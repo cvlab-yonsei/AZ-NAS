@@ -47,19 +47,19 @@ class NAS201SearchCell(nn.Module):
         self.num_edges = len(self.edges)
         self.arch_cache = None
 
-#     def random_genotype(self, set_cache):
-#         genotypes = []
-#         for i in range(1, self.max_nodes):
-#             xlist = []
-#             for j in range(i):
-#                 node_str = "{:}<-{:}".format(i, j)
-#                 op_name = random.choice(self.op_names)
-#                 xlist.append((op_name, j))
-#             genotypes.append(tuple(xlist))
-#         arch = Structure(genotypes)
-#         if set_cache:
-#             self.arch_cache = arch
-#         return arch
+    def random_genotype(self, set_cache):
+        genotypes = []
+        for i in range(1, self.max_nodes):
+            xlist = []
+            for j in range(i):
+                node_str = "{:}<-{:}".format(i, j)
+                op_name = random.choice(self.op_names)
+                xlist.append((op_name, j))
+            genotypes.append(tuple(xlist))
+        arch = Structure(genotypes)
+        if set_cache:
+            self.arch_cache = arch
+        return arch
 
     def extra_repr(self):
         string = "info :: {max_nodes} nodes, inC={in_dim}, outC={out_dim}".format(
