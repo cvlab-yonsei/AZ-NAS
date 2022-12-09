@@ -16,7 +16,8 @@ from xautodl.procedures import (
 )
 from xautodl.utils import get_model_infos, obtain_accuracy
 from xautodl.log_utils import AverageMeter, time_string, convert_secs2time
-from xautodl.models import get_cell_based_tiny_net, get_search_spaces
+from xautodl.models import get_search_spaces
+from custom_models import get_cell_based_tiny_net
 
 # NB201
 from nas_201_api import NASBench201API as API
@@ -37,7 +38,9 @@ def search_func(xloader, network, criterion, scheduler, w_optimizer, epoch_str, 
         data_time.update(time.time() - end)
 
         # update the weights
-        network.module.random_genotype(True)
+        ### sample a cell-level randomized network
+        network.module.random_genotype_per_cell(True)
+        ###
         w_optimizer.zero_grad()
         _, logits = network(base_inputs)
         base_loss = criterion(logits, base_targets)
@@ -107,7 +110,7 @@ def search_find_best(xloader, network, n_samples):
         # print ('obtain the top-{:} architectures'.format(n_samples))
         loader_iter = iter(xloader)
         for i in range(n_samples):
-            arch = network.module.random_genotype(True)
+            arch = network.module.random_genotype_per_cell(True)
             try:
                 inputs, targets = next(loader_iter)
             except:
@@ -161,10 +164,11 @@ def main(xargs):
     logger.log("w-optimizer : {:}".format(w_optimizer))
     logger.log("w-scheduler : {:}".format(w_scheduler))
     logger.log("criterion   : {:}".format(criterion))
-    if xargs.arch_nas_dataset is None:
-        api = None
-    else:
-        api = API(xargs.arch_nas_dataset)
+    # if xargs.arch_nas_dataset is None:
+    #     api = None
+    # else:
+    #     api = API(xargs.arch_nas_dataset)
+    api = None
     logger.log("{:} create API = {:} done".format(time_string(), api))
 
     last_info, model_base_path, model_best_path = (
@@ -306,6 +310,8 @@ def main(xargs):
         logger.log("{:}".format(api.query_by_arch(best_arch, "200")))
     logger.close()
 
+    ### TODO: train the found model
+
 if __name__ == "__main__":
     parser = argparse.ArgumentParser("Random search for NAS.")
     parser.add_argument("--data_path", type=str, default='./cifar.python', help="The path to dataset")
@@ -321,8 +327,8 @@ if __name__ == "__main__":
     parser.add_argument("--track_running_stats", type=int, default=0, choices=[0, 1], help="Whether use track_running_stats or not in the BN layer.")
     # log
     parser.add_argument("--workers", type=int, default=4, help="number of data loading workers")
-    parser.add_argument("--save_dir", type=str, default='./results/NB201/RSPS-CIFAR10-BN0-official', help="Folder to save checkpoints and log.")
-    parser.add_argument("--arch_nas_dataset", type=str, default='./NAS-Bench-201-v1_1-096897.pth', help="The path to load the architecture dataset (tiny-nas-benchmark).")
+    parser.add_argument("--save_dir", type=str, default='./results/NB201/RSPS-CIFAR10-BN0-cell_level', help="Folder to save checkpoints and log.")
+    # parser.add_argument("--arch_nas_dataset", type=str, default='./NAS-Bench-201-v1_1-096897.pth', help="The path to load the architecture dataset (tiny-nas-benchmark).")
     parser.add_argument("--print_freq", type=int, default=200, help="print frequency (default: 200)")
     parser.add_argument("--rand_seed", type=int, default=None, help="manual seed")
     

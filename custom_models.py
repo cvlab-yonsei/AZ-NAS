@@ -104,13 +104,13 @@ class TinyNetworkRANDOM(nn.Module):
     #         self.arch_cache = arch
     #     return arch
 
-#     def random_genotype_per_cell(self, set_cache):
-#         arch_set = []
-#         for cell in self.cells:
-#             if isinstance(cell, SearchCell):
-#                 arch = cell.random_genotype(set_cache)
-#                 arch_set.append(arch)
-#         return arch_set
+    def random_genotype_per_cell(self, set_cache):
+        arch_set = []
+        for cell in self.cells:
+            if isinstance(cell, SearchCell):
+                arch = cell.random_genotype(set_cache)
+                arch_set.append(arch)
+        return arch_set
 
     def forward(self, inputs):
 
