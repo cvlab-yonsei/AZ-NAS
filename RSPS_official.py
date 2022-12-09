@@ -27,7 +27,7 @@ parser.add_argument("--dataset", type=str, default='cifar10',choices=["cifar10",
 
 # channels and number-of-cells
 parser.add_argument("--search_space_name", type=str, default='nas-bench-201', help="The search space name.")
-parser.add_argument("--config_path", type=str, default='./configs/RANDOM.config', help="The path to the configuration.")
+parser.add_argument("--config_path", type=str, default='./configs/nas-benchmark/algos/RANDOM.config', help="The path to the configuration.")
 parser.add_argument("--max_nodes", type=int, default=4, help="The maximum number of nodes.")
 parser.add_argument("--channel", type=int, default=16, help="The number of channels.")
 parser.add_argument("--num_cells", type=int, default=5, help="The number of cells in one stage.")
@@ -165,7 +165,7 @@ config = load_config(xargs.config_path, {"class_num": class_num, "xshape": xshap
 search_loader, _, valid_loader = get_nas_search_loaders(train_data,
                                                         valid_data,
                                                         xargs.dataset,
-                                                        "../configs/",
+                                                        "./configs/nas-benchmark",
                                                         (config.batch_size, config.test_batch_size),
                                                         xargs.workers)
 logger.log("||||||| {:10s} ||||||| Search-Loader-Num={:}, Valid-Loader-Num={:}, batch size={:}".format(
