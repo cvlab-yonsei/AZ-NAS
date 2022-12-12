@@ -205,7 +205,8 @@ def main(xargs):
         logger.log("{:}".format(api.query_by_arch(best_arch, "200")))
     logger.close()
 
-    ### TODO: train the found model
+    print("Start training")
+    train_best_arch(xargs, network, best_arch)
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser("Random search for NAS.")
