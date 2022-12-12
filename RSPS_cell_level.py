@@ -87,7 +87,7 @@ def valid_func(xloader, network, criterion):
             data_time.update(time.time() - end)
             # prediction
 
-            network.module.random_genotype(True)
+            network.module.random_genotype_per_cell(True)
             _, logits = network(arch_inputs)
             arch_loss = criterion(logits, arch_targets)
             # record
