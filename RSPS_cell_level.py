@@ -129,6 +129,139 @@ def search_find_best(xloader, network, n_samples):
         best_arch, best_valid_acc = archs[best_idx], valid_accs[best_idx]
         return best_arch, best_valid_acc
 
+def train_best_arch(xargs, network, best_arch):
+    ## prepare args, logger, config
+    args = deepcopy(xargs)
+    args.save_dir = os.path.join(args.save_dir, "train")
+
+    logger = prepare_logger(args)
+
+    cifar_train_config_path = "./configs/nas-benchmark/CIFAR.config"
+
+    ## prepare dataloader
+    train_data, test_data, xshape, class_num = get_datasets(xargs.dataset, xargs.data_path, -1)
+    config = load_config(cifar_train_config_path, {"class_num": class_num, "xshape": xshape}, logger)
+
+    train_loader = torch.utils.data.DataLoader(
+            train_data,
+            batch_size=config.batch_size,
+            shuffle=True,
+            num_workers=xargs.workers,
+            pin_memory=True,)
+
+    test_loader = torch.utils.data.DataLoader(
+                test_data,
+                batch_size=config.batch_size,
+                shuffle=True,
+                num_workers=xargs.workers,
+                pin_memory=True,)
+
+    logger.log("||||||| {:10s} ||||||| Train-Loader-Num={:}, Test-Loader-Num={:}, batch size={:}".format(
+                xargs.dataset, len(train_loader), len(test_loader), config.batch_size))
+    logger.log("||||||| {:10s} ||||||| Config={:}".format(xargs.dataset, config))
+
+    ## prepare optim, loss
+    w_optimizer, w_scheduler, criterion = get_optim_scheduler(network.parameters(), config)
+    
+    ## prepare model
+    i = 0
+    for m in network.modules():
+        if isinstance(m, SearchCell):
+            m.arch_cache = best_arch[i]  # load best arch
+            i += 1
+
+    start_epoch, valid_accuracies, genotypes = 0, {"best": -1}, {}
+
+    start_time, search_time, epoch_time, total_epoch = (
+        time.time(),
+        AverageMeter(),
+        AverageMeter(),
+        config.epochs + config.warmup,
+    )
+    for epoch in range(0, total_epoch):
+        w_scheduler.update(epoch, 0.0)
+        need_time = "Time Left: {:}".format(
+            convert_secs2time(epoch_time.val * (total_epoch - epoch), True)
+        )
+        epoch_str = "{:03d}-{:03d}".format(epoch, total_epoch)
+        logger.log(
+            "\n[Search the {:}-th epoch] {:}, LR={:}".format(
+                epoch_str, need_time, min(w_scheduler.get_lr())
+            )
+        )
+
+        search_w_loss, search_w_top1, search_w_top5 = train_func_one_arch(
+            train_loader,
+            network,
+            criterion,
+            w_scheduler,
+            w_optimizer,
+            epoch_str,
+            xargs.print_freq,
+            logger,
+        )
+        search_time.update(time.time() - start_time)
+        logger.log(
+            "[{:}] searching : loss={:.2f}, accuracy@1={:.2f}%, accuracy@5={:.2f}%, time-cost={:.1f} s".format(
+                epoch_str, search_w_loss, search_w_top1, search_w_top5, search_time.sum
+            )
+        )
+        valid_a_loss, valid_a_top1, valid_a_top5 = valid_func_one_arch(
+            test_loader, network, criterion
+        )
+        logger.log(
+            "[{:}] evaluate  : loss={:.2f}, accuracy@1={:.2f}%, accuracy@5={:.2f}%".format(
+                epoch_str, valid_a_loss, valid_a_top1, valid_a_top5
+            )
+        )
+        
+        # check the best accuracy
+        valid_accuracies[epoch] = valid_a_top1
+        if valid_a_top1 > valid_accuracies["best"]:
+            valid_accuracies["best"] = valid_a_top1
+            find_best = True
+        else:
+            find_best = False
+
+        # save checkpoint
+        save_path = save_checkpoint(
+            {
+                "epoch": epoch + 1,
+                "args": deepcopy(xargs),
+                "search_model": search_model.state_dict(),
+                "w_optimizer": w_optimizer.state_dict(),
+                "w_scheduler": w_scheduler.state_dict(),
+                "genotypes": genotypes,
+                "valid_accuracies": valid_accuracies,
+            },
+            model_base_path,
+            logger,
+        )
+        last_info = save_checkpoint(
+            {
+                "epoch": epoch + 1,
+                "args": deepcopy(args),
+                "last_checkpoint": save_path,
+            },
+            logger.path("info"),
+            logger,
+        )
+        if find_best:
+            logger.log(
+                "<<<--->>> The {:}-th epoch : find the highest validation accuracy : {:.2f}%.".format(
+                    epoch_str, valid_a_top1
+                )
+            )
+            copy_checkpoint(model_base_path, model_best_path, logger)
+        if api is not None:
+            logger.log("{:}".format(api.query_by_arch(genotypes[epoch], "200")))
+        # measure elapsed time
+        epoch_time.update(time.time() - start_time)
+        start_time = time.time()
+
+    logger.close()
+    
+
 
 def main(xargs):
     train_data, valid_data, xshape, class_num = get_datasets(xargs.dataset, xargs.data_path, -1)
