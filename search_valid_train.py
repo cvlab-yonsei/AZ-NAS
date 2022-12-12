@@ -19,6 +19,8 @@ from xautodl.log_utils import AverageMeter, time_string, convert_secs2time
 from xautodl.models import get_search_spaces
 from custom_models import get_cell_based_tiny_net
 
+__all__ = ["search_func", "valid_func", "search_find_best", "train_func_one_arch", "valid_func_one_arch", "train_best_arch"]
+
 def search_func(xloader, network, criterion, scheduler, w_optimizer, epoch_str, print_freq, logger):
     data_time, batch_time = AverageMeter(), AverageMeter()
     base_losses, base_top1, base_top5 = AverageMeter(), AverageMeter(), AverageMeter()
@@ -205,7 +207,7 @@ def train_best_arch(xargs, network, best_arch):
 
     logger = prepare_logger(args)
 
-    cifar_train_config_path = "./configs/nas-benchmark/CIFAR.config"
+    cifar_train_config_path = args.train_config_path
 
     ## prepare dataloader
     train_data, test_data, xshape, class_num = get_datasets(xargs.dataset, xargs.data_path, -1)
