@@ -229,7 +229,7 @@ if __name__ == "__main__":
     parser.add_argument("--print_freq", type=int, default=200, help="print frequency (default: 200)")
     parser.add_argument("--rand_seed", type=int, default=None, help="manual seed")
     
-    args = parser.parse_args(args=[])
+    args = parser.parse_args()
     if args.rand_seed is None or args.rand_seed < 0:
         args.rand_seed = random.randint(1, 100000)
     print(args)
