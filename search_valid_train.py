@@ -200,7 +200,7 @@ def valid_func_one_arch(xloader, network, criterion):
             end = time.time()
     return arch_losses.avg, arch_top1.avg, arch_top5.avg
 
-def train_best_arch(xargs, network):
+def train_best_arch(xargs, network, search_model):
     ## prepare args, logger, config
     args = deepcopy(xargs)
     args.save_dir = os.path.join(args.save_dir, "train")
@@ -236,8 +236,14 @@ def train_best_arch(xargs, network):
         if hasattr(layer, 'reset_parameters'):
             layer.reset_parameters()
     w_optimizer, w_scheduler, criterion = get_optim_scheduler(network.parameters(), config)
+
+    last_info, model_base_path, model_best_path = (
+        logger.path("info"),
+        logger.path("model"),
+        logger.path("best"),
+    )
     
-    start_epoch, valid_accuracies, genotypes = 0, {"best": -1}, {}
+    start_epoch, valid_accuracies = 0, {"best": -1}
 
     start_time, search_time, epoch_time, total_epoch = (
         time.time(),
@@ -298,7 +304,6 @@ def train_best_arch(xargs, network):
                 "search_model": search_model.state_dict(),
                 "w_optimizer": w_optimizer.state_dict(),
                 "w_scheduler": w_scheduler.state_dict(),
-                "genotypes": genotypes,
                 "valid_accuracies": valid_accuracies,
             },
             model_base_path,
@@ -320,8 +325,6 @@ def train_best_arch(xargs, network):
                 )
             )
             copy_checkpoint(model_base_path, model_best_path, logger)
-        if api is not None:
-            logger.log("{:}".format(api.query_by_arch(genotypes[epoch], "200")))
         # measure elapsed time
         epoch_time.update(time.time() - start_time)
         start_time = time.time()

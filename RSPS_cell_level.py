@@ -213,7 +213,7 @@ def main(xargs):
         if isinstance(m, SearchCell):
             m.arch_cache = best_arch[i]  # load best arch
             i += 1
-    train_best_arch(xargs, network)
+    train_best_arch(xargs, network, search_model)
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser("Random search for NAS.")
