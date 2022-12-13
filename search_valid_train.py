@@ -19,6 +19,8 @@ from xautodl.log_utils import AverageMeter, time_string, convert_secs2time
 from xautodl.models import get_search_spaces
 from custom_models import get_cell_based_tiny_net
 
+from custom_search_cells import NAS201SearchCell as SearchCell
+
 __all__ = ["search_func", "valid_func", "search_find_best", "train_func_one_arch", "valid_func_one_arch", "train_best_arch"]
 
 def search_func(xloader, network, criterion, scheduler, w_optimizer, epoch_str, print_freq, logger):
