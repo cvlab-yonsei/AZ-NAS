@@ -23,6 +23,7 @@ from custom_models import get_cell_based_tiny_net
 from nas_201_api import NASBench201API as API
 
 from search_valid_train import *
+from custom_search_cells import NAS201SearchCell as SearchCell
 
 
 def main(xargs):
@@ -205,8 +206,14 @@ def main(xargs):
         logger.log("{:}".format(api.query_by_arch(best_arch, "200")))
     logger.close()
 
-    print("Start training")
-    train_best_arch(xargs, network, best_arch)
+    print("----------------------Start training----------------------")
+    ## prepare model
+    i = 0
+    for m in network.modules():
+        if isinstance(m, SearchCell):
+            m.arch_cache = best_arch[i]  # load best arch
+            i += 1
+    train_best_arch(xargs, network)
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser("Random search for NAS.")

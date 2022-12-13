@@ -19,8 +19,6 @@ from xautodl.log_utils import AverageMeter, time_string, convert_secs2time
 from xautodl.models import get_search_spaces
 from custom_models import get_cell_based_tiny_net
 
-from custom_search_cells import NAS201SearchCell as SearchCell
-
 __all__ = ["search_func", "valid_func", "search_find_best", "train_func_one_arch", "valid_func_one_arch", "train_best_arch"]
 
 def search_func(xloader, network, criterion, scheduler, w_optimizer, epoch_str, print_freq, logger):
@@ -202,7 +200,7 @@ def valid_func_one_arch(xloader, network, criterion):
             end = time.time()
     return arch_losses.avg, arch_top1.avg, arch_top5.avg
 
-def train_best_arch(xargs, network, best_arch):
+def train_best_arch(xargs, network):
     ## prepare args, logger, config
     args = deepcopy(xargs)
     args.save_dir = os.path.join(args.save_dir, "train")
@@ -233,16 +231,12 @@ def train_best_arch(xargs, network, best_arch):
                 xargs.dataset, len(train_loader), len(test_loader), config.batch_size))
     logger.log("||||||| {:10s} ||||||| Config={:}".format(xargs.dataset, config))
 
-    ## prepare optim, loss
+    ## prepare model, optim, loss
+    for layer in network.children(): # reset params
+        if hasattr(layer, 'reset_parameters'):
+            layer.reset_parameters()
     w_optimizer, w_scheduler, criterion = get_optim_scheduler(network.parameters(), config)
     
-    ## prepare model
-    i = 0
-    for m in network.modules():
-        if isinstance(m, SearchCell):
-            m.arch_cache = best_arch[i]  # load best arch
-            i += 1
-
     start_epoch, valid_accuracies, genotypes = 0, {"best": -1}, {}
 
     start_time, search_time, epoch_time, total_epoch = (
