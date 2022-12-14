@@ -41,7 +41,6 @@ def step_sim_metric(network, criterion, inputs, targets):
     base_loss = criterion(logits, targets)
     base_loss.backward()
     optim_large_step.step()
-#     _, logits_large_step = network(inputs)
     large_step_dict = deepcopy(network.state_dict())
     
     # multiple small steps
