@@ -195,7 +195,11 @@ def main(xargs):
     logger.log("\n" + "-" * 200)
     logger.log("Pre-searching costs {:.1f} s".format(search_time.sum))
     start_time = time.time()
-    best_arch, best_acc = search_find_best(valid_loader, network, xargs.select_num)
+    ###
+    if not diverse_metrics:
+        best_arch, best_acc = search_find_best(valid_loader, network, xargs.select_num)
+    else:
+        pass # TODO: implement fn
     search_time.update(time.time() - start_time)
     logger.log(
         "RANDOM-NAS finds the best one : {:} with accuracy={:.2f}%, with {:.1f} s.".format(

@@ -320,7 +320,7 @@ def train_best_arch(xargs, network, search_model):
         )
         if find_best:
             logger.log(
-                "<<<--->>> The {:}-th epoch : find the highest validation accuracy : {:.2f}%.".format(
+                "<<<--->>> The {:}-th epoch : find the highest test accuracy : {:.2f}%.".format(
                     epoch_str, valid_a_top1
                 )
             )
