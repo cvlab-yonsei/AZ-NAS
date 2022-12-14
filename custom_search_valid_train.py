@@ -20,6 +20,8 @@ from xautodl.models import get_search_spaces
 from custom_models import get_cell_based_tiny_net
 from custom_metrics import step_sim_metric, acc_confidence_robustness_metrics
 
+import scipy.stats as stats
+
 __all__ = ["search_func", "valid_func", "search_find_best", "train_func_one_arch", "valid_func_one_arch", "train_best_arch"]
 
 def search_func(xloader, network, criterion, scheduler, w_optimizer, epoch_str, print_freq, logger):
@@ -150,7 +152,20 @@ def search_find_best_diverse_metrics(xloader, network, criterion, n_samples):
         metric_robustnesses.append(robustness)
         metric_step_sims.append(step_sim)
 
-    return archs, metric_accs, metric_confidences, metric_sensitivities, metric_robustnesses, metric_step_sims
+    rank_accs, rank_confidences, rank_sensitivities, rank_robustnesses, rank_step_sims = stats.rankdata(metric_accs), stats.rankdata(metric_confidences), stats.rankdata(metric_sensitivities), stats.rankdata(metric_robustnesses), stats.rankdata(metric_step_sims)
+    l = len(rank_accs)
+    rank_agg = np.log(rank_accs/l)+np.log(rank_confidences/l)+np.log(rank_sensitivities/l)+np.log(rank_robustnesses/l)+np.log(rank_step_sims/l)
+    best_idx = np.argmax(rank_agg)
+    
+    best_arch, best_acc, best_conf, best_sensitivity, best_robust, best_step_sim = archs[best_idx], metric_accs[best_idx], metric_confidences[best_idx], metric_sensitivities[best_idx], metric_robustnesses[best_idx], metric_step_sims[best_idx]
+
+    print("--------------------------Found best arch--------------------------")
+    for a in best_arch:
+        print(a)
+    print("--------------------------------Scores-----------------------------")
+    print("acc: {}, confidence: {}, sensitivity: {}, robustness: {}, step_similarity: {}".format(best_acc, best_conf, best_sensitivity, best_robust, best_step_sim))
+
+    return best_arch, best_acc
     # fittedness / confidence / responsiveness / (negative) over-fittedness / linearness
 
 def train_func_one_arch(xloader, network, criterion, scheduler, w_optimizer, epoch_str, print_freq, logger):
