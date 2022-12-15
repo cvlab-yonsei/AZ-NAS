@@ -199,7 +199,7 @@ def main(xargs):
     if not xargs.diverse_metrics:
         best_arch, best_acc = search_find_best(valid_loader, network, xargs.select_num)
     else:
-        best_arch, best_acc = search_find_best_diverse_metrics(valid_loader, network, xargs.select_num)
+        best_arch, best_acc = search_find_best_diverse_metrics(valid_loader, network, criterion, xargs.select_num)
     search_time.update(time.time() - start_time)
     logger.log(
         "RANDOM-NAS finds the best one : {:} with accuracy={:.2f}%, with {:.1f} s.".format(

@@ -21,8 +21,9 @@ from custom_models import get_cell_based_tiny_net
 from custom_metrics import step_sim_metric, acc_confidence_robustness_metrics
 
 import scipy.stats as stats
+import tqdm
 
-__all__ = ["search_func", "valid_func", "search_find_best", "train_func_one_arch", "valid_func_one_arch", "train_best_arch"]
+__all__ = ["search_func", "valid_func", "search_find_best", "search_find_best_diverse_metrics", "train_func_one_arch", "valid_func_one_arch", "train_best_arch"]
 
 def search_func(xloader, network, criterion, scheduler, w_optimizer, epoch_str, print_freq, logger):
     data_time, batch_time = AverageMeter(), AverageMeter()
