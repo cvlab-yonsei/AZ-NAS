@@ -18,7 +18,7 @@ from xautodl.utils import get_model_infos, obtain_accuracy
 from xautodl.log_utils import AverageMeter, time_string, convert_secs2time
 from xautodl.models import get_search_spaces
 from custom_models import get_cell_based_tiny_net
-from custom_metrics import step_sim_metric, acc_confidence_robustness_metrics
+from custom_metrics import step_sim_metric, acc_confidence_sensitivity_robustness_metrics
 
 import scipy.stats as stats
 import tqdm
