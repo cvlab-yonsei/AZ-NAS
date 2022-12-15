@@ -143,7 +143,7 @@ def search_find_best_diverse_metrics(xloader, network, criterion, n_samples):
             loader_iter = iter(xloader)
             inputs, targets = next(loader_iter)
         inputs, targets = inputs.cuda(non_blocking=True), targets.cuda(non_blocking=True)
-        valid_acc, confidence, sensitivity, robustness = acc_confidence_robustness_metrics(network, inputs, targets)
+        valid_acc, confidence, sensitivity, robustness = acc_confidence_sensitivity_robustness_metrics(network, inputs, targets)
         step_sim = step_sim_metric(network, criterion, inputs, targets)
 
         archs.append(arch)

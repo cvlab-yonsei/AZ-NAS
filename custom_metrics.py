@@ -1,5 +1,6 @@
 import torch
 from xautodl.utils import obtain_accuracy
+from custom_search_cells import NAS201SearchCell
 
 def valid_acc_metric(network, inputs, targets):
     with torch.no_grad():
@@ -10,10 +11,10 @@ def valid_acc_metric(network, inputs, targets):
         )
     return val_top1.item()
 
-def acc_confidence_robustness_metrics(network, inputs, targets):
+def acc_confidence_sensitivity_robustness_metrics(network, inputs, targets):
     with torch.no_grad():
-        network.eval()
         # accuracy
+        network.train()
         _, logits = network(inputs)
         val_top1, val_top5 = obtain_accuracy(logits.data, targets.data, topk=(1, 5))
         acc = val_top1
@@ -23,12 +24,24 @@ def acc_confidence_robustness_metrics(network, inputs, targets):
         one_hot_idx = torch.nn.functional.one_hot(targets)
         confidence = (prob[one_hot_idx==1].sum()) / inputs.size(0) * 100 # in percent
 
-        # robustness
+        # sensitivity
         _, noisy_logits = network(inputs + torch.randn_like(inputs)*0.1)
         kl_loss = torch.nn.KLDivLoss(reduction="batchmean")
-        robustness = -kl_loss(torch.nn.functional.log_softmax(noisy_logits, dim=1), torch.nn.functional.softmax(logits, dim=1))
+        sensitivity = kl_loss(torch.nn.functional.log_softmax(noisy_logits, dim=1), torch.nn.functional.softmax(logits, dim=1))
         
-        return acc.item(), confidence.item(), robustness.item()
+        # robustness
+        original_weights = deepcopy(network.state_dict())
+        for m in network.modules():
+            if isinstance(m, NAS201SearchCell):
+                for p in m.parameters():
+                    p.add_(torch.randn_like(p) * p.std()*0.3)
+            
+        _, noisy_logits = network(inputs)
+        kl_loss = torch.nn.KLDivLoss(reduction="batchmean")
+        robustness = -kl_loss(torch.nn.functional.log_softmax(noisy_logits, dim=1), torch.nn.functional.softmax(logits, dim=1))
+        network.load_state_dict(original_weights)
+        
+        return acc.item(), confidence.item(), sensitivity.item(), robustness.item()
 
 def step_sim_metric(network, criterion, inputs, targets):
     original_dict = deepcopy(network.state_dict())
