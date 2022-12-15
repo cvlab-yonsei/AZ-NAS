@@ -1,6 +1,8 @@
 import torch
 from xautodl.utils import obtain_accuracy
 from custom_search_cells import NAS201SearchCell
+import numpy as np
+from copy import deepcopy
 
 def valid_acc_metric(network, inputs, targets):
     with torch.no_grad():
