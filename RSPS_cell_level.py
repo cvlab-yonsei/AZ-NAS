@@ -196,7 +196,7 @@ def main(xargs):
     logger.log("Pre-searching costs {:.1f} s".format(search_time.sum))
     start_time = time.time()
     ###
-    if not diverse_metrics:
+    if not xargs.diverse_metrics:
         best_arch, best_acc = search_find_best(valid_loader, network, xargs.select_num)
     else:
         best_arch, best_acc = search_find_best_diverse_metrics(valid_loader, network, xargs.select_num)
@@ -220,6 +220,16 @@ def main(xargs):
     train_best_arch(xargs, network, search_model)
 
 if __name__ == "__main__":
+    def str2bool(v):
+        if isinstance(v, bool):
+            return v
+        if v.lower() in ('yes', 'true', 't', 'y', '1'):
+            return True
+        elif v.lower() in ('no', 'false', 'f', 'n', '0'):
+            return False
+        else:
+            raise argparse.ArgumentTypeError('Boolean value expected.')
+            
     parser = argparse.ArgumentParser("Random search for NAS.")
     parser.add_argument("--data_path", type=str, default='./cifar.python', help="The path to dataset")
     parser.add_argument("--dataset", type=str, default='cifar10',choices=["cifar10", "cifar100", "ImageNet16-120"], help="Choose between Cifar10/100 and ImageNet-16.")
@@ -239,6 +249,8 @@ if __name__ == "__main__":
     # parser.add_argument("--arch_nas_dataset", type=str, default='./NAS-Bench-201-v1_1-096897.pth', help="The path to load the architecture dataset (tiny-nas-benchmark).")
     parser.add_argument("--print_freq", type=int, default=200, help="print frequency (default: 200)")
     parser.add_argument("--rand_seed", type=int, default=None, help="manual seed")
+
+    parser.add_argument("--diverse_metrics", type=str2bool, default=False, help="")
     
     args = parser.parse_args()
     if args.rand_seed is None or args.rand_seed < 0:
