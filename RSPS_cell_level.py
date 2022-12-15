@@ -22,7 +22,7 @@ from custom_models import get_cell_based_tiny_net
 # NB201
 from nas_201_api import NASBench201API as API
 
-from search_valid_train import *
+from custom_search_valid_train import *
 from custom_search_cells import NAS201SearchCell as SearchCell
 
 
@@ -229,7 +229,7 @@ if __name__ == "__main__":
             return False
         else:
             raise argparse.ArgumentTypeError('Boolean value expected.')
-            
+
     parser = argparse.ArgumentParser("Random search for NAS.")
     parser.add_argument("--data_path", type=str, default='./cifar.python', help="The path to dataset")
     parser.add_argument("--dataset", type=str, default='cifar10',choices=["cifar10", "cifar100", "ImageNet16-120"], help="Choose between Cifar10/100 and ImageNet-16.")
