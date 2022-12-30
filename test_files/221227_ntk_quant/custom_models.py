@@ -75,7 +75,7 @@ class TinyNetworkRANDOM(nn.Module):
         self.lastact = nn.Sequential(nn.BatchNorm2d(C_prev, track_running_stats=track_running_stats), nn.ReLU(inplace=True))
         self.global_pooling = nn.AdaptiveAvgPool2d(1)
         self.classifier = nn.Linear(C_prev, num_classes)
-        # self.arch_cache = None
+        self.arch_cache = None
 
     def get_message(self):
         string = self.extra_repr()
@@ -90,35 +90,26 @@ class TinyNetworkRANDOM(nn.Module):
             name=self.__class__.__name__, **self.__dict__
         )
 
-    # def random_genotype(self, set_cache):
-    #     genotypes = []
-    #     for i in range(1, self.max_nodes):
-    #         xlist = []
-    #         for j in range(i):
-    #             node_str = "{:}<-{:}".format(i, j)
-    #             op_name = random.choice(self.op_names)
-    #             xlist.append((op_name, j))
-    #         genotypes.append(tuple(xlist))
-    #     arch = Structure(genotypes)
-    #     if set_cache:
-    #         self.arch_cache = arch
-    #     return arch
-
-    def random_genotype_per_cell(self, set_cache):
-        arch_set = []
-        for cell in self.cells:
-            if isinstance(cell, SearchCell):
-                arch = cell.random_genotype(set_cache)
-                arch_set.append(arch)
-        return arch_set
+    def random_genotype(self, set_cache):
+        genotypes = []
+        for i in range(1, self.max_nodes):
+            xlist = []
+            for j in range(i):
+                node_str = "{:}<-{:}".format(i, j)
+                op_name = random.choice(self.op_names)
+                xlist.append((op_name, j))
+            genotypes.append(tuple(xlist))
+        arch = Structure(genotypes)
+        if set_cache:
+            self.arch_cache = arch
+        return arch
 
     def forward(self, inputs):
 
         feature = self.stem(inputs)
         for i, cell in enumerate(self.cells):
             if isinstance(cell, SearchCell):
-                # feature = cell.forward_dynamic(feature, self.arch_cache)
-                feature = cell.forward_dynamic(feature)
+                feature = cell.forward_dynamic(feature, self.arch_cache)
             else:
                 feature = cell(feature)
 
