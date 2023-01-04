@@ -76,6 +76,7 @@ class TinyNetworkRANDOM(nn.Module):
         self.global_pooling = nn.AdaptiveAvgPool2d(1)
         self.classifier = nn.Linear(C_prev, num_classes)
         self.arch_cache = None
+        self.last_feature_map = None
 
     def get_message(self):
         string = self.extra_repr()
@@ -114,6 +115,7 @@ class TinyNetworkRANDOM(nn.Module):
                 feature = cell(feature)
 
         out = self.lastact(feature)
+        self.last_feature_map = out.detach().clone()
         out = self.global_pooling(out)
         out = out.view(out.size(0), -1)
         logits = self.classifier(out)

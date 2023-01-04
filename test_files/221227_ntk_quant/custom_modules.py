@@ -40,6 +40,19 @@ class QConv(nn.Conv2d):
         self.register_buffer('init', torch.tensor([0]))
         self.register_buffer('search', torch.tensor([1]))
 
+    def set_q_range(self, bit_weight, bit_act):
+        self.bit_weight = bit_weight
+        self.bit_act = bit_act
+
+        self.Qn_w = -2**(self.bit_weight-1) # does not used for 1-bit
+        self.Qp_w = 2**(self.bit_weight-1) - 1 # does not used for 1-bit
+        if not self.symmetric_act:
+            self.Qn_a = 0
+            self.Qp_a = 2**(self.bit_act) - 1
+        else:
+            self.Qn_a = -2**(self.bit_act-1) # does not used for 1-bit
+            self.Qp_a = 2**(self.bit_act-1) - 1 # does not used for 1-bit
+
     def weight_quantization(self, weight):
         if self.bit_weight == 32:
             return weight
