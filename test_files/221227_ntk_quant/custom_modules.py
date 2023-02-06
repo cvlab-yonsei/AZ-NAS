@@ -62,14 +62,14 @@ class QConv(nn.Conv2d):
             weight = (weight + 1)/2 # [0, 1]
             weight = self.STE_round(weight) # {0, 1}
             weight = weight * 2 - 1 # {-1, 1}
-            return weight
+            return weight * torch.abs(self.sW)
         else:
             weight = weight / (torch.abs(self.sW)+1e-6) # normalized such that 99% of weights lie in [-1, 1]
             weight = weight * 2**(self.bit_weight-1)
             weight = weight.clamp(self.Qn_w, self.Qp_w)
             weight = self.STE_round(weight) # {-2^(b-1), ..., 2^(b-1)-1}
             weight = weight / 2**(self.bit_weight-1) # fixed point representation
-            return weight
+            return weight * torch.abs(self.sW)
 
     def act_quantization(self, x):
         if self.bit_act == 32:
@@ -79,14 +79,14 @@ class QConv(nn.Conv2d):
                 x = x / (torch.abs(self.sA)+1e-6)
                 x = x.clamp(0, 1) # [0, 1]
                 x = self.STE_round(x) # {0, 1}
-                return x
+                return x * torch.abs(self.sA)
             else:
                 x = x / (torch.abs(self.sA)+1e-6) # normalized such that 99% of activations lie in [0, 1]
                 x = x * 2**self.bit_act
                 x = x.clamp(self.Qn_a, self.Qp_a) # [0, 2^b-1]
                 x = self.STE_round(x) # {0, ..., 2^b-1}
                 x = x / 2**self.bit_act # fixed point representation
-                return x
+                return x * torch.abs(self.sA)
         else:
             if self.bit_act == 1:
                 x = x / (torch.abs(self.sA)+1e-6)
@@ -94,14 +94,14 @@ class QConv(nn.Conv2d):
                 x = (x+1) / 2 # [0, 1]
                 x = self.STE_round(x) # {0, 1}
                 x = x * 2 - 1 # {-1, 1}
-                return x
+                return x * torch.abs(self.sA)
             else:
                 x = x / (torch.abs(self.sA)+1e-6)
                 x = x * 2**(self.bit_act-1)
                 x = x.clamp(self.Qn_a, self.Qp_a)
                 x = self.STE_round(x) # {-2^(b-1), ..., 2^(b-1)-1}
                 x = x / 2**(self.bit_act-1)
-                return x
+                return x * torch.abs(self.sA)
 
 
     def initialize(self, x):
