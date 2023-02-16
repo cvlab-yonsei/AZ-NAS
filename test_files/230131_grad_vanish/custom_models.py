@@ -115,26 +115,19 @@ class TinyNetworkRANDOM(nn.Module):
         if feature.requires_grad:
             self.first_feature_map.retain_grad()
         ####################
-        ####################
+        
         self.cell_features = []
-        ####################
         for i, cell in enumerate(self.cells):
             if isinstance(cell, SearchCell):
                 feature = cell.forward_dynamic(feature, self.arch_cache)
-                ####################
-                tmp = feature
-                if feature.requires_grad:
-                    tmp.retain_grad()
-                self.cell_features.append(tmp)
-                ####################
             else:
                 feature = cell(feature)
-                ####################
-                tmp = feature
-                if feature.requires_grad:
-                    tmp.retain_grad()
-                self.cell_features.append(tmp)
-                ####################
+            ####################
+            tmp = feature
+            if feature.requires_grad:
+                tmp.retain_grad()
+            self.cell_features.append(tmp)
+            ####################
 
         out = self.lastact(feature)
         ####################
