@@ -105,8 +105,5 @@ venv.bak/
 
 
 ## custom
-cifar.python/
-results/
 *.pth.tar
 *.pth
-ImageNet_ZiCo/save_dir/
