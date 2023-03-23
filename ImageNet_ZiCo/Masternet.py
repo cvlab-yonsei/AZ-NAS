@@ -91,9 +91,9 @@ class MasterNet(PlainNet.PlainNet):
         for block_id, the_block in enumerate(self.block_list):
             output = the_block(output)
             ### new
-            tmp = output
+            # tmp = output
             if output.requires_grad:
-                tmp.retain_grad()
+                output.retain_grad()
             layer_features.append(output)
             ###
 

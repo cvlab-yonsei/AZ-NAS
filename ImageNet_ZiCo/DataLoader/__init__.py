@@ -30,8 +30,8 @@ lighting_param = 0.1
 
 params_dict = {
     'imagenet': {
-        'train_dir': os.path.expanduser('~/data/ILSVRC2012/train/'),
-        'val_dir': os.path.expanduser('~/data/ILSVRC2012/val/'),
+        'train_dir': os.path.expanduser('/dataset/ILSVRC2012/train/'),
+        'val_dir': os.path.expanduser('/dataset/ILSVRC2012/val/'),
         'num_train_samples': 1281167,
         'num_val_samples': 50000,
         'num_classes': 1000,
