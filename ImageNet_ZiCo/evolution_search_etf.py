@@ -267,6 +267,8 @@ def main(args, argv):
                 max_capacity = popu_zero_shot_score_dict['capacity'][max_idx]
                 min_capacity = popu_zero_shot_score_dict['capacity'][min_idx]
                 elasp_time = time.time() - start_timer
+                best_structure = popu_structure_list[max_idx]
+                logging.info('{}'.format(best_structure))
                 logging.info(f'loop_count={loop_count}/{args.evolution_max_iter}, time={elasp_time/3600:4g}h,\n\
                                max_expressivity={max_expressivity:4g}, min_expressivity={min_expressivity:4g},\n\
                                max_stability={max_stability:4g}, min_stability={min_stability:4g},\n\

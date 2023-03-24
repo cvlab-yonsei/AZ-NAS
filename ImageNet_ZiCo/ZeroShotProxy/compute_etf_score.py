@@ -5,6 +5,16 @@ from torch import nn
 import numpy as np
 import global_utils, argparse, ModelLoader, time
 
+def kaiming_normal_fanin_init(m):
+    if isinstance(m, nn.Conv2d) or isinstance(m, nn.Linear):
+        nn.init.kaiming_normal_(m.weight, mode='fan_in', nonlinearity='relu')
+        if hasattr(m, 'bias') and m.bias is not None:
+            nn.init.zeros_(m.bias)
+    elif isinstance(m, (nn.BatchNorm2d, nn.GroupNorm)):
+        if m.affine:
+            nn.init.ones_(m.weight)
+            nn.init.zeros_(m.bias)
+
 def kaiming_normal_fanout_init(m):
     if isinstance(m, nn.Conv2d) or isinstance(m, nn.Linear):
         nn.init.kaiming_normal_(m.weight, mode='fan_out', nonlinearity='relu')
@@ -15,12 +25,11 @@ def kaiming_normal_fanout_init(m):
             nn.init.ones_(m.weight)
             nn.init.zeros_(m.bias)
 
-def init_model(model, method='kaiming_norm_fanout'):
-    model.apply(kaiming_normal_fanout_init)
-    # if method == 'kaiming_norm_fanin':
-    #     model.apply(kaiming_normal_fanin_init)
-    # elif method == 'kaiming_norm_fanout':
-    #     model.apply(kaiming_normal_fanout_init)
+def init_model(model, method='kaiming_norm_fanin'):
+    if method == 'kaiming_norm_fanin':
+        model.apply(kaiming_normal_fanin_init)
+    elif method == 'kaiming_norm_fanout':
+        model.apply(kaiming_normal_fanout_init)
     # elif method == 'kaiming_uni_fanin':
     #     model.apply(kaiming_uniform_fanin_init)
     # elif method == 'kaiming_uni_fanout':
@@ -51,7 +60,7 @@ def compute_nas_score(gpu, model, resolution, batch_size, fp16=False):
     else:
         dtype = torch.float32
 
-    init_model(model, 'kaiming_norm_fanout')
+    init_model(model, 'kaiming_norm_fanin')
 
     input_ = torch.randn(size=[batch_size, 3, resolution, resolution], device=device, dtype=dtype)
     
