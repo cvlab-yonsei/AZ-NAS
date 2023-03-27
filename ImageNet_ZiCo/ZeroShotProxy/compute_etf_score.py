@@ -88,8 +88,14 @@ def compute_nas_score(gpu, model, resolution, batch_size, fp16=False):
         f_in = cell_features[i-1]
 
         if (f_out.size() == f_in.size()) and (torch.all(f_in == f_out)):
-            scores.append(-1)
+            scores.append(-np.inf)
         else:
+            if f_out.size(2) != f_in.size(2) or f_out.size(3) != f_in.size(3):
+                bo,co,ho,wo = f_out.size()
+                bi,ci,hi,wi = f_in.size()
+                stride = int(hi/ho)
+                pixel_unshuffle = nn.PixelUnshuffle(stride)
+                f_in = pixel_unshuffle(f_in)
             s = f_out.norm(p=2, dim=(1)).mean() / (f_in.norm(p=2, dim=(1)).mean()+1e-6)
             scores.append(-s.item() - 1/(s.item()+1e-6) + 2)
     fwrd_norm_score = np.mean(scores)

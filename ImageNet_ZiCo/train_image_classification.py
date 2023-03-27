@@ -26,6 +26,8 @@ except ImportError:
 import ModelLoader, DataLoader
 import global_utils
 
+from torch.utils.tensorboard import SummaryWriter
+
 def save_checkpoint(checkpoint_filename, state_dict):
     save_dir = os.path.dirname(checkpoint_filename)
     base_filename = os.path.basename(checkpoint_filename)

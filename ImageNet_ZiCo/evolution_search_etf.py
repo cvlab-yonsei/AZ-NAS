@@ -254,7 +254,7 @@ def main(args, argv):
             popu_latency_list.pop(tmp_idx)
         pass
 
-        if loop_count >= 1 and loop_count % 10 == 0:
+        if loop_count >= 1 and loop_count % 100 == 0:
             if args.zero_shot_score.lower() == 'etf':
                 max_idx = np.argmax(popu_zero_shot_score_list)
                 min_idx = np.argmin(popu_zero_shot_score_list)
