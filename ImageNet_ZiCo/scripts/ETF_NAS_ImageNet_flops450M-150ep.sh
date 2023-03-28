@@ -45,7 +45,7 @@ horovodrun -np 8 python train_image_classification.py --dataset imagenet --num_c
   --dist_mode single --workers_per_gpu 8 \
   --input_image_size ${resolution} --epochs ${epochs} --warmup 5 \
   --optimizer sgd --bn_momentum 0.01 --wd 4e-5 --nesterov --weight_init custom \
-  --lr_per_256 0.1 --target_lr_per_256 0.0 --lr_mode cosine \
+  --lr_per_256 0.4 --target_lr_per_256 0.0 --lr_mode cosine \
   --arch Masternet.py:MasterNet \
   --plainnet_struct_txt ${save_dir}/best_structure.txt \
   --use_se \

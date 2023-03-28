@@ -415,7 +415,7 @@ def config_model_optimizer_hvd_and_apex(model, optimizer, opt):
 
     return model, optimizer
 
-def train_one_epoch(train_loader, model, criterion, optimizer, epoch, opt, num_train_samples, no_acc_eval=False):
+def train_one_epoch(train_loader, model, criterion, optimizer, epoch, opt, num_train_samples, writer, no_acc_eval=False):
     info = {}
     
     losses = AverageMeter('Loss ', ':6.4g')
@@ -520,6 +520,11 @@ def train_one_epoch(train_loader, model, criterion, optimizer, epoch, opt, num_t
             logging.info('Train epoch={}, i={}, loss={:4g}, acc1={:4g}%, acc5={:4g}%, lr={:4g}'.format(
                 epoch, i, float(loss), float(acc1[0]), float(acc5[0]), current_lr
             ))
+            writer.add_scalar('train/lr', current_lr, len(train_loader)*epoch + i)
+            writer.add_scalar('train/loss(current)', float(loss), len(train_loader)*epoch + i)
+            writer.add_scalar('train/loss(average)', losses.avg, len(train_loader)*epoch + i)
+            writer.add_scalar('train/top1(average)', top1.avg, len(train_loader)*epoch + i)
+            writer.add_scalar('train/top5(average)', top5.avg, len(train_loader)*epoch + i)
         pass  # end if
     pass  # end for i
 
@@ -537,7 +542,7 @@ def train_one_epoch(train_loader, model, criterion, optimizer, epoch, opt, num_t
     return info
 
 
-def validate(val_loader, model, criterion, opt, epoch='N/A'):
+def validate(val_loader, model, criterion, opt, writer, epoch='N/A'):
     losses = AverageMeter('Loss ', ':6.4g')
     top1 = AverageMeter('Acc@1 ', ':6.2f')
     top5 = AverageMeter('Acc@5 ', ':6.2f')
@@ -594,11 +599,14 @@ def validate(val_loader, model, criterion, opt, epoch='N/A'):
         pass
 
     logging.info(' * Validate Acc@1 {:.3f} Acc@5 {:.3f}, n_val={}'.format(top1_acc_avg, top5_acc_avg, total_val_count))
+    if opt.rank == 0:
+        writer.add_scalar('val/top1', top1_acc_avg, epoch)
+        writer.add_scalar('val/top5', top5_acc_avg, epoch)
 
     return {'top1_acc': top1_acc_avg, 'top5_acc': top5_acc_avg}
 
 
-def train_all_epochs(opt, model, optimizer, train_sampler, train_loader, criterion, val_loader, num_train_samples=None,
+def train_all_epochs(opt, model, optimizer, train_sampler, train_loader, criterion, val_loader, writer, num_train_samples=None,
                      no_acc_eval=False, save_all_ranks=False, training_status_info=None, save_params=True):
     timer_start = time.time()
 
@@ -620,7 +628,7 @@ def train_all_epochs(opt, model, optimizer, train_sampler, train_loader, criteri
             train_sampler.set_epoch(epoch)
         # train for one epoch
         training_timer_start = time.time()
-        train_one_epoch_info = train_one_epoch(train_loader, model, criterion, optimizer, epoch, opt, num_train_samples,
+        train_one_epoch_info = train_one_epoch(train_loader, model, criterion, optimizer, epoch, opt, num_train_samples, writer,
                                                no_acc_eval=no_acc_eval)
 
         training_status_info['training_elasped_time'] += time.time() - training_timer_start
@@ -628,7 +636,7 @@ def train_all_epochs(opt, model, optimizer, train_sampler, train_loader, criteri
         # evaluate on validation set
         if val_loader is not None:
             validation_timer_start = time.time()
-            validate_info = validate(val_loader, model, criterion, opt, epoch=epoch)
+            validate_info = validate(val_loader, model, criterion, opt, writer, epoch=epoch)
             training_status_info['validation_elasped_time'] += time.time() - validation_timer_start
             acc1 = validate_info['top1_acc']
             acc5 = validate_info['top5_acc']
@@ -701,8 +709,10 @@ def main(opt, argv):
     if opt.rank == 0:
         log_filename = os.path.join(opt.save_dir, 'train_image_classification.log')
         global_utils.create_logging(log_filename=log_filename)
+        writer = SummaryWriter(opt.save_dir)
     else:
         global_utils.create_logging(log_filename=None, level=logging.ERROR)
+        writer = None
 
     logging.info('argv=\n' + str(argv))
     logging.info('opt=\n' + str(opt))
@@ -778,12 +788,12 @@ def main(opt, argv):
                                                                         map_location=map_location)
 
     if not opt.evaluate_only:
-        training_status_info = train_all_epochs(opt, model, optimizer, train_sampler, train_loader, criterion, val_loader,
+        training_status_info = train_all_epochs(opt, model, optimizer, train_sampler, train_loader, criterion, val_loader, writer,
                          num_train_samples=num_train_samples,
                          no_acc_eval=False, save_all_ranks=False,
                          training_status_info=training_status_info)
     else:
-        validate(val_loader, model, criterion, opt)
+        validate(val_loader, model, criterion, opt, writer)
 
     # mark job done
     global_utils.save_pyobj(job_done_fn, training_status_info)

@@ -17,7 +17,7 @@ import PlainNet
 from xautodl import datasets
 import time
 
-from ZeroShotProxy import compute_etf_score, compute_zen_score, compute_te_nas_score, compute_syncflow_score, compute_gradnorm_score, compute_NASWOT_score, compute_zico
+from ZeroShotProxy import compute_etf_score, compute_etf_score2, compute_zen_score, compute_te_nas_score, compute_syncflow_score, compute_gradnorm_score, compute_NASWOT_score, compute_zico
 import benchmark_network_latency
 
 import scipy.stats as stats
@@ -132,6 +132,14 @@ def compute_nas_score(AnyPlainNet, random_structure_str, gpu, args, trainloader=
         torch.cuda.empty_cache()
         return the_nas_core_info
 
+    elif args.zero_shot_score.lower() == 'etf2':
+        the_nas_core_info = compute_etf_score2.compute_nas_score(model=the_model, gpu=gpu,
+                                                                resolution=args.input_image_size,
+                                                                batch_size=args.batch_size)
+        del the_model
+        torch.cuda.empty_cache()
+        return the_nas_core_info
+
     elif args.zero_shot_score.lower() == 'zico':
         the_nas_core = compute_zico.getzico(the_model, trainloader,lossfunc)
 
@@ -230,7 +238,7 @@ def main(args, argv):
     initial_structure_str = str(masternet)
 
     popu_structure_list = []
-    if args.zero_shot_score.lower() == 'etf':
+    if 'etf' in args.zero_shot_score.lower():
         popu_zero_shot_score_dict = dict()
         popu_zero_shot_score_dict['expressivity'] = []
         popu_zero_shot_score_dict['stability'] = []
@@ -246,7 +254,7 @@ def main(args, argv):
         # too many networks in the population pool, remove one with the smallest score
         while len(popu_structure_list) > args.population_size:
             tmp_idx = np.argmin(popu_zero_shot_score_list)
-            if args.zero_shot_score.lower() == 'etf':
+            if 'etf' in args.zero_shot_score.lower():
                 for k in popu_zero_shot_score_dict.keys():
                     popu_zero_shot_score_dict[k].pop(tmp_idx)
             popu_zero_shot_score_list.pop(tmp_idx)
@@ -255,7 +263,7 @@ def main(args, argv):
         pass
 
         if loop_count >= 1 and loop_count % 100 == 0:
-            if args.zero_shot_score.lower() == 'etf':
+            if 'etf' in args.zero_shot_score.lower():
                 max_idx = np.argmax(popu_zero_shot_score_list)
                 min_idx = np.argmin(popu_zero_shot_score_list)
                 max_expressivity = popu_zero_shot_score_dict['expressivity'][max_idx]
@@ -327,7 +335,7 @@ def main(args, argv):
             if args.budget_latency < the_latency:
                 continue
 
-        if args.zero_shot_score.lower() == 'etf':
+        if 'etf' in args.zero_shot_score.lower():
             the_nas_core = compute_nas_score(AnyPlainNet, random_structure_str, gpu, args, trainbatches, lossfunc)
             for k, v in the_nas_core.items():
                 popu_zero_shot_score_dict[k].append(v)
