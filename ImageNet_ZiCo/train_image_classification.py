@@ -622,6 +622,10 @@ def train_all_epochs(opt, model, optimizer, train_sampler, train_loader, criteri
     if num_train_samples is None:
         num_train_samples = len(train_loader)
 
+    if opt.rank == 0:
+        writer.add_graph(model, next(iter(train_loader))[0])
+        writer.add_text('model_info', str(model), 0)
+
     for epoch in range(opt.start_epoch, opt.epochs):
         logging.info('--- Start training epoch {}'.format(epoch))
         if train_sampler is not None:
