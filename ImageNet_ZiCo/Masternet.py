@@ -89,14 +89,13 @@ class MasterNet(PlainNet.PlainNet):
 
         layer_features = [] # new
         for block_id, the_block in enumerate(self.block_list):
-            output = the_block(output)
-            ### new
-            # tmp = output
-            if output.requires_grad:
-                output.retain_grad()
-            layer_features.append(output)
-            ###
-
+            for block_id2, the_block2 in enumerate(the_block.block_list):
+                # print(the_block2)
+                output = the_block2(output)
+                if isinstance(the_block2, basic_blocks.RELU):
+                    if output.requires_grad:
+                        output.retain_grad()
+                    layer_features.append(output)
         return layer_features
 
     def forward(self, x):

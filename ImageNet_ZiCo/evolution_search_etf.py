@@ -17,7 +17,7 @@ import PlainNet
 from xautodl import datasets
 import time
 
-from ZeroShotProxy import compute_etf_score, compute_etf_score2, compute_zen_score, compute_te_nas_score, compute_syncflow_score, compute_gradnorm_score, compute_NASWOT_score, compute_zico
+from ZeroShotProxy import compute_etf_score, compute_etf2_score, compute_zen_score, compute_te_nas_score, compute_syncflow_score, compute_gradnorm_score, compute_NASWOT_score, compute_zico
 import benchmark_network_latency
 
 import scipy.stats as stats
@@ -121,7 +121,7 @@ def get_latency(AnyPlainNet, random_structure_str, gpu, args):
 def compute_nas_score(AnyPlainNet, random_structure_str, gpu, args, trainloader=None, lossfunc=None):
     # compute network zero-shot proxy score
     the_model = AnyPlainNet(num_classes=args.num_classes, plainnet_struct=random_structure_str,
-                            no_create=False, no_reslink=True)
+                            no_create=False, no_reslink=False) # in ZiCo and ZenNas, why no_reslink = True??????????????????
     the_model = the_model.cuda(gpu)
     
     if args.zero_shot_score.lower() == 'etf':
@@ -133,7 +133,7 @@ def compute_nas_score(AnyPlainNet, random_structure_str, gpu, args, trainloader=
         return the_nas_core_info
 
     elif args.zero_shot_score.lower() == 'etf2':
-        the_nas_core_info = compute_etf_score2.compute_nas_score(model=the_model, gpu=gpu,
+        the_nas_core_info = compute_etf2_score.compute_nas_score(model=the_model, gpu=gpu,
                                                                 resolution=args.input_image_size,
                                                                 batch_size=args.batch_size)
         del the_model
