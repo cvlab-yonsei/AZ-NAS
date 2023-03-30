@@ -4,7 +4,7 @@ set -e
 
 cd ../
 
-save_dir=./save_dir/ETF_NAS_ImageNet_flops450M-resblockfeat
+save_dir=./save_dir/ZiCo-best_ImageNet_flops450M
 mkdir -p ${save_dir}
 
 
