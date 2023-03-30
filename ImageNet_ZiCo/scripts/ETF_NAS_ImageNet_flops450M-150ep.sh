@@ -51,6 +51,6 @@ horovodrun -np 8 python train_image_classification.py --dataset imagenet --num_c
   --plainnet_struct_txt ${save_dir}/best_structure.txt \
   --use_se \
   --target_downsample_ratio 16 \
-  --batch_size_per_gpu 64 --save_dir ${save_dir}/plain_training_epochs${epochs} \
+  --batch_size_per_gpu 64 --save_dir ${save_dir}/plain_training_epochs${epochs}_labelsmoothing \
   --world-size 8 \
   --dist_mode horovod\
