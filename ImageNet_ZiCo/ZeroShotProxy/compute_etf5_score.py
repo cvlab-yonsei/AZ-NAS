@@ -98,8 +98,8 @@ def compute_nas_score(gpu, model, resolution, batch_size, fp16=False):
     ################ fwrd norm score ################
     scores = []
     for i in range(1, len(stage_features)):
-        f_out = stage_features[i]
-        f_in = stage_features[i-1]
+        f_out = stage_features[i].detach().clone()
+        f_in = stage_features[i-1].detach().clone()
 
         if (f_out.size() == f_in.size()) and (torch.all(f_in == f_out)):
             scores.append(-np.inf)
@@ -116,8 +116,8 @@ def compute_nas_score(gpu, model, resolution, batch_size, fp16=False):
             if hi>14:
                 f_in = f_in[:,:,::hi//14,::wi//14].contiguous()
                 f_out = f_out[:,:,::ho//14,::wo//14].contiguous()
-            f_in = f_in.view(bi,ci,-1)
-            f_out = f_out.view(bo,co,-1)
+            f_in = nn.functional.normalize(f_in.view(bi,ci,-1), p=2, dim=1)
+            f_out = nn.functional.normalize(f_out.view(bo,co,-1), p=2, dim=1)
             sim_in = torch.bmm(f_in.transpose(1,2),f_in).mean(dim=0, keepdim=False)
             sim_out = torch.bmm(f_out.transpose(1,2),f_out).mean(dim=0, keepdim=False)
             s = -torch.abs(sim_in-sim_out).sum().item()
