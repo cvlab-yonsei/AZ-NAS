@@ -122,7 +122,7 @@ def compute_nas_score(gpu, model, resolution, batch_size, fp16=False):
             f_in = nn.functional.normalize(f_in.view(bi,ci,-1), p=2, dim=1)
             f_out = nn.functional.normalize(f_out.view(bo,co,-1), p=2, dim=1)
             f_in = f_in.view(bi*ci,-1)
-            f_out = f_in.view(bo*co,-1)
+            f_out = f_out.view(bo*co,-1)
             sim_in = torch.matmul(f_in.transpose(0,1),f_in) / bi
             sim_out = torch.matmul(f_out.transpose(0,1),f_out) / bo
             s = -torch.abs(sim_in-sim_out).sum().item()
