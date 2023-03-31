@@ -112,8 +112,8 @@ def compute_nas_score(gpu, model, resolution, batch_size, fp16=False):
                 f_in = pixel_unshuffle(f_in)
                 ## avoid memory overhead
                 if hi>14:
-                    f_in = f_in[:,:,::hi//14,::wi//14]
-                    f_out = f_out[:,:,::ho//14,::wo//14]
+                    f_in = f_in[:,:,::hi//14,::wi//14].contiguous()
+                    f_out = f_out[:,:,::ho//14,::wo//14].contiguous()
                     bo,co,ho,wo = f_out.size()
                     bi,ci,hi,wi = f_in.size()
             f_in = f_in.view(bi,ci,hi*wi)
