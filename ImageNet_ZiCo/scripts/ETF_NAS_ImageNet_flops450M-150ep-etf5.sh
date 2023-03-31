@@ -4,7 +4,7 @@ set -e
 
 cd ../
 
-save_dir=./save_dir/ETF_NAS_ImageNet_flops450M-resblockfeat-etf5
+save_dir=./save_dir/ETF_NAS_ImageNet_flops450M-resblockfeat-etf5-searchbs64
 mkdir -p ${save_dir}
 
 
@@ -24,7 +24,7 @@ python evolution_search_etf.py --gpu 0 \
   --search_space SearchSpace/search_space_IDW_fixfc.py \
   --budget_flops ${budget_flops} \
   --max_layers ${max_layers} \
-  --batch_size 128 \
+  --batch_size 64 \
   --input_image_size ${resolution} \
   --plainnet_struct_txt ${save_dir}/init_plainnet.txt \
   --num_classes 1000 \

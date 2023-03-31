@@ -119,10 +119,8 @@ def compute_nas_score(gpu, model, resolution, batch_size, fp16=False):
             f_in = f_in.view(bi,ci,-1)
             f_out = f_out.view(bo,co,-1)
             sim_in = torch.bmm(f_in.transpose(1,2),f_in).mean(dim=0, keepdim=False)
-            print(sim_in.size())
             sim_out = torch.bmm(f_out.transpose(1,2),f_out).mean(dim=0, keepdim=False)
-            print(sim_out.size())
-            s = -torch.abs(sim_in-sim_out).sum()
+            s = -torch.abs(sim_in-sim_out).sum().item()
             scores.append(s)
     fwrd_norm_score = np.mean(scores)
     #################################################
