@@ -126,7 +126,7 @@ def compute_nas_score(gpu, model, resolution, batch_size, fp16=False):
             sim_in = torch.matmul(f_in.transpose(0,1),f_in) / bi
             sim_out = torch.matmul(f_out.transpose(0,1),f_out) / bo
             s = (sim_in-sim_out)**2 # avg squared error
-            s = -s.mean.item()
+            s = -s.mean().item()
             scores.append(s)
     fwrd_norm_score = np.mean(scores)
     #################################################
