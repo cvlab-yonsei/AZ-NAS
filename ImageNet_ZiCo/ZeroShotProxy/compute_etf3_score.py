@@ -81,27 +81,25 @@ def compute_nas_score(gpu, model, resolution, batch_size, fp16=False):
     #################################################
 
     ################ fwrd norm score ################
-    cell_features = features
-    scores = []
-    for i in range(1, len(cell_features)):
-        f_out = cell_features[i]
-        f_in = cell_features[i-1]
+    # cell_features = features
+    # scores = []
+    # for i in range(1, len(cell_features)):
+    #     f_out = cell_features[i]
+    #     f_in = cell_features[i-1]
 
-        if (f_out.size() == f_in.size()) and (torch.all(f_in == f_out)):
-            scores.append(-np.inf)
-        else:
-            # if f_out.size(2) != f_in.size(2) or f_out.size(3) != f_in.size(3):
-            #     bo,co,ho,wo = f_out.size()
-            #     bi,ci,hi,wi = f_in.size()
-            #     stride = int(hi/ho)
-            #     pixel_unshuffle = nn.PixelUnshuffle(stride)
-            #     f_in = pixel_unshuffle(f_in)
-            # s = f_out.norm(p=2, dim=(1)).mean() / (f_in.norm(p=2, dim=(1)).mean()+1e-6)
-            so = f_out.norm(p=2, dim=(1)).mean() / np.sqrt(f_out.size(1))
-            si = f_in.norm(p=2, dim=(1)).mean() / np.sqrt(f_in.size(1))
-            s = so / (si+1e-6)
-            scores.append(-s.item() - 1/(s.item()+1e-6) + 2)
-    fwrd_norm_score = np.mean(scores)
+    #     if (f_out.size() == f_in.size()) and (torch.all(f_in == f_out)):
+    #         scores.append(-np.inf)
+    #     else:
+    #         if f_out.size(2) != f_in.size(2) or f_out.size(3) != f_in.size(3):
+    #             bo,co,ho,wo = f_out.size()
+    #             bi,ci,hi,wi = f_in.size()
+    #             stride = int(hi/ho)
+    #             pixel_unshuffle = nn.PixelUnshuffle(stride)
+    #             f_in = pixel_unshuffle(f_in)
+    #         s = f_out.norm(p=2, dim=(1)).mean() / (f_in.norm(p=2, dim=(1)).mean()+1e-6)
+    #         scores.append(-s.item() - 1/(s.item()+1e-6) + 2)
+    # fwrd_norm_score = np.mean(scores)
+    fwrd_norm_score = 0
     #################################################
 
     ################ spec norm score ##############
@@ -129,19 +127,15 @@ def compute_nas_score(gpu, model, resolution, batch_size, fp16=False):
             bo,co,ho,wo = g_out.size()
             bi,ci,hi,wi = g_in.size()
             ### straight-forward way
-            # g_out2 = g_out.permute(0,2,3,1).contiguous().view(bo*ho*wo,1,co)
-            # g_in2 = g_in.permute(0,2,3,1).contiguous().view(bi*hi*wi,ci,1)
-            # mat2 = torch.bmm(g_in2,g_out2).mean(dim=0)
+            # g_out = g_out.permute(0,2,3,1).contiguous().view(bo*ho*wo,1,co)
+            # g_in = g_in.permute(0,2,3,1).contiguous().view(bi*hi*wi,ci,1)
+            # mat = torch.bmm(g_in,g_out).mean(dim=0)
             ### efficient way # print(torch.allclose(mat, mat2, atol=1e-6))
             g_out = g_out.permute(0,2,3,1).contiguous().view(bo*ho*wo,co)
             g_in = g_in.permute(0,2,3,1).contiguous().view(bi*hi*wi,ci)
             mat = torch.mm(g_in.transpose(1,0),g_out) / (bo*ho*wo)
             u, s, v = torch.svd(mat, compute_uv=False)
-            if co > ci:
-                ss = s.max().item() * np.sqrt(ci/co)
-            else:
-                ss = s.max().item() * np.sqrt(co/ci)
-            scores.append(-ss - 1/(ss+1e-6)+2)
+            scores.append(-s.max().item() - 1/(s.max().item()+1e-6)+2)
     bkwd_norm_score = np.mean(scores)
     #################################################
 

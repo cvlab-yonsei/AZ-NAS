@@ -4,7 +4,7 @@ set -e
 
 cd ../
 
-save_dir=./save_dir/ETF_NAS_ImageNet_flops450M-revfnorm
+save_dir=./save_dir/ETF_NAS_ImageNet_flops450M-resblockfeat-etf4
 mkdir -p ${save_dir}
 
 
@@ -20,7 +20,7 @@ SuperResIDWE6K3(48,96,2,48,1)SuperResIDWE6K3(96,128,2,96,1)\
 SuperConvK1BNRELU(128,2048,1,1)" > ${save_dir}/init_plainnet.txt
 
 python evolution_search_etf.py --gpu 0 \
-  --zero_shot_score ETF \
+  --zero_shot_score ETF4 \
   --search_space SearchSpace/search_space_IDW_fixfc.py \
   --budget_flops ${budget_flops} \
   --max_layers ${max_layers} \
@@ -45,11 +45,12 @@ python analyze_model.py \
 #   --dist_mode single --workers_per_gpu 8 \
 #   --input_image_size ${resolution} --epochs ${epochs} --warmup 5 \
 #   --optimizer sgd --bn_momentum 0.01 --wd 4e-5 --nesterov --weight_init custom \
+#   --label_smoothing \
 #   --lr_per_256 0.4 --target_lr_per_256 0.0 --lr_mode cosine \
 #   --arch Masternet.py:MasterNet \
 #   --plainnet_struct_txt ${save_dir}/best_structure.txt \
 #   --use_se \
 #   --target_downsample_ratio 16 \
-#   --batch_size_per_gpu 64 --save_dir ${save_dir}/plain_training_epochs${epochs} \
+#   --batch_size_per_gpu 64 --save_dir ${save_dir}/plain_training_epochs${epochs}_labelsmoothing \
 #   --world-size 8 \
 #   --dist_mode horovod\

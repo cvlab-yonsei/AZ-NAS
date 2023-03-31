@@ -17,7 +17,8 @@ import PlainNet
 from xautodl import datasets
 import time
 
-from ZeroShotProxy import compute_etf_score, compute_etf2_score, compute_zen_score, compute_te_nas_score, compute_syncflow_score, compute_gradnorm_score, compute_NASWOT_score, compute_zico
+# from ZeroShotProxy import compute_etf4_score, compute_zen_score, compute_te_nas_score, compute_syncflow_score, compute_gradnorm_score, compute_NASWOT_score, compute_zico
+from ZeroShotProxy import *
 import benchmark_network_latency
 
 import scipy.stats as stats
@@ -124,18 +125,12 @@ def compute_nas_score(AnyPlainNet, random_structure_str, gpu, args, trainloader=
                             no_create=False, no_reslink=False) # in ZiCo and ZenNas, why no_reslink = True??????????????????
     the_model = the_model.cuda(gpu)
     
-    if args.zero_shot_score.lower() == 'etf':
-        the_nas_core_info = compute_etf_score.compute_nas_score(model=the_model, gpu=gpu,
-                                                                resolution=args.input_image_size,
-                                                                batch_size=args.batch_size)
-        del the_model
-        torch.cuda.empty_cache()
-        return the_nas_core_info
-
-    elif args.zero_shot_score.lower() == 'etf2':
-        the_nas_core_info = compute_etf2_score.compute_nas_score(model=the_model, gpu=gpu,
-                                                                resolution=args.input_image_size,
-                                                                batch_size=args.batch_size)
+    if 'etf' in args.zero_shot_score.lower():
+        score_fn_name = "compute_{}_score".format(args.zero_shot_score.lower())
+        score_fn = globals().get(score_fn_name)
+        the_nas_core_info = score_fn.compute_nas_score(model=the_model, gpu=gpu,
+                                                       resolution=args.input_image_size,
+                                                       batch_size=args.batch_size)
         del the_model
         torch.cuda.empty_cache()
         return the_nas_core_info

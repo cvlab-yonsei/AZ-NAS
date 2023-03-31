@@ -67,59 +67,90 @@ def compute_nas_score(gpu, model, resolution, batch_size, fp16=False):
     features = model.extract_layer_features(input_)
 
     ################ fwrd pca score ################
-    feat = features[-1].detach().clone()
-    b,c,h,w = feat.size()
-    feat = feat.permute(0,2,3,1).contiguous().view(b*h*w,c)
-    m = feat.mean(dim=0, keepdim=True)
-    feat = feat - m
-    sigma = torch.mm(feat.transpose(1,0),feat) / (feat.size(0))
-    u, s, v = torch.svd(sigma, compute_uv=False)
-    prob_s = s / s.sum()
-    score = (-prob_s)*torch.log(prob_s+1e-8)
-    score = score.sum()
-    fwrd_pca_score = score.item()
+    # feat = features[-1].detach().clone()
+    # b,c,h,w = feat.size()
+    # feat = feat.permute(0,2,3,1).contiguous().view(b*h*w,c)
+    # m = feat.mean(dim=0, keepdim=True)
+    # feat = feat - m
+    # sigma = torch.mm(feat.transpose(1,0),feat) / (feat.size(0))
+    # u, s, v = torch.svd(sigma, compute_uv=False)
+    # prob_s = s / s.sum()
+    # score = (-prob_s)*torch.log(prob_s+1e-8)
+    # score = score.sum()
+    # fwrd_pca_score = score.item()
+
+    scores = []
+    for i in range(len(features)):
+        feat = features[i].detach().clone()
+        b,c,h,w = feat.size()
+        feat = feat.permute(0,2,3,1).contiguous().view(b*h*w,c)
+        m = feat.mean(dim=0, keepdim=True)
+        feat = feat - m
+        sigma = torch.mm(feat.transpose(1,0),feat) / (feat.size(0))
+        u, s, v = torch.svd(sigma, compute_uv=False)
+        prob_s = s / s.sum()
+        score = (-prob_s)*torch.log(prob_s+1e-8)
+        score = score.sum().item()
+        scores.append(upper_bound - score)
+    fwrd_pca_score = np.mean(scores)
     #################################################
 
     ################ fwrd norm score ################
-    cell_features = features
-    scores = []
-    for i in range(1, len(cell_features)):
-        f_out = cell_features[i]
-        f_in = cell_features[i-1]
+    # cell_features = features
+    # scores = []
+    # for i in range(1, len(cell_features)):
+    #     f_out = cell_features[i]
+    #     f_in = cell_features[i-1]
 
-        if (f_out.size() == f_in.size()) and (torch.all(f_in == f_out)):
-            scores.append(-np.inf)
-        else:
-            # if f_out.size(2) != f_in.size(2) or f_out.size(3) != f_in.size(3):
-            #     bo,co,ho,wo = f_out.size()
-            #     bi,ci,hi,wi = f_in.size()
-            #     stride = int(hi/ho)
-            #     pixel_unshuffle = nn.PixelUnshuffle(stride)
-            #     f_in = pixel_unshuffle(f_in)
-            # s = f_out.norm(p=2, dim=(1)).mean() / (f_in.norm(p=2, dim=(1)).mean()+1e-6)
-            so = f_out.abs().mean()
-            si = f_in.abs().mean()
-            s = so / (si+1e-6)
-            scores.append(-s.item() - 1/(s.item()+1e-6) + 2)
-    fwrd_norm_score = np.mean(scores)
+    #     if (f_out.size() == f_in.size()) and (torch.all(f_in == f_out)):
+    #         scores.append(-np.inf)
+    #     else:
+    #         if f_out.size(2) != f_in.size(2) or f_out.size(3) != f_in.size(3):
+    #             bo,co,ho,wo = f_out.size()
+    #             bi,ci,hi,wi = f_in.size()
+    #             stride = int(hi/ho)
+    #             pixel_unshuffle = nn.PixelUnshuffle(stride)
+    #             f_in = pixel_unshuffle(f_in)
+    #         s = f_out.norm(p=2, dim=(1)).mean() / (f_in.norm(p=2, dim=(1)).mean()+1e-6)
+    #         scores.append(-s.item() - 1/(s.item()+1e-6) + 2)
+    # fwrd_norm_score = np.mean(scores)
+    fwrd_norm_score = 0
     #################################################
 
     ################ spec norm score ##############
     cell_features = features
-
-    f_last = cell_features[-1]
-    g = torch.randn_like(f_last)
-    f_last.backward(g, retain_graph=True)
-
     scores = []
     for i in reversed(range(1, len(cell_features))):
-        g_out = cell_features[i].grad
-        g_in = cell_features[i-1].grad        
+        f_out = cell_features[i]
+        f_in = cell_features[i-1]
+        if f_out.grad is not None:
+            f_out.grad.zero_()
+            f_in.grad.zero_()
+        
+        g_out = torch.ones_like(f_out) * 0.5
+        g_out = (torch.bernoulli(g_out) - 0.5) * 2
+        g_in = torch.autograd.grad(outputs=f_out, inputs=f_in, grad_outputs=g_out, retain_graph=False)[0]
         if g_out.size()==g_in.size() and torch.all(g_in == g_out):
             scores.append(-np.inf)
         else:
-            ss = g_in.abs().mean().item() / g_out.abs().mean().item()
-            scores.append(-ss - 1/(ss+1e-6)+2)
+            if g_out.size(2) != g_in.size(2) or g_out.size(3) != g_in.size(3):
+                bo,co,ho,wo = g_out.size()
+                bi,ci,hi,wi = g_in.size()
+                stride = int(hi/ho)
+                pixel_unshuffle = nn.PixelUnshuffle(stride)
+                g_in = pixel_unshuffle(g_in)
+            bo,co,ho,wo = g_out.size()
+            bi,ci,hi,wi = g_in.size()
+            ### straight-forward way
+            # g_out = g_out.permute(0,2,3,1).contiguous().view(bo*ho*wo,1,co)
+            # g_in = g_in.permute(0,2,3,1).contiguous().view(bi*hi*wi,ci,1)
+            # mat = torch.bmm(g_in,g_out).mean(dim=0)
+            ### efficient way # print(torch.allclose(mat, mat2, atol=1e-6))
+            g_out = g_out.permute(0,2,3,1).contiguous().view(bo*ho*wo,co)
+            g_in = g_in.permute(0,2,3,1).contiguous().view(bi*hi*wi,ci)
+            mat = torch.mm(g_in.transpose(1,0),g_out) / (bo*ho*wo)
+            u, s, v = torch.svd(mat, compute_uv=False)
+            scores.append(-s.max().item() - 1/(s.max().item()+1e-6)+2)
     bkwd_norm_score = np.mean(scores)
     #################################################
 
