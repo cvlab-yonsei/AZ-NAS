@@ -98,6 +98,24 @@ class MasterNet(PlainNet.PlainNet):
                     layer_features.append(output)
         return layer_features
 
+    def extract_layer_and_stage_features(self, x): # new
+        output = x
+
+        layer_features = [] # new
+        stage_features = [] # new
+        for block_id, the_block in enumerate(self.block_list):
+            for block_id2, the_block2 in enumerate(the_block.block_list):
+                # print(the_block2)
+                output = the_block2(output)
+                if isinstance(the_block2, basic_blocks.RELU):
+                    if output.requires_grad:
+                        output.retain_grad()
+                    layer_features.append(output)
+            if output.requires_grad:
+                output.retain_grad()
+            stage_features.append(output)
+        return layer_features, stage_features
+
     def forward(self, x):
         output = x
 

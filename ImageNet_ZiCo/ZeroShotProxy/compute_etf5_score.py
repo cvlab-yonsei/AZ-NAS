@@ -96,25 +96,29 @@ def compute_nas_score(gpu, model, resolution, batch_size, fp16=False):
     #################################################
 
     ################ fwrd norm score ################
-    # cell_features = features
-    # scores = []
-    # for i in range(1, len(cell_features)):
-    #     f_out = cell_features[i]
-    #     f_in = cell_features[i-1]
+    scores = []
+    for i in range(1, len(stage_features)):
+        f_out = stage_features[i]
+        f_in = stage_features[i-1]
 
-    #     if (f_out.size() == f_in.size()) and (torch.all(f_in == f_out)):
-    #         scores.append(-np.inf)
-    #     else:
-    #         if f_out.size(2) != f_in.size(2) or f_out.size(3) != f_in.size(3):
-    #             bo,co,ho,wo = f_out.size()
-    #             bi,ci,hi,wi = f_in.size()
-    #             stride = int(hi/ho)
-    #             pixel_unshuffle = nn.PixelUnshuffle(stride)
-    #             f_in = pixel_unshuffle(f_in)
-    #         s = f_out.norm(p=2, dim=(1)).mean() / (f_in.norm(p=2, dim=(1)).mean()+1e-6)
-    #         scores.append(-s.item() - 1/(s.item()+1e-6) + 2)
-    # fwrd_norm_score = np.mean(scores)
-    fwrd_norm_score = 0
+        if (f_out.size() == f_in.size()) and (torch.all(f_in == f_out)):
+            scores.append(-np.inf)
+        else:
+            if f_out.size(2) != f_in.size(2) or f_out.size(3) != f_in.size(3):
+                bo,co,ho,wo = f_out.size()
+                bi,ci,hi,wi = f_in.size()
+                stride = int(hi/ho)
+                pixel_unshuffle = nn.PixelUnshuffle(stride)
+                f_in = pixel_unshuffle(f_in)
+            f_in = f_in.view(bi,ci,hi*wi)
+            f_out = f_out.view(bo,co,ho*wo)
+            sim_in = torch.bmm(f_in.transpose(1,2),f_in).mean(dim=0, keepdim=False)
+            print(sim_in.size())
+            sim_out = torch.bmm(f_out.transpose(1,2),f_out).mean(dim=0, keepdim=False)
+            print(sim_out.size())
+            s = -torch.abs(sim_in-sim_out).sum()
+            scores.append(s)
+    fwrd_norm_score = np.mean(scores)
     #################################################
 
     ################ spec norm score ##############
