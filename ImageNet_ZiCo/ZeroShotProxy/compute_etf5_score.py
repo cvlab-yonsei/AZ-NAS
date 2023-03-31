@@ -110,14 +110,14 @@ def compute_nas_score(gpu, model, resolution, batch_size, fp16=False):
                 stride = int(hi/ho)
                 pixel_unshuffle = nn.PixelUnshuffle(stride)
                 f_in = pixel_unshuffle(f_in)
-                ## avoid memory overhead
-                if hi>14:
-                    f_in = f_in[:,:,::hi//14,::wi//14].contiguous()
-                    f_out = f_out[:,:,::ho//14,::wo//14].contiguous()
-                    bo,co,ho,wo = f_out.size()
-                    bi,ci,hi,wi = f_in.size()
-            f_in = f_in.view(bi,ci,hi*wi)
-            f_out = f_out.view(bo,co,ho*wo)
+            bo,co,ho,wo = f_out.size()
+            bi,ci,hi,wi = f_in.size()
+            ## avoid memory overhead
+            if hi>14:
+                f_in = f_in[:,:,::hi//14,::wi//14].contiguous()
+                f_out = f_out[:,:,::ho//14,::wo//14].contiguous()
+            f_in = f_in.view(bi,ci,-1)
+            f_out = f_out.view(bo,co,-1)
             sim_in = torch.bmm(f_in.transpose(1,2),f_in).mean(dim=0, keepdim=False)
             print(sim_in.size())
             sim_out = torch.bmm(f_out.transpose(1,2),f_out).mean(dim=0, keepdim=False)
