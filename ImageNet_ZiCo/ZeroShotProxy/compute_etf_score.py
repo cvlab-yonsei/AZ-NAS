@@ -45,7 +45,7 @@ def init_model(model, method='kaiming_norm_fanin'):
     return model
 
 
-def compute_nas_score(gpu, model, resolution, batch_size, fp16=False):
+def compute_nas_score(model, gpu, trainloader, resolution, batch_size, fp16=False):
     model.train()
     model.cuda()
     info = {}
@@ -62,11 +62,17 @@ def compute_nas_score(gpu, model, resolution, batch_size, fp16=False):
 
     init_model(model, 'kaiming_norm_fanin')
 
-    input_ = torch.randn(size=[batch_size, 3, resolution, resolution], device=device, dtype=dtype)
-    
+    if trainloader == None:
+        input_ = torch.randn(size=[batch_size, 3, resolution, resolution], device=device, dtype=dtype)
+    else:
+        input_ = next(iter(trainloader))[0]
+        
     features = model.extract_layer_features(input_)
 
     ################ fwrd pca score ################
+    """
+    pca score at the last stage feature
+    """
     feat = features[-1].detach().clone()
     b,c,h,w = feat.size()
     feat = feat.permute(0,2,3,1).contiguous().view(b*h*w,c)
@@ -81,6 +87,9 @@ def compute_nas_score(gpu, model, resolution, batch_size, fp16=False):
     #################################################
 
     ################ fwrd norm score ################
+    """
+    L2 norm preserving after matching the resolution
+    """
     cell_features = features
     scores = []
     for i in range(1, len(cell_features)):
@@ -102,6 +111,9 @@ def compute_nas_score(gpu, model, resolution, batch_size, fp16=False):
     #################################################
 
     ################ spec norm score ##############
+    """
+    spec norm score across residual block features
+    """
     cell_features = features
     scores = []
     for i in reversed(range(1, len(cell_features))):

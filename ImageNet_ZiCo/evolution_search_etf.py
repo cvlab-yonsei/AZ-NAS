@@ -54,7 +54,7 @@ def parse_cmd_options(argv):
                         help='root of path')
     parser.add_argument('--num_worker', type=int, default=40,
                         help='root of path')
-    parser.add_argument('--maxbatch', type=int, default=2,
+    parser.add_argument('--maxbatch', type=int, default=None,
                         help='root of path')
                         
     module_opt, _ = parser.parse_known_args(argv)
@@ -128,7 +128,7 @@ def compute_nas_score(AnyPlainNet, random_structure_str, gpu, args, trainloader=
     if 'etf' in args.zero_shot_score.lower():
         score_fn_name = "compute_{}_score".format(args.zero_shot_score.lower())
         score_fn = globals().get(score_fn_name)
-        the_nas_core_info = score_fn.compute_nas_score(model=the_model, gpu=gpu,
+        the_nas_core_info = score_fn.compute_nas_score(model=the_model, gpu=gpu, trainloader=trainloader,
                                                        resolution=args.input_image_size,
                                                        batch_size=args.batch_size)
         del the_model
@@ -211,12 +211,16 @@ def main(args, argv):
         torch.backends.cudnn.benchmark = True
     print(args)
     trainloader, testloader, xshape, class_num = getmisc(args)
-    trainbatches = []
-    for batchid, batch in enumerate(trainloader):
-        if batchid == args.maxbatch:
-            break
-        datax, datay = batch[0].cuda(), batch[1].cuda()
-        trainbatches.append([datax, datay])
+    
+    if args.maxbatch == None:
+        trainbatches = None
+    else:
+        trainbatches = []
+        for batchid, batch in enumerate(trainloader):
+            if batchid == args.maxbatch:
+                break
+            datax, datay = batch[0].cuda(), batch[1].cuda()
+            trainbatches.append([datax, datay])
         
     best_structure_txt = os.path.join(args.save_dir, 'best_structure.txt')
     if os.path.isfile(best_structure_txt):

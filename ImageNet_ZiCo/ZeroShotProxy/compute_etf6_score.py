@@ -45,7 +45,7 @@ def init_model(model, method='kaiming_norm_fanin'):
     return model
 
 
-def compute_nas_score(gpu, model, resolution, batch_size, fp16=False):
+def compute_nas_score(model, gpu, trainloader, resolution, batch_size, fp16=False):
     model.train()
     model.cuda()
     info = {}
@@ -62,23 +62,17 @@ def compute_nas_score(gpu, model, resolution, batch_size, fp16=False):
 
     init_model(model, 'kaiming_norm_fanin')
 
-    input_ = torch.randn(size=[batch_size, 3, resolution, resolution], device=device, dtype=dtype)
+    if trainloader == None:
+        input_ = torch.randn(size=[batch_size, 3, resolution, resolution], device=device, dtype=dtype)
+    else:
+        input_ = next(iter(trainloader))[0]
     
     layer_features, stage_features = model.extract_layer_and_stage_features(input_)
 
     ################ fwrd pca score ################
-    # feat = features[-1].detach().clone()
-    # b,c,h,w = feat.size()
-    # feat = feat.permute(0,2,3,1).contiguous().view(b*h*w,c)
-    # m = feat.mean(dim=0, keepdim=True)
-    # feat = feat - m
-    # sigma = torch.mm(feat.transpose(1,0),feat) / (feat.size(0))
-    # u, s, v = torch.svd(sigma, compute_uv=False)
-    # prob_s = s / s.sum()
-    # score = (-prob_s)*torch.log(prob_s+1e-8)
-    # score = score.sum()
-    # fwrd_pca_score = score.item()
-
+    """
+    pca score across stage features
+    """
     scores = []
     for i in range(len(stage_features)):
         feat = stage_features[i].detach().clone()
@@ -96,6 +90,9 @@ def compute_nas_score(gpu, model, resolution, batch_size, fp16=False):
     #################################################
 
     ################ fwrd norm score ################
+    """
+    preserving structural info / efficient version
+    """
     scores = []
     for i in range(1, len(stage_features)):
         f_out = stage_features[i].detach().clone()
@@ -132,6 +129,9 @@ def compute_nas_score(gpu, model, resolution, batch_size, fp16=False):
     #################################################
 
     ################ spec norm score ##############
+    """
+    spec norm score across residual block features
+    """
     cell_features = layer_features
     scores = []
     for i in reversed(range(1, len(cell_features))):
