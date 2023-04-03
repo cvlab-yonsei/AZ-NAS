@@ -25,6 +25,16 @@ import scipy.stats as stats
 
 working_dir = os.path.dirname(os.path.abspath(__file__))
 
+def str2bool(v):
+    if isinstance(v, bool):
+        return v
+    if v.lower() in ('yes', 'true', 't', 'y', '1'):
+        return True
+    elif v.lower() in ('no', 'false', 'f', 'n', '0'):
+        return False
+    else:
+        raise argparse.ArgumentTypeError('Boolean value expected.')
+
 def parse_cmd_options(argv):
     parser = argparse.ArgumentParser()
     parser.add_argument('--gpu', type=int, default=None)
@@ -54,8 +64,9 @@ def parse_cmd_options(argv):
                         help='root of path')
     parser.add_argument('--num_worker', type=int, default=40,
                         help='root of path')
-    parser.add_argument('--maxbatch', type=int, default=None,
+    parser.add_argument('--maxbatch', type=int, default=1,
                         help='root of path')
+    parser.add_argument('--rand_input', type=str2bool, default=True, help='random input')
                         
     module_opt, _ = parser.parse_known_args(argv)
     return module_opt
@@ -212,9 +223,11 @@ def main(args, argv):
     print(args)
     trainloader, testloader, xshape, class_num = getmisc(args)
     
-    if args.maxbatch == None:
+    if args.rand_input:
+        print("Use random input")
         trainbatches = None
     else:
+        print("Use real input")
         trainbatches = []
         for batchid, batch in enumerate(trainloader):
             if batchid == args.maxbatch:
