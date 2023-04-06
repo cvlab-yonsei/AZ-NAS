@@ -102,7 +102,7 @@ def compute_nas_score(model, gpu, trainloader, resolution, batch_size, fp16=Fals
 
     ################ spec norm score ##############
     """
-    spec norm score across residual block features / consider difference in channel-width / match res by stride sampling
+    spec norm score across residual block features / consider difference in channel-width / match res by stacking
     """
     scores = []
     for i in reversed(range(1, len(layer_features))):
@@ -122,9 +122,11 @@ def compute_nas_score(model, gpu, trainloader, resolution, batch_size, fp16=Fals
                 bo,co,ho,wo = g_out.size()
                 bi,ci,hi,wi = g_in.size()
                 stride = int(hi/ho)
-                g_in = g_in[:,:,::stride,::stride]
-                # pixel_unshuffle = nn.PixelUnshuffle(stride)
-                # g_in = pixel_unshuffle(g_in)
+                # g_in = g_in[:,:,::stride,::stride]
+                pixel_unshuffle = nn.PixelUnshuffle(stride)
+                g_in = pixel_unshuffle(g_in)
+                # avg_pool = nn.AvgPool2d(stride)
+                # g_in = avg_pool(g_in)
             bo,co,ho,wo = g_out.size()
             bi,ci,hi,wi = g_in.size()
             ### straight-forward way
