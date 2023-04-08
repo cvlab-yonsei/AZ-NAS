@@ -169,7 +169,7 @@ def compute_nas_score(model, gpu, trainloader, resolution, batch_size, fp16=Fals
     info['trainability'] = float(bkwd_norm_score)
     info['feat_capacity'] = float(feat_cap_score)
     info['net_capacity'] = float(model.get_model_size())
-    info['complexity'] = float(model.get_FLOPs(args.input_image_size))
+    info['complexity'] = float(model.get_FLOPs(resolution))
     return info
 
 
