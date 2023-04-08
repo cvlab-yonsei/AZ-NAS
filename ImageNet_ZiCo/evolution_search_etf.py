@@ -251,13 +251,7 @@ def main(args, argv):
 
     popu_structure_list = []
     if 'etf' in args.zero_shot_score.lower():
-        popu_zero_shot_score_dict = dict()
-        popu_zero_shot_score_dict['expressivity'] = []
-        popu_zero_shot_score_dict['stability'] = []
-        popu_zero_shot_score_dict['trainability'] = []
-        popu_zero_shot_score_dict['feat_capacity'] = []
-        popu_zero_shot_score_dict['net_capacity'] = []
-        popu_zero_shot_score_dict['complexity'] = []
+        popu_zero_shot_score_dict = None
     else:
         popu_zero_shot_score_list = []
     popu_latency_list = []
@@ -344,6 +338,10 @@ def main(args, argv):
 
         if 'etf' in args.zero_shot_score.lower():
             the_nas_core = compute_nas_score(AnyPlainNet, random_structure_str, gpu, args, trainbatches, lossfunc)
+            if popu_zero_shot_score_dict is None and loop_count == 0: # initialize dict
+                popu_zero_shot_score_dict = dict()
+                for k in the_nas_core.keys():
+                    popu_zero_shot_score_dict[k] = []
             for k, v in the_nas_core.items():
                 popu_zero_shot_score_dict[k].append(v)
 
