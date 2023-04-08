@@ -255,7 +255,9 @@ def main(args, argv):
         popu_zero_shot_score_dict['expressivity'] = []
         popu_zero_shot_score_dict['stability'] = []
         popu_zero_shot_score_dict['trainability'] = []
-        popu_zero_shot_score_dict['capacity'] = []
+        popu_zero_shot_score_dict['feat_capacity'] = []
+        popu_zero_shot_score_dict['net_capacity'] = []
+        popu_zero_shot_score_dict['complexity'] = []
     else:
         popu_zero_shot_score_list = []
     popu_latency_list = []
