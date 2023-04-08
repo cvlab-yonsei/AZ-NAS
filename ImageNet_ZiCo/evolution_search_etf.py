@@ -278,22 +278,15 @@ def main(args, argv):
             if 'etf' in args.zero_shot_score.lower():
                 max_idx = np.argmax(popu_zero_shot_score_list)
                 min_idx = np.argmin(popu_zero_shot_score_list)
-                max_expressivity = popu_zero_shot_score_dict['expressivity'][max_idx]
-                min_expressivity = popu_zero_shot_score_dict['expressivity'][min_idx]
-                max_stability = popu_zero_shot_score_dict['stability'][max_idx]
-                min_stability = popu_zero_shot_score_dict['stability'][min_idx]
-                max_trainability = popu_zero_shot_score_dict['trainability'][max_idx]
-                min_trainability = popu_zero_shot_score_dict['trainability'][min_idx]
-                max_capacity = popu_zero_shot_score_dict['capacity'][max_idx]
-                min_capacity = popu_zero_shot_score_dict['capacity'][min_idx]
                 elasp_time = time.time() - start_timer
+                log_string = f'loop_count={loop_count}/{args.evolution_max_iter}, time={elasp_time/3600:4g}h,\n'
+                for key in popu_zero_shot_score_dict.keys():
+                    _max = popu_zero_shot_score_dict[key][max_idx]
+                    _min = popu_zero_shot_score_dict[key][min_idx]
+                    log_string += f'max_{key}={_max:4g}, min_{key}={_min:4g}\n'
                 best_structure = popu_structure_list[max_idx]
                 logging.info('{}'.format(best_structure))
-                logging.info(f'loop_count={loop_count}/{args.evolution_max_iter}, time={elasp_time/3600:4g}h,\n\
-                               max_expressivity={max_expressivity:4g}, min_expressivity={min_expressivity:4g},\n\
-                               max_stability={max_stability:4g}, min_stability={min_stability:4g},\n\
-                               max_trainability={max_trainability:4g}, min_trainability={min_trainability:4g},\n\
-                               max_capacity={max_capacity:4g}, min_capacity={min_capacity:4g}')
+                logging.info(log_string)
             else:
                 max_score = max(popu_zero_shot_score_list)
                 min_score = min(popu_zero_shot_score_list)
@@ -352,13 +345,14 @@ def main(args, argv):
             for k, v in the_nas_core.items():
                 popu_zero_shot_score_dict[k].append(v)
 
-            l = len(popu_zero_shot_score_dict['expressivity'])
-            rank_expressivity = stats.rankdata(popu_zero_shot_score_dict['expressivity'])
-            rank_stability = stats.rankdata(popu_zero_shot_score_dict['stability'])
-            rank_trainability = stats.rankdata(popu_zero_shot_score_dict['trainability'])
-            rank_capacity = stats.rankdata(popu_zero_shot_score_dict['capacity'])
-            popu_zero_shot_score_list = np.log(rank_expressivity/l) + np.log(rank_stability/l) + \
-                                        np.log(rank_trainability/l) + np.log(rank_capacity/l)
+            popu_zero_shot_score_list = None
+            for key in popu_zero_shot_score_dict.keys():
+                l = len(popu_zero_shot_score_dict[key])
+                _rank = stats.rankdata(popu_zero_shot_score_dict[key])
+                if popu_zero_shot_score_list is not None:
+                    popu_zero_shot_score_list = popu_zero_shot_score_list + np.log(_rank/l)
+                else:
+                    popu_zero_shot_score_list = np.log(_rank/l)
             popu_zero_shot_score_list = popu_zero_shot_score_list.tolist()
             popu_structure_list.append(random_structure_str)
             popu_latency_list.append(the_latency)
