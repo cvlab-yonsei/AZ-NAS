@@ -225,7 +225,11 @@ def main(args, argv):
     
     if args.rand_input:
         print("Use random input")
-        trainbatches = None
+        trainbatches = []
+        device = torch.device('cuda:{}'.format(gpu))
+        datax = torch.randn(size=[args.batch_size, 3, args.input_image_size, args.input_image_size], 
+                            device=device)
+        trainbatches.append([datax])
     else:
         print("Use real input")
         trainbatches = []

@@ -66,6 +66,11 @@ def compute_nas_score(model, gpu, trainloader, resolution, batch_size, fp16=Fals
     
     layer_features, stage_features = model.extract_layer_and_stage_features(input_)
 
+    ### exclude the last feature map (whose output channel width is fixed with 2048)
+    layer_features = layer_features[:-1]
+    stage_features = stage_features[:-1]
+    ###
+
     ################ fwrd pca score ################
     """
     pca score across residual block features / normalize each score by upper bound

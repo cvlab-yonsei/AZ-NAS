@@ -66,6 +66,11 @@ def compute_nas_score(model, gpu, trainloader, resolution, batch_size, fp16=Fals
     
     layer_features, stage_features = model.extract_layer_and_stage_features(input_)
 
+    ### exclude the last feature map (whose output channel width is fixed with 2048)
+    layer_features = layer_features[:-1]
+    stage_features = stage_features[:-1]
+    ###
+
     ################ fwrd pca score ################
     """
     pca score across residual block features / normalize each score by upper bound
@@ -108,17 +113,6 @@ def compute_nas_score(model, gpu, trainloader, resolution, batch_size, fp16=Fals
             ss = s.item() * np.sqrt(ci/co)
             scores.append(-s.item() - 1/(s.item()+1e-6) + 2)
     fwrd_norm_score = np.mean(scores)
-    #################################################
-
-    ############ feature capacity score #############
-    """
-    minimum of num_elements across layers
-    """
-    scores = []
-    for feat in layer_features:
-        b,c,h,w = feat.size()
-        scores.append(c*h*w)
-    feat_cap_score = np.min(scores)
     #################################################
 
     ################ spec norm score ##############
@@ -168,8 +162,7 @@ def compute_nas_score(model, gpu, trainloader, resolution, batch_size, fp16=Fals
     info['expressivity'] = float(fwrd_pca_score)
     info['stability'] = float(fwrd_norm_score)
     info['trainability'] = float(bkwd_norm_score)
-    info['feat_capacity'] = float(feat_cap_score)
-    info['net_capacity'] = float(model.get_model_size())
+    info['capacity'] = float(model.get_model_size())
     info['complexity'] = float(model.get_FLOPs(resolution))
     return info
 
