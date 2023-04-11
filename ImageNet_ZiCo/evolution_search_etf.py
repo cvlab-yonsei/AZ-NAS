@@ -67,6 +67,7 @@ def parse_cmd_options(argv):
     parser.add_argument('--maxbatch', type=int, default=1,
                         help='root of path')
     parser.add_argument('--rand_input', type=str2bool, default=True, help='random input')
+    parser.add_argument('--search_no_res', type=str2bool, default=False, help='remove residual link in search phase')
                         
     module_opt, _ = parser.parse_known_args(argv)
     return module_opt
@@ -133,7 +134,7 @@ def get_latency(AnyPlainNet, random_structure_str, gpu, args):
 def compute_nas_score(AnyPlainNet, random_structure_str, gpu, args, trainloader=None, lossfunc=None):
     # compute network zero-shot proxy score
     the_model = AnyPlainNet(num_classes=args.num_classes, plainnet_struct=random_structure_str,
-                            no_create=False, no_reslink=False) # in ZiCo and ZenNas, why no_reslink = True??????????????????
+                            no_create=False, no_reslink=args.search_no_res) # in ZiCo and ZenNas, why no_reslink = True??????????????????
     the_model = the_model.cuda(gpu)
     
     if 'etf' in args.zero_shot_score.lower():
