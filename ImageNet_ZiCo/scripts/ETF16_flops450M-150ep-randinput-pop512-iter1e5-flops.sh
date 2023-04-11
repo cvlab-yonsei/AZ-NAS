@@ -42,16 +42,16 @@ python analyze_model.py \
   --arch Masternet.py:MasterNet \
   --plainnet_struct_txt ${save_dir}/best_structure.txt
 
-# horovodrun -np 8 python train_image_classification.py --dataset imagenet --num_classes 1000 \
-#   --dist_mode single --workers_per_gpu 8 \
-#   --input_image_size ${resolution} --epochs ${epochs} --warmup 5 \
-#   --optimizer sgd --bn_momentum 0.01 --wd 4e-5 --nesterov --weight_init custom \
-#   --label_smoothing \
-#   --lr_per_256 0.4 --target_lr_per_256 0.0 --lr_mode cosine \
-#   --arch Masternet.py:MasterNet \
-#   --plainnet_struct_txt ${save_dir}/best_structure.txt \
-#   --use_se \
-#   --target_downsample_ratio 16 \
-#   --batch_size_per_gpu 64 --save_dir ${save_dir}/plain_training_epochs${epochs}_labelsmoothing \
-#   --world-size 8 \
-#   --dist_mode horovod\
+horovodrun -np 8 python train_image_classification.py --dataset imagenet --num_classes 1000 \
+  --dist_mode single --workers_per_gpu 8 \
+  --input_image_size ${resolution} --epochs ${epochs} --warmup 5 \
+  --optimizer sgd --bn_momentum 0.01 --wd 4e-5 --nesterov --weight_init custom \
+  --label_smoothing \
+  --lr_per_256 0.4 --target_lr_per_256 0.0 --lr_mode cosine \
+  --arch Masternet.py:MasterNet \
+  --plainnet_struct_txt ${save_dir}/best_structure.txt \
+  --use_se \
+  --target_downsample_ratio 16 \
+  --batch_size_per_gpu 64 --save_dir ${save_dir}/plain_training_epochs${epochs}_labelsmoothing \
+  --world-size 8 \
+  --dist_mode horovod\

@@ -342,7 +342,7 @@ def main(args, argv):
 
         if 'etf' in args.zero_shot_score.lower():
             the_nas_core = compute_nas_score(AnyPlainNet, random_structure_str, gpu, args, trainbatches, lossfunc)
-            if popu_zero_shot_score_dict is None and loop_count == 0: # initialize dict
+            if popu_zero_shot_score_dict is None: # initialize dict
                 popu_zero_shot_score_dict = dict()
                 for k in the_nas_core.keys():
                     popu_zero_shot_score_dict[k] = []
