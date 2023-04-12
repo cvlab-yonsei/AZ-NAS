@@ -200,17 +200,25 @@ class MasterNet(PlainNet.PlainNet):
             new_str += block.split(split_layer_threshold=split_layer_threshold)
         return new_str
 
-    def init_parameters(self):
+    def init_parameters(self, kaiming=False):
+        if kaiming:
+            print("Use kaiming init")
         for m in self.modules():
             if isinstance(m, nn.Conv2d):
-                nn.init.xavier_normal_(m.weight.data, gain=3.26033)
+                if kaiming:
+                    nn.init.kaiming_normal_(m.weight, mode='fan_in', nonlinearity='relu')
+                else:
+                    nn.init.xavier_normal_(m.weight.data, gain=3.26033)
                 if hasattr(m, 'bias') and m.bias is not None:
                     nn.init.zeros_(m.bias)
             elif isinstance(m, (nn.BatchNorm2d, nn.GroupNorm)):
                 nn.init.ones_(m.weight)
                 nn.init.zeros_(m.bias)
             elif isinstance(m, nn.Linear):
-                nn.init.normal_(m.weight, 0, 3.26033 * np.sqrt(2 / (m.weight.shape[0] + m.weight.shape[1])))
+                if kaiming:
+                    nn.init.kaiming_normal_(m.weight, mode='fan_in', nonlinearity='relu')
+                else:
+                    nn.init.normal_(m.weight, 0, 3.26033 * np.sqrt(2 / (m.weight.shape[0] + m.weight.shape[1])))
                 if hasattr(m, 'bias') and m.bias is not None:
                     nn.init.zeros_(m.bias)
             else:
