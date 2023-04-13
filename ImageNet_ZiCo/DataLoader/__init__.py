@@ -109,7 +109,7 @@ class lighting_albu(object):
         image = transforms.ToPILImage()(image)
         return image
 
-class Lighting_albu(albumentations.core.transforms_interface.ImageOnlyTransform):
+class Lighting_albu(A.core.transforms_interface.ImageOnlyTransform):
     
     def __init__(
         self, alphastd, eigval, eigvec,
