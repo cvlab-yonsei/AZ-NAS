@@ -74,6 +74,7 @@ class Lighting(object):
         self.eigvec = eigvec
 
     def __call__(self, image):
+        image = image.float()
         if self.alphastd == 0:
             return image
 
@@ -128,11 +129,11 @@ def load_imagenet_like(dataset_name, set_name, train_augment, random_erase, auto
             transform_list = [A.RandomResizedCrop(height=input_image_size, width=input_image_size, interpolation=cv2.INTER_CUBIC),
                               A.HorizontalFlip(p=0.5),
                               A.ColorJitter(0.4, 0.4, 0.4, 0, always_apply=True),
-                              A.FancyPCA(alpha=lighting_param, always_apply=True),
-                              A.Normalize(mean=[0.485, 0.456, 0.406], std=[0.229, 0.224, 0.225]),
+                            #   A.FancyPCA(alpha=lighting_param, always_apply=True),
+                            #   A.Normalize(mean=[0.485, 0.456, 0.406], std=[0.229, 0.224, 0.225]),
                               ToTensorV2(),
-                            #   Lighting(lighting_param, _IMAGENET_PCA['eigval'], _IMAGENET_PCA['eigvec']),
-                            #   transforms_normalize
+                              Lighting(lighting_param, _IMAGENET_PCA['eigval'], _IMAGENET_PCA['eigvec']),
+                              transforms_normalize
                              ]
         pass
         if random_erase:
