@@ -90,7 +90,7 @@ class Transforms:
         self.transforms = transforms
 
     def __call__(self, img, *args, **kwargs):
-        return self.transforms(image=np.array(img))
+        return self.transforms(image=np.array(img))['image']
 
 
 def load_imagenet_like(dataset_name, set_name, train_augment, random_erase, auto_augment,
