@@ -18,10 +18,6 @@ import math
 
 from . import autoaugment
 
-import albumentations as A
-from albumentations.pytorch import ToTensorV2
-import cv2
-
 _IMAGENET_PCA = {
     'eigval': torch.Tensor([0.2175, 0.0188, 0.0045]),
     'eigvec': torch.Tensor([
@@ -73,62 +69,17 @@ class Lighting(object):
         self.eigval = eigval
         self.eigvec = eigvec
 
-    def __call__(self, image):
-        image = image.float()
-        if self.alphastd == 0:
-            return image
-
-        alpha = image.new().resize_(3).normal_(0, self.alphastd)
-        rgb = self.eigvec.type_as(image).clone() \
-            .mul(alpha.view(1, 3).expand(3, 3)) \
-            .mul(self.eigval.view(1, 3).expand(3, 3)) \
-            .sum(1).squeeze()
-
-        return image.add(rgb.view(3, 1, 1).expand_as(image))
-
-class lighting_albu(object):
-    """Lighting noise(AlexNet - style PCA - based noise)"""
-
-    def __init__(self, alphastd, eigval, eigvec):
-        self.alphastd = alphastd
-        self.eigval = eigval
-        self.eigvec = eigvec
-
     def __call__(self, img):
         if self.alphastd == 0:
             return img
-        image = transforms.ToTensor()(img)
-        
-        alpha = image.new().resize_(3).normal_(0, self.alphastd)
-        rgb = self.eigvec.type_as(image).clone() \
+
+        alpha = img.new().resize_(3).normal_(0, self.alphastd)
+        rgb = self.eigvec.type_as(img).clone() \
             .mul(alpha.view(1, 3).expand(3, 3)) \
             .mul(self.eigval.view(1, 3).expand(3, 3)) \
             .sum(1).squeeze()
-        image.add(rgb.view(3, 1, 1).expand_as(image))
 
-        image = transforms.ToPILImage()(image)
-        return np.array(image)
-
-class Lighting_albu(A.core.transforms_interface.ImageOnlyTransform):
-    
-    def __init__(
-        self, alphastd, eigval, eigvec,
-        always_apply=False,
-        p=1
- ):
-        
-        super(Lighting_albu, self).__init__(always_apply, p)
-        self.fn = lighting_albu(alphastd, eigval, eigvec)
-    
-    def apply(self, img, **params):
-        return self.fn(img)
-
-class Transforms:
-    def __init__(self, transforms: A.Compose):
-        self.transforms = transforms
-
-    def __call__(self, img, *args, **kwargs):
-        return self.transforms(image=np.array(img))['image']
+        return img.add(rgb.view(3, 1, 1).expand_as(img))
 
 
 def load_imagenet_like(dataset_name, set_name, train_augment, random_erase, auto_augment,
@@ -140,13 +91,8 @@ def load_imagenet_like(dataset_name, set_name, train_augment, random_erase, auto
 
     if train_augment == False:
         assert random_erase == False and auto_augment == False
-        # transform_list = [transforms.Resize(resize_image_size, interpolation=PIL.Image.BICUBIC), transforms.CenterCrop(input_image_size),
-        #                   transforms.ToTensor(), transforms_normalize]
-        albumentations_transform = True
-        transform_list = [A.Resize(height=resize_image_size, width=resize_image_size, interpolation=cv2.INTER_CUBIC),
-                          A.CenterCrop(height=input_image_size,width=input_image_size),
-                          A.Normalize(mean=[0.485, 0.456, 0.406], std=[0.229, 0.224, 0.225]),
-                          ToTensorV2()]
+        transform_list = [transforms.Resize(resize_image_size, interpolation=PIL.Image.BICUBIC), transforms.CenterCrop(input_image_size),
+                          transforms.ToTensor(), transforms_normalize]
     else:
         if auto_augment:
             transform_list = [transforms.RandomResizedCrop(input_image_size, interpolation=PIL.Image.BICUBIC),
@@ -156,29 +102,18 @@ def load_imagenet_like(dataset_name, set_name, train_augment, random_erase, auto
                               Lighting(lighting_param, _IMAGENET_PCA['eigval'], _IMAGENET_PCA['eigvec']),
                               transforms_normalize]
         else:
-            # transform_list = [transforms.RandomResizedCrop(input_image_size, interpolation=PIL.Image.BICUBIC),
-            #                   transforms.RandomHorizontalFlip(),
-            #                   transforms.ColorJitter(0.4, 0.4, 0.4),
-            #                   transforms.ToTensor(),
-            #                   Lighting(lighting_param, _IMAGENET_PCA['eigval'], _IMAGENET_PCA['eigvec']),
-            #                   transforms_normalize]
-            albumentations_transform = True
-            transform_list = [A.RandomResizedCrop(height=input_image_size, width=input_image_size, interpolation=cv2.INTER_CUBIC),
-                              A.HorizontalFlip(p=0.5),
-                              A.ColorJitter(0.4, 0.4, 0.4, 0, always_apply=True),
-                              Lighting_albu(lighting_param, _IMAGENET_PCA['eigval'], _IMAGENET_PCA['eigvec']),
-                              A.Normalize(mean=[0.485, 0.456, 0.406], std=[0.229, 0.224, 0.225]),
-                              ToTensorV2(),
-                             ]
+            transform_list = [transforms.RandomResizedCrop(input_image_size, interpolation=PIL.Image.BICUBIC),
+                              transforms.RandomHorizontalFlip(),
+                              transforms.ColorJitter(0.4, 0.4, 0.4),
+                              transforms.ToTensor(),
+                              Lighting(lighting_param, _IMAGENET_PCA['eigval'], _IMAGENET_PCA['eigvec']),
+                              transforms_normalize]
         pass
         if random_erase:
             transform_list.append(hotfix.transforms.RandomErasing())
     pass
 
-    if albumentations_transform:
-        transformer = Transforms(A.Compose(transform_list))
-    else:
-        transformer = transforms.Compose(transform_list)
+    transformer = transforms.Compose(transform_list)
 
     the_dataset = dataset_ImageFolderClass(data_dir, transformer)
 
