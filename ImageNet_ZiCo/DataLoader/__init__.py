@@ -95,8 +95,13 @@ def load_imagenet_like(dataset_name, set_name, train_augment, random_erase, auto
 
     if train_augment == False:
         assert random_erase == False and auto_augment == False
-        transform_list = [transforms.Resize(resize_image_size, interpolation=PIL.Image.BICUBIC), transforms.CenterCrop(input_image_size),
-                          transforms.ToTensor(), transforms_normalize]
+        # transform_list = [transforms.Resize(resize_image_size, interpolation=PIL.Image.BICUBIC), transforms.CenterCrop(input_image_size),
+        #                   transforms.ToTensor(), transforms_normalize]
+        albumentations_transform = True
+        transform_list = [A.Resize(height=resize_image_size, width=resize_image_size, interpolation=cv2.INTER_CUBIC),
+                          A.CenterCrop(height=input_image_size,width=input_image_size),
+                          A.Normalize(mean=[0.485, 0.456, 0.406], std=[0.229, 0.224, 0.225]),
+                          ToTensorV2()]
     else:
         if auto_augment:
             transform_list = [transforms.RandomResizedCrop(input_image_size, interpolation=PIL.Image.BICUBIC),
