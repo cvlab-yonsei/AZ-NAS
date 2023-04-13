@@ -85,6 +85,13 @@ class Lighting(object):
 
         return img.add(rgb.view(3, 1, 1).expand_as(img))
 
+class Transforms:
+    def __init__(self, transforms: A.Compose):
+        self.transforms = transforms
+
+    def __call__(self, img, *args, **kwargs):
+        return self.transforms(image=np.array(img))
+
 
 def load_imagenet_like(dataset_name, set_name, train_augment, random_erase, auto_augment,
                        data_dir, input_image_size, input_image_crop, rank, world_size,
@@ -118,12 +125,14 @@ def load_imagenet_like(dataset_name, set_name, train_augment, random_erase, auto
             #                   Lighting(lighting_param, _IMAGENET_PCA['eigval'], _IMAGENET_PCA['eigvec']),
             #                   transforms_normalize]
             albumentations_transform = True
-            transform_list = [A.RandomResizedCrop(height=input_image_size, width=input_image_size, interpolation=cv2.INTER_CUBIC, always_apply=True),
+            transform_list = [A.RandomResizedCrop(height=input_image_size, width=input_image_size, interpolation=cv2.INTER_CUBIC),
                               A.HorizontalFlip(p=0.5),
                               A.ColorJitter(0.4, 0.4, 0.4, 0, always_apply=True),
-                              A.FancyPCA(alpha=lighting_param, always_apply=True),
-                              A.Normalize(mean=[0.485, 0.456, 0.406], std=[0.229, 0.224, 0.225]),
-                              ToTensorV2()
+                            #   A.FancyPCA(alpha=lighting_param, always_apply=True),
+                            #   A.Normalize(mean=[0.485, 0.456, 0.406], std=[0.229, 0.224, 0.225]),
+                              ToTensorV2(),
+                              Lighting(lighting_param, _IMAGENET_PCA['eigval'], _IMAGENET_PCA['eigvec']),
+                              transforms_normalize
                              ]
         pass
         if random_erase:
@@ -131,7 +140,7 @@ def load_imagenet_like(dataset_name, set_name, train_augment, random_erase, auto
     pass
 
     if albumentations_transform:
-        transformer = A.Compose(transform_list)
+        transformer = Transforms(A.Compose(transform_list))
     else:
         transformer = transforms.Compose(transform_list)
 
