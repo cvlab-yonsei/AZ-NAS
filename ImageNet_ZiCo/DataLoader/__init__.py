@@ -19,6 +19,7 @@ import math
 from . import autoaugment
 
 import albumentations as A
+from albumentations.pytorch import ToTensorV2
 import cv2
 
 _IMAGENET_PCA = {
@@ -115,7 +116,7 @@ def load_imagenet_like(dataset_name, set_name, train_augment, random_erase, auto
             transform_list = [A.RandomResizedCrop(height=input_image_size, width=input_image_size, interpolation=cv2.INTER_CUBIC),
                               A.HorizontalFlip(p=0.5),
                               A.ColorJitter(0.4, 0.4, 0.4, 0, always_apply=True),
-                              A.pytorch.ToTensorV2(),
+                              ToTensorV2(),
                               Lighting(lighting_param, _IMAGENET_PCA['eigval'], _IMAGENET_PCA['eigvec']),
                               transforms_normalize
                              ]
