@@ -18,6 +18,9 @@ import math
 
 from . import autoaugment
 
+import albumentations as A
+import cv2
+
 _IMAGENET_PCA = {
     'eigval': torch.Tensor([0.2175, 0.0188, 0.0045]),
     'eigvec': torch.Tensor([
@@ -102,18 +105,29 @@ def load_imagenet_like(dataset_name, set_name, train_augment, random_erase, auto
                               Lighting(lighting_param, _IMAGENET_PCA['eigval'], _IMAGENET_PCA['eigvec']),
                               transforms_normalize]
         else:
-            transform_list = [transforms.RandomResizedCrop(input_image_size, interpolation=PIL.Image.BICUBIC),
-                              transforms.RandomHorizontalFlip(),
-                              transforms.ColorJitter(0.4, 0.4, 0.4),
-                              transforms.ToTensor(),
+            # transform_list = [transforms.RandomResizedCrop(input_image_size, interpolation=PIL.Image.BICUBIC),
+            #                   transforms.RandomHorizontalFlip(),
+            #                   transforms.ColorJitter(0.4, 0.4, 0.4),
+            #                   transforms.ToTensor(),
+            #                   Lighting(lighting_param, _IMAGENET_PCA['eigval'], _IMAGENET_PCA['eigvec']),
+            #                   transforms_normalize]
+            albumentations_transform = True
+            transform_list = [A.RandomResizedCrop(height=input_image_size, width=input_image_size, interpolation=cv2.INTER_CUBIC),
+                              A.HorizontalFlip(p=0.5),
+                              A.ColorJitter(0.4, 0.4, 0.4, 0, always_apply=True),
+                              A.pytorch.ToTensorV2(),
                               Lighting(lighting_param, _IMAGENET_PCA['eigval'], _IMAGENET_PCA['eigvec']),
-                              transforms_normalize]
+                              transforms_normalize
+                             ]
         pass
         if random_erase:
             transform_list.append(hotfix.transforms.RandomErasing())
     pass
 
-    transformer = transforms.Compose(transform_list)
+    if albumentations_transform:
+        transformer = A.Compose(transform_list)
+    else:
+        transformer = transforms.Compose(transform_list)
 
     the_dataset = dataset_ImageFolderClass(data_dir, transformer)
 
