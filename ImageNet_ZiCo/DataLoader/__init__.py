@@ -86,6 +86,43 @@ class Lighting(object):
 
         return image.add(rgb.view(3, 1, 1).expand_as(image))
 
+class lighting_albu(object):
+    """Lighting noise(AlexNet - style PCA - based noise)"""
+
+    def __init__(self, alphastd, eigval, eigvec):
+        self.alphastd = alphastd
+        self.eigval = eigval
+        self.eigvec = eigvec
+
+    def __call__(self, img):
+        if self.alphastd == 0:
+            return img
+        image = transforms.ToTensor()(img)
+        
+        alpha = image.new().resize_(3).normal_(0, self.alphastd)
+        rgb = self.eigvec.type_as(image).clone() \
+            .mul(alpha.view(1, 3).expand(3, 3)) \
+            .mul(self.eigval.view(1, 3).expand(3, 3)) \
+            .sum(1).squeeze()
+        image.add(rgb.view(3, 1, 1).expand_as(image))
+
+        image = transforms.ToPILImage()(image)
+        return image
+
+class Lighting_albu(albumentations.core.transforms_interface.ImageOnlyTransform):
+    
+    def __init__(
+        self, alphastd, eigval, eigvec,
+        always_apply=False,
+        p=1
+ ):
+        
+        super(Lighting_albu, self).__init__(always_apply, p)
+        self.fn = lighting_albu(alphastd, eigval, eigvec)
+    
+    def apply(self, img, **params):
+        return self.fn(img)
+
 class Transforms:
     def __init__(self, transforms: A.Compose):
         self.transforms = transforms
@@ -129,11 +166,9 @@ def load_imagenet_like(dataset_name, set_name, train_augment, random_erase, auto
             transform_list = [A.RandomResizedCrop(height=input_image_size, width=input_image_size, interpolation=cv2.INTER_CUBIC),
                               A.HorizontalFlip(p=0.5),
                               A.ColorJitter(0.4, 0.4, 0.4, 0, always_apply=True),
-                            #   A.FancyPCA(alpha=lighting_param, always_apply=True),
-                            #   A.Normalize(mean=[0.485, 0.456, 0.406], std=[0.229, 0.224, 0.225]),
+                              Lighting_albu(lighting_param, _IMAGENET_PCA['eigval'], _IMAGENET_PCA['eigvec']),
+                              A.Normalize(mean=[0.485, 0.456, 0.406], std=[0.229, 0.224, 0.225]),
                               ToTensorV2(),
-                              Lighting(lighting_param, _IMAGENET_PCA['eigval'], _IMAGENET_PCA['eigvec']),
-                              A.Normalize(mean=[0.485, 0.456, 0.406], std=[0.229, 0.224, 0.225])
                              ]
         pass
         if random_erase:
