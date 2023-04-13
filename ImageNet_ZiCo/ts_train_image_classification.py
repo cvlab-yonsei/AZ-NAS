@@ -453,6 +453,9 @@ def init_model(model, opt, argv):
             logging.info('Warning! No init_parameters found')
         else:
             model.init_parameters()
+    elif hasattr(opt, 'weight_init') and opt.weight_init == 'custom_kaiming':
+        assert hasattr(model, 'init_parameters')
+        model.init_parameters(kaiming=True)
     elif hasattr(opt, 'weight_init') and opt.weight_init == 'None':
         logging.info('Warning!!! model loaded without initialization !')
     else:
