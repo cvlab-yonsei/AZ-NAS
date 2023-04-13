@@ -107,7 +107,7 @@ class lighting_albu(object):
         image.add(rgb.view(3, 1, 1).expand_as(image))
 
         image = transforms.ToPILImage()(image)
-        return image
+        return np.array(image)
 
 class Lighting_albu(A.core.transforms_interface.ImageOnlyTransform):
     
