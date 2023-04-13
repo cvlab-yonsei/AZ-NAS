@@ -133,7 +133,7 @@ def load_imagenet_like(dataset_name, set_name, train_augment, random_erase, auto
                             #   A.Normalize(mean=[0.485, 0.456, 0.406], std=[0.229, 0.224, 0.225]),
                               ToTensorV2(),
                               Lighting(lighting_param, _IMAGENET_PCA['eigval'], _IMAGENET_PCA['eigvec']),
-                              transforms_normalize
+                              A.Normalize(mean=[0.485, 0.456, 0.406], std=[0.229, 0.224, 0.225])
                              ]
         pass
         if random_erase:
