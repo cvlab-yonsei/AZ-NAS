@@ -64,10 +64,11 @@ def parse_cmd_options(argv):
                         help='root of path')
     parser.add_argument('--num_worker', type=int, default=40,
                         help='root of path')
-    parser.add_argument('--maxbatch', type=int, default=1,
+    parser.add_argument('--maxbatch', type=int, default=2,
                         help='root of path')
     parser.add_argument('--rand_input', type=str2bool, default=True, help='random input')
     parser.add_argument('--search_no_res', type=str2bool, default=False, help='remove residual link in search phase')
+    parser.add_argument('--seed', type=int, default=None)    
                         
     module_opt, _ = parser.parse_known_args(argv)
     return module_opt
@@ -85,8 +86,9 @@ def get_new_random_structure_str(AnyPlainNet, structure_str, num_classes, get_se
         to_search_student_blocks_list_list = get_search_space_func(the_net.block_list, random_id)
 
         to_search_student_blocks_list = [x for sublist in to_search_student_blocks_list_list for x in sublist]
+        to_search_student_blocks_list = sorted(to_search_student_blocks_list) # for reproducibility, due to the randomness of importlib in global_utils.py
         new_student_block_str = random.choice(to_search_student_blocks_list)
-
+        
         if len(new_student_block_str) > 0:
             new_student_block = PlainNet.create_netblock_list_from_str(new_student_block_str, no_create=True)
             assert len(new_student_block) == 1
@@ -215,12 +217,11 @@ def getmisc(args):
 
 
 def main(args, argv):
-
     gpu = args.gpu
     if gpu is not None:
         print(torch.cuda.device_count())
         torch.cuda.set_device('cuda:{}'.format(gpu))
-        torch.backends.cudnn.benchmark = True
+        # torch.backends.cudnn.benchmark = True
     print(args)
     trainloader, testloader, xshape, class_num = getmisc(args)
     
@@ -378,6 +379,17 @@ if __name__ == '__main__':
     args = parse_cmd_options(sys.argv)
     log_fn = os.path.join(args.save_dir, 'evolution_search.log')
     global_utils.create_logging(log_fn)
+
+    if args.seed is not None:
+        logging.info("The seed number is set to {}".format(args.seed))
+        random.seed(args.seed)
+        np.random.seed(args.seed)
+        torch.manual_seed(args.seed)
+        torch.cuda.manual_seed(args.seed)
+        torch.cuda.manual_seed_all(args.seed)
+        torch.backends.cudnn.deterministic=True
+        torch.backends.cudnn.benchmark = False
+        os.environ["PYTHONHASHSEED"] = str(args.seed)
 
     info = main(args, sys.argv)
     if info is None:

@@ -60,7 +60,7 @@ def compute_nas_score(model, gpu, trainloader, resolution, batch_size, fp16=Fals
     else:
         dtype = torch.float32
 
-    init_model(model, 'kaiming_norm_fanout')
+    init_model(model, 'kaiming_norm_fanin')
 
     input_ = next(iter(trainloader))[0]
     
@@ -164,7 +164,7 @@ def compute_nas_score(model, gpu, trainloader, resolution, batch_size, fp16=Fals
     info['expressivity'] = float(fwrd_pca_score) if not np.isnan(fwrd_pca_score) else -np.inf
     info['stability'] = float(fwrd_norm_score) if not np.isnan(fwrd_norm_score) else -np.inf
     info['trainability'] = float(bkwd_norm_score) if not np.isnan(bkwd_norm_score) else -np.inf
-    info['capacity'] = float(model.get_model_size())
+    # info['capacity'] = float(model.get_model_size())
     info['complexity'] = float(model.get_FLOPs(resolution))
     return info
 

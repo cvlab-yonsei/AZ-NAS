@@ -60,7 +60,7 @@ def compute_nas_score(model, gpu, trainloader, resolution, batch_size, fp16=Fals
     else:
         dtype = torch.float32
 
-    init_model(model, 'kaiming_norm_fanout')
+    init_model(model, 'kaiming_norm_fanin')
 
     input_ = next(iter(trainloader))[0]
     
@@ -71,7 +71,7 @@ def compute_nas_score(model, gpu, trainloader, resolution, batch_size, fp16=Fals
     
     ################ fwrd pca score ################
     """
-    pca score across residual block features / normalize each score by upper bound
+    pca score across residual block features / normalize each score by upper bound / worst case
     """
     with torch.no_grad():
         scores = []
@@ -88,12 +88,12 @@ def compute_nas_score(model, gpu, trainloader, resolution, batch_size, fp16=Fals
             score = (-prob_s)*torch.log(prob_s+1e-8)
             score = score.sum().item()
             scores.append(score / np.log(c)) # normalize by an upper bound (= np.log(c))
-        fwrd_pca_score = np.mean(scores)
+        fwrd_pca_score = np.min(scores)
     #################################################
 
     ################ fwrd norm score ################
     """
-    residual block features / stack and compare
+    residual block features / stack and compare / worst case
     """
     with torch.no_grad():
         scores = []
@@ -112,12 +112,12 @@ def compute_nas_score(model, gpu, trainloader, resolution, batch_size, fp16=Fals
                     f_in = pixel_unshuffle(f_in)
                 s = f_out.norm(p=2, dim=(1)).mean() / (f_in.norm(p=2, dim=(1)).mean()+1e-6)
                 scores.append(-s.item() - 1/(s.item()+1e-6) + 2)
-        fwrd_norm_score = np.mean(scores)
+        fwrd_norm_score = np.min(scores)
     #################################################
 
     ################ spec norm score ##############
     """
-    spec norm score across residual block features / stack and compare
+    spec norm score across residual block features / stack and compare / worst case
     """
     scores = []
     for i in reversed(range(1, len(layer_features))):
@@ -158,7 +158,7 @@ def compute_nas_score(model, gpu, trainloader, resolution, batch_size, fp16=Fals
             # s = torch.linalg.svdvals(mat.cpu()) # can be faster on cpu
             ss = s.max().item()
             scores.append(-ss - 1/(ss+1e-6)+2)
-    bkwd_norm_score = np.mean(scores)
+    bkwd_norm_score = np.min(scores)
     #################################################
 
     info['expressivity'] = float(fwrd_pca_score) if not np.isnan(fwrd_pca_score) else -np.inf
