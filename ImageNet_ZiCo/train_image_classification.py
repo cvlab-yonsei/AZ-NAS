@@ -327,7 +327,10 @@ def init_model(model, opt, argv):
         model.init_parameters()
     elif hasattr(opt, 'weight_init') and opt.weight_init == 'custom_kaiming':
         assert hasattr(model, 'init_parameters')
-        model.init_parameters(kaiming=True)
+        model.init_parameters(method='kaiming')
+    elif hasattr(opt, 'weight_init') and opt.weight_init == 'custom_xavier':
+        assert hasattr(model, 'init_parameters')
+        model.init_parameters(method='xavier')
     elif hasattr(opt, 'weight_init') and opt.weight_init == 'None':
         logging.info('Warning!!! model loaded without initialization !')
     else:
