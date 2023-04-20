@@ -130,7 +130,7 @@ def compute_nas_score(model, gpu, trainloader, resolution, batch_size, fp16=Fals
         
         g_out = torch.randint_like(f_out,low=0,high=2)
         g_out = (g_out - 0.5)*2
-        g_in = torch.autograd.grad(outputs=f_out, inputs=f_in, grad_outputs=g_out, retain_graph=False)[0]
+        g_in = torch.autograd.grad(outputs=f_out, inputs=f_in, grad_outputs=g_out, retain_graph=True)[0]
         if g_out.size()==g_in.size() and torch.all(g_in == g_out):
             scores.append(-np.inf)
         else:
@@ -161,9 +161,23 @@ def compute_nas_score(model, gpu, trainloader, resolution, batch_size, fp16=Fals
     bkwd_norm_score = np.mean(scores)
     #################################################
 
+
+    #################################################
+    last_feat = layer_features[-1]
+    last_feat.backward(torch.randn_like(last_feat))
+    norm2_sum = 0
+    with torch.no_grad():
+        for p in model.parameters():
+            if hasattr(p, 'grad') and p.grad is not None:
+                norm2_sum += torch.norm(p.grad) ** 2
+
+    grad_norm_score = float(torch.sqrt(norm2_sum))
+    #################################################
+
     info['expressivity'] = float(fwrd_pca_score) if not np.isnan(fwrd_pca_score) else -np.inf
     info['stability'] = float(fwrd_norm_score) if not np.isnan(fwrd_norm_score) else -np.inf
     info['trainability'] = float(bkwd_norm_score) if not np.isnan(bkwd_norm_score) else -np.inf
+    info['grad_norm'] = float(grad_norm_score) if not np.isnan(bkwd_norm_score) else -np.inf
     info['capacity'] = float(model.get_model_size())
     info['complexity'] = float(model.get_FLOPs(resolution))
     return info
