@@ -35,6 +35,11 @@ def str2bool(v):
     else:
         raise argparse.ArgumentTypeError('Boolean value expected.')
 
+def none_or_int(value):
+    if value.lower() == 'none':
+        return None
+    return int(value)
+
 def parse_cmd_options(argv):
     parser = argparse.ArgumentParser()
     parser.add_argument('--gpu', type=int, default=None)
@@ -68,7 +73,7 @@ def parse_cmd_options(argv):
                         help='root of path')
     parser.add_argument('--rand_input', type=str2bool, default=True, help='random input')
     parser.add_argument('--search_no_res', type=str2bool, default=False, help='remove residual link in search phase')
-    parser.add_argument('--seed', type=int, default=None)    
+    parser.add_argument('--seed', type=none_or_int, default=None)    
                         
     module_opt, _ = parser.parse_known_args(argv)
     return module_opt
