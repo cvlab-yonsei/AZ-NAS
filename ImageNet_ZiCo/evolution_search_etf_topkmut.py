@@ -272,15 +272,15 @@ def main(args, argv):
     lossfunc = nn.CrossEntropyLoss().cuda()
     for loop_count in range(args.evolution_max_iter):
         # too many networks in the population pool, remove one with the smallest score
-        while len(popu_structure_list) > args.population_size:
-            tmp_idx = np.argmin(popu_zero_shot_score_list)
-            if 'etf' in args.zero_shot_score.lower():
-                for k in popu_zero_shot_score_dict.keys():
-                    popu_zero_shot_score_dict[k].pop(tmp_idx)
-            popu_zero_shot_score_list.pop(tmp_idx)
-            popu_structure_list.pop(tmp_idx)
-            popu_latency_list.pop(tmp_idx)
-        pass
+        # while len(popu_structure_list) > args.population_size:
+        #     tmp_idx = np.argmin(popu_zero_shot_score_list)
+        #     if 'etf' in args.zero_shot_score.lower():
+        #         for k in popu_zero_shot_score_dict.keys():
+        #             popu_zero_shot_score_dict[k].pop(tmp_idx)
+        #     popu_zero_shot_score_list.pop(tmp_idx)
+        #     popu_structure_list.pop(tmp_idx)
+        #     popu_latency_list.pop(tmp_idx)
+        # pass
 
         if loop_count >= 1 and loop_count % 100 == 0:
             if 'etf' in args.zero_shot_score.lower():
@@ -306,12 +306,19 @@ def main(args, argv):
             random_structure_str = get_new_random_structure_str(
                 AnyPlainNet=AnyPlainNet, structure_str=initial_structure_str, num_classes=args.num_classes,
                 get_search_space_func=select_search_space.gen_search_space, num_replaces=1)
-        else:
+        elif len(popu_structure_list) < args.population_size-1:
             tmp_idx = random.randint(0, len(popu_structure_list) - 1)
             tmp_random_structure_str = popu_structure_list[tmp_idx]
             random_structure_str = get_new_random_structure_str(
                 AnyPlainNet=AnyPlainNet, structure_str=tmp_random_structure_str, num_classes=args.num_classes,
                 get_search_space_func=select_search_space.gen_search_space, num_replaces=2)
+        else:
+            tmp_idx = np.random.choice(np.argsort(popu_zero_shot_score_list, axis=0)[-args.population_size+1:])
+            tmp_random_structure_str = popu_structure_list[tmp_idx]
+            random_structure_str = get_new_random_structure_str(
+                AnyPlainNet=AnyPlainNet, structure_str=tmp_random_structure_str, num_classes=args.num_classes,
+                get_search_space_func=select_search_space.gen_search_space, num_replaces=2)
+
 
         random_structure_str = get_splitted_structure_str(AnyPlainNet, random_structure_str,
                                                           num_classes=args.num_classes)
@@ -347,7 +354,7 @@ def main(args, argv):
             the_latency = get_latency(AnyPlainNet, random_structure_str, gpu, args)
             if args.budget_latency < the_latency:
                 continue
-                
+
         if 'etf' in args.zero_shot_score.lower():
             the_nas_core = compute_nas_score(AnyPlainNet, random_structure_str, gpu, args, trainbatches, lossfunc)
             if popu_zero_shot_score_dict is None: # initialize dict

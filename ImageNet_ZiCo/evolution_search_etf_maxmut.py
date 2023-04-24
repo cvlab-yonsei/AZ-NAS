@@ -306,12 +306,19 @@ def main(args, argv):
             random_structure_str = get_new_random_structure_str(
                 AnyPlainNet=AnyPlainNet, structure_str=initial_structure_str, num_classes=args.num_classes,
                 get_search_space_func=select_search_space.gen_search_space, num_replaces=1)
-        else:
+        elif len(popu_structure_list) < args.population_size-1:
             tmp_idx = random.randint(0, len(popu_structure_list) - 1)
             tmp_random_structure_str = popu_structure_list[tmp_idx]
             random_structure_str = get_new_random_structure_str(
                 AnyPlainNet=AnyPlainNet, structure_str=tmp_random_structure_str, num_classes=args.num_classes,
                 get_search_space_func=select_search_space.gen_search_space, num_replaces=2)
+        else:
+            max_idx = np.argmax(popu_zero_shot_score_list)
+            tmp_random_structure_str = popu_structure_list[max_idx]
+            random_structure_str = get_new_random_structure_str(
+                AnyPlainNet=AnyPlainNet, structure_str=tmp_random_structure_str, num_classes=args.num_classes,
+                get_search_space_func=select_search_space.gen_search_space, num_replaces=2)
+
 
         random_structure_str = get_splitted_structure_str(AnyPlainNet, random_structure_str,
                                                           num_classes=args.num_classes)
@@ -347,7 +354,7 @@ def main(args, argv):
             the_latency = get_latency(AnyPlainNet, random_structure_str, gpu, args)
             if args.budget_latency < the_latency:
                 continue
-                
+
         if 'etf' in args.zero_shot_score.lower():
             the_nas_core = compute_nas_score(AnyPlainNet, random_structure_str, gpu, args, trainbatches, lossfunc)
             if popu_zero_shot_score_dict is None: # initialize dict
