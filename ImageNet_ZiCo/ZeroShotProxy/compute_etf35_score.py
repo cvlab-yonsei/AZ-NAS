@@ -62,7 +62,10 @@ def compute_nas_score(model, gpu, trainloader, resolution, batch_size, fp16=Fals
 
     init_model(model, 'kaiming_norm_fanin')
 
-    input_ = next(iter(trainloader))[0]
+    if trainloader == None:
+        input_ = torch.randn(size=[batch_size, 3, resolution, resolution], device=device, dtype=dtype)
+    else:
+        input_ = next(iter(trainloader))[0]
     
     if model.no_reslink:
         layer_features = model.extract_layer_features_nores(input_)
