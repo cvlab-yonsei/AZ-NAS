@@ -100,69 +100,24 @@ def compute_nas_score(model, gpu, trainloader, resolution, batch_size, fp16=Fals
         fwrd_pca_score = np.mean(scores)
     #################################################
 
-    # ################ fwrd norm score ################
-    # """
-    # residual block features / consider channel diff
-    # """
-    # with torch.no_grad():
-    #     scores = []
-    #     for i in range(1, len(layer_features)):
-    #         f_out = layer_features[i]
-    #         f_in = layer_features[i-1]
-
-    #         if (f_out.size() == f_in.size()) and (torch.all(f_in == f_out)):
-    #             scores.append(-np.inf)
-    #         else:
-    #             bo,co,ho,wo = f_out.size()
-    #             bi,ci,hi,wi = f_in.size()
-    #             s = f_out.norm(p=2, dim=(1)).mean() / (f_in.norm(p=2, dim=(1)).mean()+1e-6)
-    #             scores.append(-s.item() - 1/(s.item()+1e-6) + 2)
-    #     fwrd_norm_score = np.mean(scores)
-    # #################################################
-
-    ################ spec norm score ##############
+    ################ fwrd norm score ################
     """
-    spec norm score across residual block features / match res by stacking
+    residual block features
     """
-    scores = []
-    for i in reversed(range(1, len(layer_features))):
-        f_out = layer_features[i]
-        f_in = layer_features[i-1]
-        if f_out.grad is not None:
-            f_out.grad.zero_()
-        if f_in.grad is not None:
-            f_in.grad.zero_()
-        
-        g_out = torch.randint_like(f_out,low=0,high=2)
-        g_out = (g_out - 0.5)*2
-        g_in = torch.autograd.grad(outputs=f_out, inputs=f_in, grad_outputs=g_out, retain_graph=True)[0]
-        if g_out.size()==g_in.size() and torch.all(g_in == g_out):
-            scores.append(-np.inf)
-        else:
-            if g_out.size(2) != g_in.size(2) or g_out.size(3) != g_in.size(3):
-                bo,co,ho,wo = g_out.size()
-                bi,ci,hi,wi = g_in.size()
-                stride = int(hi/ho)
-                pixel_unshuffle = nn.PixelUnshuffle(stride)
-                g_in = pixel_unshuffle(g_in)
-            bo,co,ho,wo = g_out.size()
-            bi,ci,hi,wi = g_in.size()
-            ### straight-forward way
-            # g_out = g_out.permute(0,2,3,1).contiguous().view(bo*ho*wo,1,co)
-            # g_in = g_in.permute(0,2,3,1).contiguous().view(bi*hi*wi,ci,1)
-            # mat = torch.bmm(g_in,g_out).mean(dim=0)
-            ### efficient way # print(torch.allclose(mat, mat2, atol=1e-6))
-            g_out = g_out.permute(0,2,3,1).contiguous().view(bo*ho*wo,co)
-            g_in = g_in.permute(0,2,3,1).contiguous().view(bi*hi*wi,ci)
-            mat = torch.mm(g_in.transpose(1,0),g_out) / (bo*ho*wo)
-            ### make faster on cpu
-            if mat.size(0) < mat.size(1):
-                mat = mat.transpose(0,1)
-            ###
-            u, s, v = torch.svd(mat.cpu(), compute_uv=False)
-            ss = s.max().item()
-            scores.append(-ss - 1/(ss+1e-6)+2)
-    bkwd_norm_score = np.mean(scores)
+    with torch.no_grad():
+        scores = []
+        for i in range(1, len(layer_features)):
+            f_out = layer_features[i]
+            f_in = layer_features[i-1]
+
+            if (f_out.size() == f_in.size()) and (torch.all(f_in == f_out)):
+                scores.append(-np.inf)
+            else:
+                bo,co,ho,wo = f_out.size()
+                bi,ci,hi,wi = f_in.size()
+                s = f_out.norm(p=2, dim=(1)).mean() / (f_in.norm(p=2, dim=(1)).mean()+1e-6)
+                scores.append(-s.item() - 1/(s.item()+1e-6) + 2)
+        fwrd_norm_score = np.mean(scores)
     #################################################
 
     #################################################
@@ -181,23 +136,42 @@ def compute_nas_score(model, gpu, trainloader, resolution, batch_size, fp16=Fals
     with torch.no_grad():
         for p in model.parameters():
             if hasattr(p, 'grad') and p.grad is not None:
-                if len(p.size()) == 4 or len(p.size()) == 2 : # conv, fc weights
-                    # co, ci, kh, w = p.size()
-                    co = p.size(0)
+                if len(p.size()) == 4: # conv weights
+                    co, ci, kh, w = p.size()
                     g = p.grad.clone().view(co, -1)
                     p = p.clone().view(co, -1)
                     new_p = p - 0.1*g
                     angular_diff = (1 - torch.nn.functional.cosine_similarity(p, new_p, dim=1, eps=1e-8)).mean().item()
                     scores.append(angular_diff)
-    trainability_mean = np.mean(scores)
-    trainability_std = -np.std(scores)
+    trainability = np.mean(scores)/(np.std(scores)+1e-8)
     #################################################
 
+    ################ bkwd norm score ##############
+    """
+    grad stability score across residual block features
+    """
+    scores = []
+    for i in reversed(range(1, len(layer_features))):
+        g_out = layer_features[i].grad.detach().clone()
+        g_in = layer_features[i-1].grad.detach().clone()
+
+        if g_out.size()==g_in.size() and torch.all(g_in == g_out):
+            scores.append(-np.inf)
+        else:
+            bo,co,ho,wo = g_out.size()
+            bi,ci,hi,wi = g_in.size()
+            s = g_out.norm(p=2, dim=(1)).mean() / (g_in.norm(p=2, dim=(1)).mean()+1e-6)
+            scores.append(-s.item() - 1/(s.item()+1e-6) + 2)
+    bkwd_norm_score = np.mean(scores)
+    #################################################
+
+
+    
+
     info['expressivity'] = float(fwrd_pca_score) if not np.isnan(fwrd_pca_score) else -np.inf
-    # info['fwrd_stability'] = float(fwrd_norm_score) if not np.isnan(fwrd_norm_score) else -np.inf
+    info['fwrd_stability'] = float(fwrd_norm_score) if not np.isnan(fwrd_norm_score) else -np.inf
     info['bkwd_stability'] = float(bkwd_norm_score) if not np.isnan(bkwd_norm_score) else -np.inf
-    info['trainability_mean'] = float(trainability_mean) if not np.isnan(trainability_mean) else -np.inf
-    info['trainability_std'] = float(trainability_std) if not np.isnan(trainability_std) else -np.inf
+    info['trainability'] = float(trainability) if not np.isnan(trainability) else -np.inf
     info['capacity'] = float(model.get_model_size())
     info['complexity'] = float(model.get_FLOPs(resolution))
     return info
