@@ -2,3 +2,4 @@
 *.pth
 *.done
 events.*
+init_plainnet.txt
