@@ -17,7 +17,7 @@ gpu=$4
 seed=$5
 echo "Run this script with metric=$metric, population_size=$population_size, evolution_max_iter=$evolution_max_iter, search gpu=$gpu, seed=$seed"
 
-evolution_max_iter=$(printf "%i" $evolution_max_iter)
+evolution_max_iter=$(printf "%.0f" $evolution_max_iter)
 
 cd ../
 
