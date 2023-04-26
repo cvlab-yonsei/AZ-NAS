@@ -11,22 +11,24 @@ set -e
 # echo "Run this script with metric=$metric, search gpu=$gpu, seed=$seed"
 
 metric=$1
-gpu=$2
-seed=$3
-echo "Run this script with metric=$metric, search gpu=$gpu, seed=$seed"
+population_size=$2
+evolution_max_iter=$3
+gpu=$4
+seed=$5
+echo "Run this script with metric=$metric, population_size=$population_size, evolution_max_iter=$evolution_max_iter, search gpu=$gpu, seed=$seed"
 
 cd ../
 
-save_dir=./save_dir/${metric}_flops450M-searchbs64-pop1024-iter1e5-topkmut-${seed}
+save_dir=./save_dir/${metric}_flops450M-searchbs64-pop${population_size}-iter${evolution_max_iter}-topkmut-${seed}
 mkdir -p ${save_dir}
 
 
 resolution=224
 budget_flops=450e6
 max_layers=14
-population_size=1024
+# population_size=1024
 epochs=150
-evolution_max_iter=100000
+# evolution_max_iter=100000
 
 echo "SuperConvK3BNRELU(3,8,2,1)SuperResIDWE6K3(8,32,2,8,1)SuperResIDWE6K3(32,48,2,32,1)\
 SuperResIDWE6K3(48,96,2,48,1)SuperResIDWE6K3(96,128,2,96,1)\
