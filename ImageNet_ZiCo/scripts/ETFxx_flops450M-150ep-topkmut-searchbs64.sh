@@ -17,6 +17,8 @@ gpu=$4
 seed=$5
 echo "Run this script with metric=$metric, population_size=$population_size, evolution_max_iter=$evolution_max_iter, search gpu=$gpu, seed=$seed"
 
+evolution_max_iter=$(printf "%i" $evolution_max_iter)
+
 cd ../
 
 save_dir=./save_dir/${metric}_flops450M-searchbs64-pop${population_size}-iter${evolution_max_iter}-topkmut-${seed}
