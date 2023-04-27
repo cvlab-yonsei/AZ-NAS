@@ -73,7 +73,10 @@ def compute_nas_score(model, gpu, trainloader, resolution, batch_size, fp16=Fals
     else:
         input_ = next(iter(trainloader))[0]
     
-    layer_features, stage_features = model.extract_layer_and_stage_features(input_)
+    if model.no_reslink:
+        layer_features = model.extract_layer_features_nores(input_)
+    else:
+        layer_features, output = model.extract_layer_features_and_logit(input_)
 
     ################ fwrd pca score ################
     """
