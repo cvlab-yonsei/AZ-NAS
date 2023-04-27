@@ -74,7 +74,7 @@ def compute_nas_score(model, gpu, trainloader, resolution, batch_size, fp16=Fals
     
     ################ fwrd pca score ################
     """
-    pca score across residual block features / normalize each score by upper bound
+    pca score @ last residual block feature
     """
     with torch.no_grad():
         feat = layer_features[-1].detach().clone()
@@ -87,8 +87,7 @@ def compute_nas_score(model, gpu, trainloader, resolution, batch_size, fp16=Fals
         s = torch.linalg.eigvalsh(sigma) # faster version for computing eignevalues, can be adopted since sigma is symmetric
         prob_s = s / s.sum()
         score = (-prob_s)*torch.log(prob_s+1e-8)
-        score = score.sum().item()
-        scores.append(score / np.log(c)) # normalize by an upper bound (= np.log(c))
+        fwrd_pca_score = score.sum().item()
     #################################################
 
     # ################ fwrd norm score ################
