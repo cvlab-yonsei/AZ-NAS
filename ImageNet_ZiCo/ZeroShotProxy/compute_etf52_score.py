@@ -158,7 +158,7 @@ def compute_nas_score(model, gpu, trainloader, resolution, batch_size, fp16=Fals
     info['expressivity'] = float(fwrd_pca_score)
     info['stability'] = float(fwrd_norm_score)
     info['trainability'] = float(bkwd_norm_score)
-    info['capacity'] = float(model.get_model_size())
+    # info['capacity'] = float(model.get_model_size())
     return info
 
 
