@@ -122,6 +122,7 @@ def compute_nas_score(model, gpu, trainloader, resolution, batch_size, fp16=Fals
         f_in = layer_features[i-1]
         if f_out.grad is not None:
             f_out.grad.zero_()
+        if f_in.grad is not None:
             f_in.grad.zero_()
         
         g_out = torch.ones_like(f_out) * 0.5
