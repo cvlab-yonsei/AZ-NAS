@@ -44,6 +44,12 @@ def init_model(model, method='kaiming_norm_fanin'):
     #     raise NotImplementedError
     return model
 
+def cross_entropy(logit, target):
+    # target must be one-hot format!!
+    prob_logit = torch.nn.functional.log_softmax(logit, dim=1)
+    loss = -(target * prob_logit).sum(dim=1).mean()
+    return loss
+
 
 def compute_nas_score(model, gpu, trainloader, resolution, batch_size, fp16=False):
     model.train()
@@ -112,54 +118,36 @@ def compute_nas_score(model, gpu, trainloader, resolution, batch_size, fp16=Fals
     fwrd_norm_score = np.mean(scores)
     #################################################
 
-    ################ spec norm score ##############
+    ################ bkwd norm score ##############
     """
-    spec norm score across residual block features
+    grad stability score across residual block features
     """
+    model.zero_grad(set_to_none=True)
+    
+    num_classes = output.shape[1]
+    y = torch.randint(low=0, high=num_classes, size=[batch_size], device=device)
+    one_hot_y = torch.nn.functional.one_hot(y, num_classes).float()
+    loss = cross_entropy(output, one_hot_y)
+    loss.backward()    
+    
     scores = []
     for i in reversed(range(1, len(layer_features))):
-        f_out = layer_features[i]
-        f_in = layer_features[i-1]
-        if f_out.grad is not None:
-            f_out.grad.zero_()
-        if f_in.grad is not None:
-            f_in.grad.zero_()
-        
-        g_out = torch.ones_like(f_out) * 0.5
-        g_out = (torch.bernoulli(g_out) - 0.5) * 2
-        g_in = torch.autograd.grad(outputs=f_out, inputs=f_in, grad_outputs=g_out, retain_graph=False)[0]
+        g_out = layer_features[i].grad.detach().clone()
+        g_in = layer_features[i-1].grad.detach().clone()
+
         if g_out.size()==g_in.size() and torch.all(g_in == g_out):
             scores.append(-np.inf)
         else:
-            if g_out.size(2) != g_in.size(2) or g_out.size(3) != g_in.size(3):
-                bo,co,ho,wo = g_out.size()
-                bi,ci,hi,wi = g_in.size()
-                stride = int(hi/ho)
-                pixel_unshuffle = nn.PixelUnshuffle(stride)
-                g_in = pixel_unshuffle(g_in)
-            bo,co,ho,wo = g_out.size()
-            bi,ci,hi,wi = g_in.size()
-            ### straight-forward way
-            # g_out = g_out.permute(0,2,3,1).contiguous().view(bo*ho*wo,1,co)
-            # g_in = g_in.permute(0,2,3,1).contiguous().view(bi*hi*wi,ci,1)
-            # mat = torch.bmm(g_in,g_out).mean(dim=0)
-            ### efficient way # print(torch.allclose(mat, mat2, atol=1e-6))
-            g_out = g_out.permute(0,2,3,1).contiguous().view(bo*ho*wo,co)
-            g_in = g_in.permute(0,2,3,1).contiguous().view(bi*hi*wi,ci)
-            mat = torch.mm(g_in.transpose(1,0),g_out) / (bo*ho*wo)
-            ### make faster on cpu
-            if mat.size(0) < mat.size(1):
-                mat = mat.transpose(0,1)
-            ###
-            s = torch.linalg.svdvals(mat)
-            scores.append(-s.max().item() - 1/(s.max().item()+1e-6)+2)
+            s = g_out.std() / (g_in.std()+1e-6)
+            scores.append(-s.item() - 1/(s.item()+1e-6) + 2)
     bkwd_norm_score = np.mean(scores)
     #################################################
 
     info['expressivity'] = float(fwrd_pca_score) if not np.isnan(fwrd_pca_score) else -np.inf
     info['stability'] = float(fwrd_norm_score) if not np.isnan(fwrd_norm_score) else -np.inf
     info['trainability'] = float(bkwd_norm_score) if not np.isnan(bkwd_norm_score) else -np.inf
-    # info['capacity'] = float(model.get_model_size())
+    info['capacity'] = float(model.get_model_size())
+    info['complexity'] = float(model.get_FLOPs(resolution))
     return info
 
 
