@@ -10,12 +10,18 @@ set -e
 # read seed
 # echo "Run this script with metric=$metric, search gpu=$gpu, seed=$seed"
 
+if [ "$#" -lt 5 ] || [ "$#" -gt 5 ]; then
+    echo "$# is Illegal number of parameters."
+    echo "Usage: *.sh metric pop_size evo_iter search_gpu seed"
+	exit 1
+fi
+
 metric=$1
 population_size=$2
 evolution_max_iter=$3
 gpu=$4
 seed=$5
-echo "Run this script with metric=$metric, population_size=$population_size, evolution_max_iter=$evolution_max_iter, search gpu=$gpu, seed=$seed"
+echo "Run this script with metric=$metric, population_size=$population_size, evolution_max_iter=$evolution_max_iter, search_gpu=$gpu, seed=$seed"
 
 cd ../
 
