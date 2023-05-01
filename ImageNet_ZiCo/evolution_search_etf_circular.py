@@ -306,18 +306,21 @@ def main(args, argv):
             random_structure_str = get_new_random_structure_str(
                 AnyPlainNet=AnyPlainNet, structure_str=initial_structure_str, num_classes=args.num_classes,
                 get_search_space_func=select_search_space.gen_search_space, num_replaces=1)
-        else:
-            if 'etf' not in args.zero_shot_score.lower():
-                tmp_idx = random.randint(0, len(popu_structure_list) - 1)
-            else:
-                key_list = list(popu_zero_shot_score_dict.keys())
-                cicular_idx = loop_count % len(key_list)
-                key = key_list[cicular_idx]
-                tmp_idx = np.argmax(popu_zero_shot_score_dict[key])
+        elif ('etf' not in args.zero_shot_score.lower()) or (len(popu_structure_list) < args.population_size-1):
+            tmp_idx = random.randint(0, len(popu_structure_list) - 1)
             tmp_random_structure_str = popu_structure_list[tmp_idx]
             random_structure_str = get_new_random_structure_str(
                 AnyPlainNet=AnyPlainNet, structure_str=tmp_random_structure_str, num_classes=args.num_classes,
                 get_search_space_func=select_search_space.gen_search_space, num_replaces=2)
+        else:
+            key_list = list(popu_zero_shot_score_dict.keys())
+            cicular_idx = loop_count % len(key_list)
+            key = key_list[cicular_idx]
+            tmp_idx = np.argmax(popu_zero_shot_score_dict[key])
+            tmp_random_structure_str = popu_structure_list[tmp_idx]
+            random_structure_str = get_new_random_structure_str(
+                AnyPlainNet=AnyPlainNet, structure_str=tmp_random_structure_str, num_classes=args.num_classes,
+                get_search_space_func=select_search_space.gen_search_space, num_replaces=1)
 
         random_structure_str = get_splitted_structure_str(AnyPlainNet, random_structure_str,
                                                           num_classes=args.num_classes)
