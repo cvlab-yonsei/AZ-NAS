@@ -10,34 +10,42 @@ set -e
 # read seed
 # echo "Run this script with metric=$metric, search gpu=$gpu, seed=$seed"
 
+if [ "$#" -lt 5 ] || [ "$#" -gt 5 ]; then
+    echo "$# is Illegal number of parameters."
+    echo "Usage: *.sh metric pop_size evo_iter search_gpu seed"
+	exit 1
+fi
+
 metric=$1
-gpu=$2
-seed=$3
-echo "Run this script with metric=$metric, search gpu=$gpu, seed=$seed"
+population_size=$2
+evolution_max_iter=$3
+gpu=$4
+seed=$5
+echo "Run this script with metric=$metric, population_size=$population_size, evolution_max_iter=$evolution_max_iter, search_gpu=$gpu, seed=$seed"
 
 cd ../
 
-save_dir=./save_dir/${metric}_flops450M-resblockfeat-searchbs128-randinput-pop1024-iter1e5-res-topkmut-${seed}
+save_dir=./save_dir/${metric}_flops450M-searchbs64-pop${population_size}-iter${evolution_max_iter}-circular-${seed}
 mkdir -p ${save_dir}
-
+evolution_max_iter=$(printf "%.0f" $evolution_max_iter)
 
 resolution=224
 budget_flops=450e6
 max_layers=14
-population_size=1024
+# population_size=1024
 epochs=150
-evolution_max_iter=100000
+# evolution_max_iter=100000
 
 echo "SuperConvK3BNRELU(3,8,2,1)SuperResIDWE6K3(8,32,2,8,1)SuperResIDWE6K3(32,48,2,32,1)\
 SuperResIDWE6K3(48,96,2,48,1)SuperResIDWE6K3(96,128,2,96,1)\
 SuperConvK1BNRELU(128,2048,1,1)" > ${save_dir}/init_plainnet.txt
 
-python evolution_search_etf_topkmut.py --gpu ${gpu} \
+python evolution_search_etf_circular.py --gpu ${gpu} \
   --zero_shot_score ${metric} \
   --search_space SearchSpace/search_space_IDW_fixfc.py \
   --budget_flops ${budget_flops} \
   --max_layers ${max_layers} \
-  --batch_size 128 \
+  --batch_size 64 \
   --input_image_size ${resolution} \
   --plainnet_struct_txt ${save_dir}/init_plainnet.txt \
   --num_classes 1000 \
