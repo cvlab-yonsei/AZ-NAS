@@ -26,7 +26,7 @@ echo "Run this script with metric=$metric, population_size=$population_size, evo
 
 cd ../
 
-save_dir=./save_dir/${metric}_flops450M-searchbs64-pop${population_size}-iter${evolution_max_iter}-plain-${seed}
+save_dir=./save_dir/${metric}_flops450M-searchbs128-pop${population_size}-iter${evolution_max_iter}-plain-${seed}
 mkdir -p ${save_dir}
 evolution_max_iter=$(printf "%.0f" $evolution_max_iter)
 
@@ -46,7 +46,7 @@ SuperConvK1BNRELU(128,2048,1,1)" > ${save_dir}/init_plainnet.txt
 #   --search_space SearchSpace/search_space_IDW_fixfc.py \
 #   --budget_flops ${budget_flops} \
 #   --max_layers ${max_layers} \
-#   --batch_size 64 \
+#   --batch_size 128 \
 #   --input_image_size ${resolution} \
 #   --plainnet_struct_txt ${save_dir}/init_plainnet.txt \
 #   --num_classes 1000 \

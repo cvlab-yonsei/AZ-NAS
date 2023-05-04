@@ -46,7 +46,7 @@ SuperConvK1BNRELU(128,2048,1,1)" > ${save_dir}/init_plainnet.txt
 #   --search_space SearchSpace/search_space_IDW_fixfc.py \
 #   --budget_flops ${budget_flops} \
 #   --max_layers ${max_layers} \
-#   --batch_size 128 \
+#   --batch_size 64 \
 #   --input_image_size ${resolution} \
 #   --plainnet_struct_txt ${save_dir}/init_plainnet.txt \
 #   --num_classes 1000 \
