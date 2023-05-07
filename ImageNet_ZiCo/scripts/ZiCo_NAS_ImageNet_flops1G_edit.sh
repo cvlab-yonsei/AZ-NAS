@@ -12,7 +12,7 @@ resolution=224
 budget_flops=1000e6
 max_layers=16
 population_size=512
-epochs=480
+epochs=150
 evolution_max_iter=100000  
 
 # echo "SuperConvK3BNRELU(3,8,2,1)SuperResIDWE6K3(8,32,2,8,1)SuperResIDWE6K3(32,48,2,32,1)\
