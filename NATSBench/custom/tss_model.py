@@ -121,6 +121,30 @@ class TinyNetworkRANDOM(nn.Module):
 
         return cell_features
 
+    def extract_cell_features_and_logits(self, inputs):
+        cell_features = []
+        
+        feature = self.stem(inputs)
+        if feature.requires_grad:
+            feature.retain_grad()
+        cell_features.append(feature)
+        for i, cell in enumerate(self.cells):
+            if isinstance(cell, SearchCell):
+                feature = cell.forward_dynamic(feature, self.arch_cache)
+            else:
+                feature = cell(feature)
+            
+            if feature.requires_grad:
+                feature.retain_grad()
+            cell_features.append(feature)
+
+        out = self.lastact(feature)
+        out = self.global_pooling(out)
+        out = out.view(out.size(0), -1)
+        logits = self.classifier(out)
+
+        return cell_features, logits
+
     def forward(self, inputs):
 
         feature = self.stem(inputs)
