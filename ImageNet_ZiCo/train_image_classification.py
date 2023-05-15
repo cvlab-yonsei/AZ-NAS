@@ -700,6 +700,17 @@ def train_all_epochs(opt, model, optimizer, train_sampler, train_loader, criteri
                 'training_status_info': training_status_info
             })
 
+        # ----- save epoch -----#
+        if epoch % 10 == 0:
+            checkpoint_filename = os.path.join(opt.save_dir, 'params_rank{}_ep{}.pth'.format(opt.rank, epoch))
+            save_checkpoint(checkpoint_filename, {
+                'epoch': epoch,
+                'state_dict': model.state_dict(),
+                'top1_acc': acc1,
+                'top5_acc': acc5,
+                'training_status_info': training_status_info
+            })
+
     pass  # end for epoch in range(opt.start_epoch, opt.epochs):
 
     return training_status_info
