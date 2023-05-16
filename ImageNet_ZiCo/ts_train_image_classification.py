@@ -881,7 +881,7 @@ def train_all_epochs(opt, model, optimizer, train_sampler, train_loader, criteri
             })
 
         # ----- save for student model -----#
-        if epoch % 10 == 0:
+        if epoch % 10 == 0 and opt.rank == 0:
             checkpoint_filename = os.path.join(opt.save_dir, 'student-params_rank{}_ep{}.pth'.format(opt.rank, epoch))
             save_checkpoint(checkpoint_filename, {
                 'epoch': epoch,
