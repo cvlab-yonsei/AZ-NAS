@@ -26,6 +26,33 @@ from model.pit_space import pit
 from model.autoformer_space import Vision_TransformerSuper
 from collections import OrderedDict
 
+from torch.utils.tensorboard import SummaryWriter
+import logging
+import distutils.dir_util
+
+def mkfilepath(filename):
+    distutils.dir_util.mkpath(os.path.dirname(filename))
+
+def create_logging(log_filename=None, level=logging.INFO):
+    if log_filename is not None:
+        mkfilepath(log_filename)
+        logging.basicConfig(
+            level=level,
+            format="%(message)s",
+            handlers=[
+                logging.FileHandler(log_filename),
+                logging.StreamHandler()
+            ]
+        )
+    else:
+        logging.basicConfig(
+            level=level,
+            format="%(message)s",
+            handlers=[
+                logging.StreamHandler()
+            ]
+        )
+
 
 def get_args_parser():
     parser = argparse.ArgumentParser('Training and Evaluation Script', add_help=False)
@@ -325,6 +352,13 @@ def main(args):
 
     if not output_dir.exists():
         output_dir.mkdir(parents=True)
+    if utils.get_rank() == 0:
+        log_filename = os.path.join(output_dir, 'train.log')
+        create_logging(log_filename=log_filename)
+        writer = SummaryWriter(output_dir)
+    else:
+        create_logging(log_filename=None, level=logging.ERROR)
+        writer = None
     # save config for later experiments
     with open(output_dir / "config.yaml", 'w') as f:
         f.write(args_text)
@@ -358,11 +392,11 @@ def main(args):
         retrain_config = {'layer_num': cfg.RETRAIN.DEPTH, 'embed_dim': [cfg.RETRAIN.EMBED_DIM]*cfg.RETRAIN.DEPTH,
                           'num_heads': cfg.RETRAIN.NUM_HEADS,'mlp_ratio': cfg.RETRAIN.MLP_RATIO}
     if args.eval:
-        test_stats = evaluate(data_loader_val, model_type, model, device,  mode = args.mode, retrain_config=retrain_config)
+        test_stats = evaluate(None, 0, data_loader_val, model_type, model, device,  mode = args.mode, retrain_config=retrain_config)
         print(f"Accuracy of the network on the {len(dataset_val)} test images: {test_stats['acc1']:.1f}%")
         return
 
-    print("Start training")
+    logging.info("Start training")
     start_time = time.time()
     max_accuracy = 0.0
 
@@ -371,7 +405,7 @@ def main(args):
             data_loader_train.sampler.set_epoch(epoch)
 
         train_stats = train_one_epoch(
-            model, criterion, data_loader_train,
+            writer, model, criterion, data_loader_train,
             optimizer, device, epoch, model_type, loss_scaler,
             args.clip_grad, model_ema, mixup_fn,
             amp=args.amp, teacher_model=teacher_model,
@@ -393,10 +427,10 @@ def main(args):
                     'args': args,
                 }, checkpoint_path)
 
-        test_stats = evaluate(data_loader_val, model_type, model, device, amp=args.amp, choices=choices, mode = args.mode, retrain_config=retrain_config)
-        print(f"Accuracy of the network on the {len(dataset_val)} test images: {test_stats['acc1']:.1f}%")
+        test_stats = evaluate(writer, epoch, data_loader_val, model_type, model, device, amp=args.amp, choices=choices, mode = args.mode, retrain_config=retrain_config)
+        logging.info(f"Accuracy of the network on the {len(dataset_val)} test images: {test_stats['acc1']:.1f}%")
         max_accuracy = max(max_accuracy, test_stats["acc1"])
-        print(f'Max accuracy: {max_accuracy:.2f}%')
+        logging.info(f'Max accuracy: {max_accuracy:.2f}%')
 
         log_stats = {**{f'train_{k}': v for k, v in train_stats.items()},
                      **{f'test_{k}': v for k, v in test_stats.items()},
@@ -409,7 +443,7 @@ def main(args):
 
     total_time = time.time() - start_time
     total_time_str = str(datetime.timedelta(seconds=int(total_time)))
-    print('Training time {}'.format(total_time_str))
+    logging.info('Training time {}'.format(total_time_str))
 
 
 if __name__ == '__main__':
