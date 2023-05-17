@@ -9,13 +9,12 @@
 #   --param-limits 6 --change_qk --relative_position --dist-eval --cfg './experiments/search_space/space-T.yaml' --output_dir './OUTPUT/ETF-space-T'
 
 
-### 50000 archs
+### 10000 archs
+# CUDA_VISIBLE_DEVICES=0, python3 search_autoformer_etf.py --data-path '/dataset/ILSVRC2012' --gp --population-num 10000 --seed 123 \
+#  --param-limits 54 --min-param-limits 52 --change_qk --relative_position --dist-eval --cfg './experiments/search_space/space-B.yaml' --output_dir './OUTPUT/ETF-space-B-pop10000'
 
-# CUDA_VISIBLE_DEVICES=0, python3 search_autoformer_etf.py --data-path '/dataset/ILSVRC2012' --gp --population-num 50000 \
-#  --param-limits 54 --change_qk --relative_position --dist-eval --cfg './experiments/search_space/space-B.yaml' --output_dir './OUTPUT/ETF-space-B-pop50000'
+CUDA_VISIBLE_DEVICES=1, python3 search_autoformer_etf.py --data-path '/dataset/ILSVRC2012' --gp --population-num 10000 --seed 123  \
+  --param-limits 6 --min-param-limits 4 --change_qk --relative_position --dist-eval --cfg './experiments/search_space/space-T.yaml' --output_dir './OUTPUT/ETF-space-T-pop10000'
 
-CUDA_VISIBLE_DEVICES=1, python3 search_autoformer_etf.py --data-path '/dataset/ILSVRC2012' --gp --population-num 50000 \
- --param-limits 23 --change_qk --relative_position --dist-eval --cfg './experiments/search_space/space-S.yaml' --output_dir './OUTPUT/ETF-space-S-pop50000'
-
-CUDA_VISIBLE_DEVICES=1, python3 search_autoformer_etf.py --data-path '/dataset/ILSVRC2012' --gp --population-num 50000 \
-  --param-limits 6 --change_qk --relative_position --dist-eval --cfg './experiments/search_space/space-T.yaml' --output_dir './OUTPUT/ETF-space-T-pop50000'
+CUDA_VISIBLE_DEVICES=1, python3 search_autoformer_etf.py --data-path '/dataset/ILSVRC2012' --gp --population-num 10000 --seed 123  \
+ --param-limits 23 --min-param-limits 21 --change_qk --relative_position --dist-eval --cfg './experiments/search_space/space-S.yaml' --output_dir './OUTPUT/ETF-space-S-pop10000'
