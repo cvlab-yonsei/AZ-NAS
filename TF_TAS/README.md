@@ -1,3 +1,8 @@
+# Install
+```bash
+pip install timm thop einops
+```
+
 # Credit
 - Code taken from [TFTAS](https://github.com/decemberzhou/TF_TAS/tree/42616bcf1b6bb643bf968a8342f8aaddc4f53f32)
 
