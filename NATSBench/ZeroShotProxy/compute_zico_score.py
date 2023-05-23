@@ -13,13 +13,15 @@ def getgrad(model:torch.nn.Module, grad_dict:dict, step_iter=0):
     if step_iter==0:
         for name,mod in model.named_modules():
             if isinstance(mod, nn.Conv2d) or isinstance(mod, nn.Linear):
-                # print(mod.weight.grad.data.size())
-                # print(mod.weight.data.size())
-                grad_dict[name]=[mod.weight.grad.data.cpu().reshape(-1).numpy()]
+                if mod.weight.grad is not None:
+                    # print(mod.weight.grad.data.size())
+                    # print(mod.weight.data.size())
+                    grad_dict[name]=[mod.weight.grad.data.cpu().reshape(-1).numpy()]
     else:
         for name,mod in model.named_modules():
             if isinstance(mod, nn.Conv2d) or isinstance(mod, nn.Linear):
-                grad_dict[name].append(mod.weight.grad.data.cpu().reshape( -1).numpy())
+                if mod.weight.grad is not None:
+                    grad_dict[name].append(mod.weight.grad.data.cpu().reshape( -1).numpy())
     return grad_dict
 
 def caculate_zico(grad_dict):
@@ -56,7 +58,7 @@ def compute_nas_score(network, gpu, trainloader, resolution, batch_size, batch_i
     for i, batch in enumerate(trainloader):
         if i == batch_iter:
             break
-        network.zero_grad()
+        network.zero_grad(set_to_none=True)
         data,label = batch[0],batch[1]
         data,label=data.to(device),label.to(device)
 
