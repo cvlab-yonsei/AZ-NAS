@@ -135,6 +135,31 @@ class MasterNet(PlainNet.PlainNet):
         logit = self.fc_linear(output)
 
         return layer_features, logit
+
+    def extract_layer_features_and_logit_without_se(self, x): # new
+        output = x
+
+        layer_features = [] # new
+        for block_id, the_block in enumerate(self.block_list):
+            for block_id2, the_block2 in enumerate(the_block.block_list):
+                if hasattr(the_block2, 'block_list'):
+                    new_block_list = []
+                    for block_id3, the_block3 in enumerate(the_block2.block_list):
+                        if not isinstance(the_block3, basic_blocks.SE):
+                            new_block_list.append(the_block3)
+                    the_block2.block_list = new_block_list
+                output = the_block2(output)
+                if isinstance(the_block2, basic_blocks.RELU):
+                    if output.requires_grad:
+                        output.retain_grad()
+                    layer_features.append(output)
+
+        output = F.adaptive_avg_pool2d(output, output_size=1)
+        output = torch.flatten(output, 1)
+        logit = self.fc_linear(output)
+
+        return layer_features, logit
+        
         
 
     def extract_layer_and_stage_features(self, x): # new
