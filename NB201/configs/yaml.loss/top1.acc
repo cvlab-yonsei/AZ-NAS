@@ -1,4 +1,0 @@
-class_or_func: Top1AccMetric
-module_path: xautodl.xmisc.meter_utils
-args: [False]
-kwargs: {}

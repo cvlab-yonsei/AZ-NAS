@@ -1,4 +1,0 @@
-class_or_func: CrossEntropyLoss
-module_path: torch.nn
-args: []
-kwargs: {}
