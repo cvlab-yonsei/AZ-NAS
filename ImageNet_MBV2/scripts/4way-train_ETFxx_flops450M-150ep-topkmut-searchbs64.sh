@@ -77,5 +77,5 @@ horovodrun -np 4 python train_image_classification.py --dataset imagenet --num_c
   --use_se \
   --target_downsample_ratio 16 \
   --batch_size_per_gpu 128 --save_dir ${save_dir}/plain_training_epochs${epochs}_init-${init} \
-  --world-size 8 \
+  --world-size 4 \
   --dist_mode horovod\
