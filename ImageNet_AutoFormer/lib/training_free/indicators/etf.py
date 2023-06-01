@@ -44,6 +44,7 @@ def compute_nas_score(model, device, trainloader, resolution, batch_size):
         input_ = torch.randn(size=[batch_size, 3, resolution, resolution], device=device)
     else:
         input_ = next(iter(trainloader))[0]
+        input_ = input_.to(device)
     
     blk_features = model.extract_blk_features(input_)
 
@@ -72,8 +73,8 @@ def compute_nas_score(model, device, trainloader, resolution, batch_size):
         prob_s = s / s.sum()
         score = (-prob_s)*torch.log(prob_s+1e-8)
         score = score.sum().item()
-        info_flow_scores.append(score) 
-        expressivity_scores.append(score) # normalize by an upper bound (= np.log(c))
+        info_flow_scores.append(score)
+        expressivity_scores.append(score / np.log(c)) # normalize by an upper bound (= np.log(c))
     info_flow_scores = np.array(info_flow_scores)
     info_flow = np.min(info_flow_scores[1:] - info_flow_scores[:-1])
     expressivity = np.mean(expressivity_scores)

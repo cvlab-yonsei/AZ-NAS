@@ -26,7 +26,7 @@ echo "Run this script with metric=$metric, population_size=$population_size, evo
 
 cd ../
 
-save_dir=./save_dir/${metric}_flops600M-searchbs64-pop${population_size}-iter${evolution_max_iter}-topkmut-${seed}
+save_dir=./save_dir/${metric}_flops1G-searchbs64-pop${population_size}-iter${evolution_max_iter}-topkmut-${seed}
 mkdir -p ${save_dir}
 evolution_max_iter=$(printf "%.0f" $evolution_max_iter)
 
@@ -59,3 +59,4 @@ horovodrun -np 8 python ts_train_image_classification.py --dataset imagenet --nu
   --batch_size_per_gpu 64 --save_dir ${save_dir}/ts_training_epochs${epochs}_init-${init} \
   --world-size 8 \
   --dist_mode horovod\
+

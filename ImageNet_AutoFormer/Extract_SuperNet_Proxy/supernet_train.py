@@ -1,255 +1,30 @@
-import random
-import pickle
+import argparse
+import datetime
 import numpy as np
 import time
 import torch
 import torch.backends.cudnn as cudnn
-from pathlib import Path
-
-from lib.datasets import build_dataset
-from lib import utils
-from model.autoformer_space import Vision_TransformerSuper
-import argparse
-import os
+import json
 import yaml
-from lib.config import cfg, update_config_from_file
+from pathlib import Path
+from timm.data import Mixup
+from timm.models import create_model
+from timm.loss import LabelSmoothingCrossEntropy, SoftTargetCrossEntropy
+from timm.scheduler import create_scheduler
+from timm.optim import create_optimizer
+from timm.utils import NativeScaler
+from lib.datasets import build_dataset
+from supernet_engine import train_one_epoch, evaluate
 from lib.samplers import RASampler
-
-from lib.training_free import *
-# from lib.training_free.dataset import *
-from timm.utils.model import unwrap_model
-import copy
-from timm.utils import accuracy
-
-from lib.training_free.indicators.etf import compute_nas_score
-import scipy.stats as stats
-import time, logging
-import distutils.dir_util
-
-def mkfilepath(filename):
-    distutils.dir_util.mkpath(os.path.dirname(filename))
-
-def create_logging(log_filename=None, level=logging.INFO):
-    if log_filename is not None:
-        mkfilepath(log_filename)
-        logging.basicConfig(
-            level=level,
-            format="%(message)s",
-            handlers=[
-                logging.FileHandler(log_filename),
-                logging.StreamHandler()
-            ]
-        )
-    else:
-        logging.basicConfig(
-            level=level,
-            format="%(message)s",
-            handlers=[
-                logging.StreamHandler()
-            ]
-        )
-
-def decode_cand_tuple(cand_tuple):
-    depth = cand_tuple[0]
-    return depth, list(cand_tuple[1:depth+1]), list(cand_tuple[depth + 1: 2 * depth + 1]), cand_tuple[-1]
-
-def sample_configs(choices):
-
-    config = {}
-    dimensions = ['mlp_ratio', 'num_heads']
-    depth = random.choice(choices['depth'])
-    for dimension in dimensions:
-        config[dimension] = [random.choice(choices[dimension]) for _ in range(depth)]
-
-    config['embed_dim'] = [random.choice(choices['embed_dim'])]*depth
-
-    config['layer_num'] = depth
-    return config
-
-@torch.no_grad()
-def set_arc(data_loader, model, device, amp=True, choices=None, mode='super', retrain_config=None):
-    metric_logger = utils.MetricLogger(delimiter="  ")
-
-    # switch to evaluation mode
-    model.eval()
-    if mode == 'super':
-        config = sample_configs(choices=choices)
-        model_module = unwrap_model(model)
-        model_module.set_sample_config(config=config)
-    else:
-        config = retrain_config
-        model_module = unwrap_model(model)
-        model_module.set_sample_config(config=config)
-
-    return
-
-class Searcher(object):
-
-    def __init__(self, args, device, model, model_without_ddp, choices, train_loader, val_loader, test_loader, output_dir):
-        self.device = device
-        self.indicator_name=args.indicator_name
-        self.model = model
-        self.model_without_ddp = model_without_ddp
-        self.args = args
-        self.max_epochs = args.max_epochs
-        self.population_num = args.population_num
-        self.parameters_limits = args.param_limits
-        self.min_parameters_limits = args.min_param_limits
-        self.train_loader = train_loader
-        self.val_loader = val_loader
-        self.test_loader = test_loader
-        self.output_dir = output_dir
-        self.memory = []
-        self.vis_dict = {}
-        self.top = {}
-        self.epoch = 0
-        self.checkpoint_path = args.resume
-        self.candidates = []
-        self.top_accuracies = []
-        self.cand_params = []
-        self.choices = choices
-        self.all_archs = []
-        self.all_score_lists_dict = {}
-
-    def save_checkpoint(self):
-
-        info = {}
-        info['top_accuracies'] = self.top_accuracies
-        info['memory'] = self.memory
-        info['candidates'] = self.candidates
-        info['vis_dict'] = self.vis_dict
-        info['epoch'] = self.epoch
-        checkpoint_path = os.path.join(self.output_dir, "checkpoint-{}.pth.tar".format(self.epoch))
-        torch.save(info, checkpoint_path)
-        print('save checkpoint to', checkpoint_path)
-
-    def load_checkpoint(self):
-        if not os.path.exists(self.checkpoint_path):
-            return False
-        info = torch.load(self.checkpoint_path)
-        self.memory = info['memory']
-        self.candidates = info['candidates']
-        self.vis_dict = info['vis_dict']
-        self.epoch = info['epoch']
-
-        print('load checkpoint from', self.checkpoint_path)
-        return True
-
-    def is_legal(self, cand):
-        info = {}
-        sampled_config = {}
-        sampled_config['layer_num'] = cand['layer_num']
-        sampled_config['mlp_ratio'] = cand['mlp_ratio']
-        sampled_config['num_heads'] = cand['num_heads']
-        sampled_config['embed_dim'] = cand['embed_dim']
-        n_parameters = self.model_without_ddp.get_sampled_params_numel(cand)
-        info['params'] = n_parameters / 10. ** 6
-
-        if info['params'] > self.parameters_limits:
-            # print('parameters limit exceed')
-            return False
-
-        if info['params'] < self.min_parameters_limits:
-            # print('under minimum parameters limit')
-            return False
-
-        # print("rank:", utils.get_rank(), cand, info['params'])
-        set_arc(self.val_loader, self.model_without_ddp, self.device, amp=self.args.amp, mode='retrain',
-                              retrain_config=sampled_config)
-
-        ### ETF metric
-        scores = compute_nas_score(model=self.model_without_ddp, device=self.device, trainloader=None, 
-                                   resolution=self.args.input_size, batch_size=self.args.batch_size)
-
-        # append scores
-        if self.all_score_lists_dict == {}:
-            for k in scores.keys():
-                self.all_score_lists_dict[k] = []
-        for k, v in scores.items():
-            self.all_score_lists_dict[k].append(v)
-        self.all_archs.append(cand)
-
-        # compute aggregated scores
-        agg_rank = None
-        for k in self.all_score_lists_dict.keys():
-            l = len(self.all_score_lists_dict[k])
-            if agg_rank is None:
-                agg_rank = np.log(stats.rankdata(self.all_score_lists_dict[k]) / l)
-            else:
-                agg_rank = agg_rank + np.log(stats.rankdata(self.all_score_lists_dict[k]) / l)
-
-        # update best arch
-        best_idx = np.argmax(agg_rank)
-        self.top['cand']=self.all_archs[best_idx]
-
-        # logging
-        if len(self.all_archs) % 100 == 0:
-            elapsed_time = time.time() - self.start_timer
-            logging.info("loop_count={} / {}, time={:4g}h".format(len(self.all_archs), self.population_num, elapsed_time/3600))
-            logging.info(self.top['cand'])
-            params = self.model_without_ddp.get_sampled_params_numel(self.top['cand']) / 10. ** 6
-            logging.info("with {}M params".format(params))
-            log_string = ''
-            best_idx = np.argmax(agg_rank)
-            worst_idx = np.argmin(agg_rank)
-            for key in self.all_score_lists_dict.keys():
-                _max = self.all_score_lists_dict[key][best_idx]
-                _min = self.all_score_lists_dict[key][worst_idx]
-                log_string += f'max_{key}={_max:4g}\t min_{key}={_min:4g}\n'
-            logging.info(log_string)
-
-
-        info['visited'] = True
-        self.vis_dict[cand['id']] = info
-        return True
-
-    def stack_random_cand(self, random_func, *, batchsize=20):
-        while True:
-            cands = [random_func(i) for i in range(batchsize)]
-            for cand in cands:
-                if cand not in self.candidates:
-                    self.vis_dict = {}
-            for cand in cands:
-                yield cand
-
-    def get_random_cand(self, id):
-
-        config = {}
-        dimensions = ['mlp_ratio', 'num_heads']
-        depth = random.choice(self.choices['depth'])
-        for dimension in dimensions:
-            config[dimension] = [random.choice(self.choices[dimension]) for _ in range(depth)]
-        config['embed_dim'] = [random.choice(self.choices['embed_dim'])] * depth
-        config['layer_num'] = depth
-        config['id'] = id
-        return config
-
-    def get_random(self, num):
-        print('random select ........')
-        cand_iter = self.stack_random_cand(self.get_random_cand)
-        while len(self.candidates) < num:
-            cand = next(cand_iter)
-            if not self.is_legal(cand):
-                continue
-            self.candidates.append(cand)
-
-    def search(self):
-        self.start_timer = time.time()
-        self.get_random(self.population_num)
-        logging.info('Searched Architecture: ', self.top['cand'])
+from lib import utils
+from lib.config import cfg, update_config_from_file
+from model.supernet_transformer import Vision_TransformerSuper
 
 
 def get_args_parser():
-    parser = argparse.ArgumentParser('Training-free Transformer Search Script', add_help=False)
+    parser = argparse.ArgumentParser('AutoFormer training and evaluation script', add_help=False)
     parser.add_argument('--batch-size', default=64, type=int)
-
-    # search parameters
-    parser.add_argument('--indicator-name', default='etf', type=str)
-    parser.add_argument('--max-epochs', type=int, default=1)
-    parser.add_argument('--population-num', type=int, default=8000)
-    parser.add_argument('--param-limits', type=float, default=23)
-    parser.add_argument('--min-param-limits', type=float, default=3)
-
+    parser.add_argument('--epochs', default=300, type=int)
     # config file
     parser.add_argument('--cfg',help='experiment configure file name',required=True,type=str)
 
@@ -259,15 +34,15 @@ def get_args_parser():
     parser.add_argument('--teacher_model', default='', type=str,
                         help='Name of teacher model to train')
     parser.add_argument('--relative_position', action='store_true')
-    parser.add_argument('--max_relative_position', type=int, default=14, help='max distance in relative position embedding')
-    parser.add_argument('--scale', action='store_true')
     parser.add_argument('--gp', action='store_true')
     parser.add_argument('--change_qkv', action='store_true')
+    parser.add_argument('--max_relative_position', type=int, default=14, help='max distance in relative position embedding')
 
     # Model parameters
     parser.add_argument('--model', default='', type=str, metavar='MODEL',
                         help='Name of model to train')
-
+    # AutoFormer config
+    parser.add_argument('--mode', type=str, default='super', choices=['super', 'retrain'], help='mode of AutoFormer')
     parser.add_argument('--input-size', default=224, type=int)
     parser.add_argument('--patch_size', default=16, type=int)
 
@@ -283,8 +58,6 @@ def get_args_parser():
     # parser.set_defaults(model_ema=True)
     parser.add_argument('--model-ema-decay', type=float, default=0.99996, help='')
     parser.add_argument('--model-ema-force-cpu', action='store_true', default=False, help='')
-
-    # custom model argument
     parser.add_argument('--rpe_type', type=str, default='bias', choices=['bias', 'direct'])
     parser.add_argument('--post_norm', action='store_true')
     parser.add_argument('--no_abs_pos', action='store_true')
@@ -302,6 +75,7 @@ def get_args_parser():
                         help='SGD momentum (default: 0.9)')
     parser.add_argument('--weight-decay', type=float, default=0.05,
                         help='weight decay (default: 0.05)')
+
     # Learning rate schedule parameters
     parser.add_argument('--sched', default='cosine', type=str, metavar='SCHEDULER',
                         help='LR scheduler (default: "cosine"')
@@ -343,6 +117,8 @@ def get_args_parser():
 
     parser.add_argument('--repeated-aug', action='store_true')
     parser.add_argument('--no-repeated-aug', action='store_false', dest='repeated_aug')
+
+
     parser.set_defaults(repeated_aug=True)
 
     # * Random Erase params
@@ -370,16 +146,15 @@ def get_args_parser():
                         help='How to apply mixup/cutmix params. Per "batch", "pair", or "elem"')
 
     # Dataset parameters
-    parser.add_argument('--data-path', default='/dataset/imagenet', type=str,
+    parser.add_argument('--data-path', default='./data/imagenet/', type=str,
                         help='dataset path')
-    parser.add_argument('--data-set', default='IMNET', choices=['CIFAR10', 'CIFAR100', 'IMNET'],
+    parser.add_argument('--data-set', default='IMNET', choices=['CIFAR', 'IMNET', 'INAT', 'INAT19'],
                         type=str, help='Image Net dataset path')
     parser.add_argument('--inat-category', default='name',
                         choices=['kingdom', 'phylum', 'class', 'order', 'supercategory', 'family', 'genus', 'name'],
                         type=str, help='semantic granularity')
-    parser.add_argument('--no-prefetcher', action='store_true', default=False,
-                        help='disable fast prefetcher')
-    parser.add_argument('--output_dir', default='./OUTPUT/sample',
+
+    parser.add_argument('--output_dir', default='./',
                         help='path where to save, empty for no saving')
     parser.add_argument('--device', default='cuda',
                         help='device to use for training / testing')
@@ -400,36 +175,33 @@ def get_args_parser():
     parser.add_argument('--world_size', default=1, type=int,
                         help='number of distributed processes')
     parser.add_argument('--dist_url', default='env://', help='url used to set up distributed training')
+
     parser.add_argument('--amp', action='store_true')
     parser.add_argument('--no-amp', action='store_false', dest='amp')
     parser.set_defaults(amp=True)
+
+
     return parser
 
 def main(args):
 
-    update_config_from_file(args.cfg)
     utils.init_distributed_mode(args)
+    update_config_from_file(args.cfg)
+
+    print(args)
+    args_text = yaml.safe_dump(args.__dict__, default_flow_style=False)
 
     device = torch.device(args.device)
 
-    args_text = yaml.safe_dump(args.__dict__, default_flow_style=False)
-    with open(os.path.join(args.output_dir, "config.yaml"), 'w') as f:
-        f.write(args_text)
-
-    create_logging(os.path.join(args.output_dir, "search.log"))
-    logging.info(args)
-
+    # fix the seed for reproducibility
     seed = args.seed + utils.get_rank()
     torch.manual_seed(seed)
     np.random.seed(seed)
-    random.seed(args.seed)
+    # random.seed(seed)
     cudnn.benchmark = True
 
-    args.prefetcher = not args.no_prefetcher
-
     dataset_train, args.nb_classes = build_dataset(is_train=True, args=args)
-    dataset_val, args.nb_classes = build_dataset(is_train=False, args=args, folder_name="subImageNet")
-    dataset_test, _ = build_dataset(is_train=False, args=args, folder_name="val")
+    dataset_val, _ = build_dataset(is_train=False, args=args)
 
     if args.distributed:
         num_tasks = utils.get_world_size()
@@ -450,14 +222,10 @@ def main(args):
                     'equal num of samples per-process.')
             sampler_val = torch.utils.data.DistributedSampler(
                 dataset_val, num_replicas=num_tasks, rank=global_rank, shuffle=False)
-            sampler_test = torch.utils.data.DistributedSampler(
-                dataset_test, num_replicas=num_tasks, rank=global_rank, shuffle=False)
         else:
             sampler_val = torch.utils.data.SequentialSampler(dataset_val)
-            sampler_test = torch.utils.data.SequentialSampler(dataset_test)
     else:
         sampler_val = torch.utils.data.SequentialSampler(dataset_val)
-        sampler_test = torch.utils.data.SequentialSampler(dataset_test)
         sampler_train = torch.utils.data.RandomSampler(dataset_train)
 
     data_loader_train = torch.utils.data.DataLoader(
@@ -468,18 +236,22 @@ def main(args):
         drop_last=True,
     )
 
-    data_loader_test = torch.utils.data.DataLoader(
-        dataset_test, batch_size=int(args.batch_size*2),
-        sampler=sampler_test, num_workers=args.num_workers,
-        pin_memory=args.pin_mem, drop_last=False
-    )
-
     data_loader_val = torch.utils.data.DataLoader(
-        dataset_val, batch_size=int(args.batch_size),
+        dataset_val, batch_size=int(2 * args.batch_size),
         sampler=sampler_val, num_workers=args.num_workers,
         pin_memory=args.pin_mem, drop_last=False
     )
-    logging.info(cfg)
+
+    mixup_fn = None
+    mixup_active = args.mixup > 0 or args.cutmix > 0. or args.cutmix_minmax is not None
+    if mixup_active:
+        mixup_fn = Mixup(
+            mixup_alpha=args.mixup, cutmix_alpha=args.cutmix, cutmix_minmax=args.cutmix_minmax,
+            prob=args.mixup_prob, switch_prob=args.mixup_switch_prob, mode=args.mixup_mode,
+            label_smoothing=args.smoothing, num_classes=args.nb_classes)
+
+    print(f"Creating SuperVisionTransformer")
+    print(cfg)
     model = Vision_TransformerSuper(img_size=args.input_size,
                                     patch_size=args.patch_size,
                                     embed_dim=cfg.SUPERNET.EMBED_DIM, depth=cfg.SUPERNET.DEPTH,
@@ -492,49 +264,133 @@ def main(args):
                                     relative_position=args.relative_position,
                                     change_qkv=args.change_qkv, abs_pos=not args.no_abs_pos)
 
+    choices = {'num_heads': cfg.SEARCH_SPACE.NUM_HEADS, 'mlp_ratio': cfg.SEARCH_SPACE.MLP_RATIO,
+               'embed_dim': cfg.SEARCH_SPACE.EMBED_DIM , 'depth': cfg.SEARCH_SPACE.DEPTH}
+
     model.to(device)
-    model_without_ddp =copy.deepcopy(model)
+    if args.teacher_model:
+        teacher_model = create_model(
+            args.teacher_model,
+            pretrained=True,
+            num_classes=args.nb_classes,
+        )
+        teacher_model.to(device)
+        teacher_loss = LabelSmoothingCrossEntropy(smoothing=args.smoothing)
+    else:
+        teacher_model = None
+        teacher_loss = None
+
+    model_ema = None
+
+    model_without_ddp = model
     if args.distributed:
-        model = torch.nn.parallel.DistributedDataParallel(model, device_ids=[args.gpu])
+
+        model = torch.nn.parallel.DistributedDataParallel(model, device_ids=[args.gpu], find_unused_parameters=True)
         model_without_ddp = model.module
-        model_pe = copy.deepcopy(model_without_ddp)
 
     n_parameters = sum(p.numel() for p in model.parameters() if p.requires_grad)
-    logging.info('number of params: {}'.format(n_parameters))
+    print('number of params:', n_parameters)
+
+    linear_scaled_lr = args.lr * args.batch_size * utils.get_world_size() / 512.0
+    args.lr = linear_scaled_lr
+    optimizer = create_optimizer(args, model_without_ddp)
+    loss_scaler = NativeScaler()
+    lr_scheduler, _ = create_scheduler(args, optimizer)
+
+    # criterion = LabelSmoothingCrossEntropy()
+
+    if args.mixup > 0.:
+        # smoothing is handled with mixup label transform
+        criterion = SoftTargetCrossEntropy()
+    elif args.smoothing:
+        criterion = LabelSmoothingCrossEntropy(smoothing=args.smoothing)
+    else:
+        criterion = torch.nn.CrossEntropyLoss()
+
+    output_dir = Path(args.output_dir)
+
+    if not output_dir.exists():
+        output_dir.mkdir(parents=True)
+    # save config for later experiments
+    with open(output_dir / "config.yaml", 'w') as f:
+        f.write(args_text)
     if args.resume:
         if args.resume.startswith('https'):
             checkpoint = torch.hub.load_state_dict_from_url(
                 args.resume, map_location='cpu', check_hash=True)
         else:
             checkpoint = torch.load(args.resume, map_location='cpu')
-        print("resume from checkpoint: {}".format(args.resume))
         model_without_ddp.load_state_dict(checkpoint['model'])
+        if not args.eval and 'optimizer' in checkpoint and 'lr_scheduler' in checkpoint and 'epoch' in checkpoint:
+            optimizer.load_state_dict(checkpoint['optimizer'])
+            lr_scheduler.load_state_dict(checkpoint['lr_scheduler'])
+            args.start_epoch = checkpoint['epoch'] + 1
+            if 'scaler' in checkpoint:
+                loss_scaler.load_state_dict(checkpoint['scaler'])
+            if args.model_ema:
+                utils._load_checkpoint_for_ema(model_ema, checkpoint['model_ema'])
 
-    choices = {'num_heads': cfg.SEARCH_SPACE.NUM_HEADS, 'mlp_ratio': cfg.SEARCH_SPACE.MLP_RATIO,
-               'embed_dim': cfg.SEARCH_SPACE.EMBED_DIM , 'depth': cfg.SEARCH_SPACE.DEPTH}
+    retrain_config = None
+    if args.mode == 'retrain' and "RETRAIN" in cfg:
+        retrain_config = {'layer_num': cfg.RETRAIN.DEPTH, 'embed_dim': [cfg.RETRAIN.EMBED_DIM]*cfg.RETRAIN.DEPTH,
+                          'num_heads': cfg.RETRAIN.NUM_HEADS,'mlp_ratio': cfg.RETRAIN.MLP_RATIO}
+    if args.eval:
+        test_stats = evaluate(data_loader_val, model, device,  mode = args.mode, retrain_config=retrain_config)
+        print(f"Accuracy of the network on the {len(dataset_val)} test images: {test_stats['acc1']:.1f}%")
+        return
 
+    print("Start training")
+    start_time = time.time()
+    max_accuracy = 0.0
 
-    t = time.time()
-    searcher = Searcher(args, device, model, model_without_ddp, choices, data_loader_train, data_loader_val, data_loader_test, args.output_dir)
+    for epoch in range(args.start_epoch, args.epochs):
+        if args.distributed:
+            data_loader_train.sampler.set_epoch(epoch)
 
-    searcher.search()
+        train_stats = train_one_epoch(
+            model, criterion, data_loader_train,
+            optimizer, device, epoch, loss_scaler,
+            args.clip_grad, model_ema, mixup_fn,
+            amp=args.amp, teacher_model=teacher_model,
+            teach_loss=teacher_loss,
+            choices=choices, mode = args.mode, retrain_config=retrain_config,
+        )
 
-    best_arch = searcher.top['cand']
-    output_dict = {'RETRAIN':{}}
-    output_dict['RETRAIN']['MLP_RATIO'] = best_arch['mlp_ratio']
-    output_dict['RETRAIN']['NUM_HEADS'] = best_arch['num_heads']
-    output_dict['RETRAIN']['DEPTH'] = best_arch['layer_num']
-    output_dict['RETRAIN']['EMBED_DIM'] = best_arch['embed_dim'][0]
-    output_text = yaml.safe_dump(output_dict, default_flow_style=False)
-    with open(os.path.join(args.output_dir, "best_arch.yaml"), 'w') as f:
-        f.write(output_text)
+        lr_scheduler.step(epoch)
+        if args.output_dir:
+            checkpoint_paths = [output_dir / 'checkpoint.pth']
+            for checkpoint_path in checkpoint_paths:
+                utils.save_on_master({
+                    'model': model_without_ddp.state_dict(),
+                    'optimizer': optimizer.state_dict(),
+                    'lr_scheduler': lr_scheduler.state_dict(),
+                    'epoch': epoch,
+                    # 'model_ema': get_state_dict(model_ema),
+                    'scaler': loss_scaler.state_dict(),
+                    'args': args,
+                }, checkpoint_path)
 
-    logging.info('total searching time = {:.2f} hours'.format(
-        (time.time() - t) / 3600))
+        test_stats = evaluate(data_loader_val, model, device, amp=args.amp, choices=choices, mode = args.mode, retrain_config=retrain_config)
+        print(f"Accuracy of the network on the {len(dataset_val)} test images: {test_stats['acc1']:.1f}%")
+        max_accuracy = max(max_accuracy, test_stats["acc1"])
+        print(f'Max accuracy: {max_accuracy:.2f}%')
+
+        log_stats = {**{f'train_{k}': v for k, v in train_stats.items()},
+                     **{f'test_{k}': v for k, v in test_stats.items()},
+                     'epoch': epoch,
+                     'n_parameters': n_parameters}
+
+        if args.output_dir and utils.is_main_process():
+            with (output_dir / "log.txt").open("a") as f:
+                f.write(json.dumps(log_stats) + "\n")
+
+    total_time = time.time() - start_time
+    total_time_str = str(datetime.timedelta(seconds=int(total_time)))
+    print('Training time {}'.format(total_time_str))
 
 
 if __name__ == '__main__':
-    parser = argparse.ArgumentParser('Training-free Transformer Search', parents=[get_args_parser()])
+    parser = argparse.ArgumentParser('AutoFormer training and evaluation script', parents=[get_args_parser()])
     args = parser.parse_args()
     if args.output_dir:
         Path(args.output_dir).mkdir(parents=True, exist_ok=True)
