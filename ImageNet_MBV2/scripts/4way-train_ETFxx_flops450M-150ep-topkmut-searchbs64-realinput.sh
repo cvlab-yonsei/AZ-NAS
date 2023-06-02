@@ -26,7 +26,7 @@ echo "Run this script with metric=$metric, population_size=$population_size, evo
 
 cd ../
 
-save_dir=./save_dir/${metric}_flops450M-searchbs64-pop${population_size}-iter${evolution_max_iter}-topkmut-${seed}
+save_dir=./save_dir/${metric}_flops450M-searchbs64-pop${population_size}-iter${evolution_max_iter}-topkmut-${seed}-realinput
 mkdir -p ${save_dir}
 evolution_max_iter=$(printf "%.0f" $evolution_max_iter)
 
