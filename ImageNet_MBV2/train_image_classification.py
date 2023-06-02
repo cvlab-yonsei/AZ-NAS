@@ -749,6 +749,7 @@ def main(opt, argv):
     # create model
     model = ModelLoader.get_model(opt, argv)
     model = init_model(model, opt, argv)
+    model = torch.nn.SyncBatchNorm.convert_sync_batchnorm(model) ### Sync BN
     logging.info('loading model:')
     logging.info(str(model))
 
