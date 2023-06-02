@@ -4,41 +4,41 @@ import torch
 from torch import nn
 import numpy as np
 
-# def kaiming_normal_fanin_init(m):
-#     if isinstance(m, nn.Conv2d) or isinstance(m, nn.Linear):
-#         nn.init.kaiming_normal_(m.weight, mode='fan_in', nonlinearity='relu')
-#         if hasattr(m, 'bias') and m.bias is not None:
-#             nn.init.zeros_(m.bias)
-#     elif isinstance(m, (nn.BatchNorm2d, nn.GroupNorm)):
-#         if m.affine:
-#             nn.init.ones_(m.weight)
-#             nn.init.zeros_(m.bias)
+def kaiming_normal_fanin_init(m):
+    if isinstance(m, nn.Conv2d) or isinstance(m, nn.Linear):
+        nn.init.kaiming_normal_(m.weight, mode='fan_in', nonlinearity='relu')
+        if hasattr(m, 'bias') and m.bias is not None:
+            nn.init.zeros_(m.bias)
+    elif isinstance(m, (nn.BatchNorm2d, nn.GroupNorm)):
+        if m.affine:
+            nn.init.ones_(m.weight)
+            nn.init.zeros_(m.bias)
 
-# def kaiming_normal_fanout_init(m):
-#     if isinstance(m, nn.Conv2d) or isinstance(m, nn.Linear):
-#         nn.init.kaiming_normal_(m.weight, mode='fan_out', nonlinearity='relu')
-#         if hasattr(m, 'bias') and m.bias is not None:
-#             nn.init.zeros_(m.bias)
-#     elif isinstance(m, (nn.BatchNorm2d, nn.GroupNorm)):
-#         if m.affine:
-#             nn.init.ones_(m.weight)
-#             nn.init.zeros_(m.bias)
+def kaiming_normal_fanout_init(m):
+    if isinstance(m, nn.Conv2d) or isinstance(m, nn.Linear):
+        nn.init.kaiming_normal_(m.weight, mode='fan_out', nonlinearity='relu')
+        if hasattr(m, 'bias') and m.bias is not None:
+            nn.init.zeros_(m.bias)
+    elif isinstance(m, (nn.BatchNorm2d, nn.GroupNorm)):
+        if m.affine:
+            nn.init.ones_(m.weight)
+            nn.init.zeros_(m.bias)
 
-# def init_model(model, method='kaiming_norm_fanin'):
-#     if method == 'kaiming_norm_fanin':
-#         model.apply(kaiming_normal_fanin_init)
-#     elif method == 'kaiming_norm_fanout':
-#         model.apply(kaiming_normal_fanout_init)
-#     else:
-#         raise NotImplementedError
-#     return model
+def init_model(model, method='kaiming_norm_fanin'):
+    if method == 'kaiming_norm_fanin':
+        model.apply(kaiming_normal_fanin_init)
+    elif method == 'kaiming_norm_fanout':
+        model.apply(kaiming_normal_fanout_init)
+    else:
+        raise NotImplementedError
+    return model
 
 
 def compute_nas_score(model, device, trainloader, resolution, batch_size):
-    model.train()
+    model.eval() # eval mode
     info = {}
 
-    # init_model(model, 'kaiming_norm_fanin')
+    init_model(model, 'kaiming_norm_fanin')
 
     if trainloader == None:
         input_ = torch.randn(size=[batch_size, 3, resolution, resolution], device=device)
@@ -46,7 +46,7 @@ def compute_nas_score(model, device, trainloader, resolution, batch_size):
         input_ = next(iter(trainloader))[0]
         input_ = input_.to(device)
     
-    blk_features = model.extract_blk_features(input_)
+    res_features = model.extract_res_features(input_)
 
     ################ fwrd pca score ################
     """
@@ -55,14 +55,14 @@ def compute_nas_score(model, device, trainloader, resolution, batch_size):
     info_flow_scores = []
     expressivity_scores = []
     prev_feat = None
-    for i in range(len(blk_features)):
-        feat = blk_features[i].detach().clone()
+    for i in range(len(res_features)):
+        feat = res_features[i].detach().clone()
         ### avoid duplicated features
         if prev_feat is None:
-            prev_feat = blk_features[i].detach().clone()
+            prev_feat = res_features[i].detach().clone()
         else:
             assert not torch.all(feat == prev_feat)
-            prev_feat = blk_features[i].detach().clone()
+            prev_feat = res_features[i].detach().clone()
         ### 
         b,n,c = feat.size()
         feat = feat.view(b*n,c)
@@ -85,9 +85,9 @@ def compute_nas_score(model, device, trainloader, resolution, batch_size):
     spec norm score across residual block features
     """
     scores = []
-    for i in reversed(range(1, len(blk_features))):
-        f_out = blk_features[i]
-        f_in = blk_features[i-1]
+    for i in reversed(range(1, len(res_features))):
+        f_out = res_features[i]
+        f_in = res_features[i-1]
         if f_out.grad is not None:
             f_out.grad.zero_()
         if f_in.grad is not None:

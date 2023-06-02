@@ -2,13 +2,13 @@ available_indicators = []
 _indicator_impls = {}
 
 
-def indicator(name, bn=True, copy_net=True, force_clean=True, **impl_args):
+def indicator(name, bn=True, copy_net=False, force_clean=True, **impl_args):
     def make_impl(func):
         def indicator_impl(net_orig, device, *args, **kwargs):
             if copy_net:
                 net = net_orig.get_copy(bn=bn).to(device)
-            else:
-                net = net_orig
+            else: # we set copy_net=False by default due to the deepcopy error
+                net = net_orig.to(device)
             if name =='NASWOT':
                 ret = func(net, device)
             elif name =='te_nas':

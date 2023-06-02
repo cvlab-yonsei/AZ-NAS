@@ -146,8 +146,8 @@ class Vision_TransformerSuper(nn.Module):
         total_flops += self.head.get_complexity(sequence_length+1)
         return total_flops
 
-    def extract_blk_features(self, x):
-        blk_features = []
+    def extract_res_features(self, x):
+        res_features = []
         
         B = x.shape[0]
         x = self.patch_embed_super(x)
@@ -160,14 +160,17 @@ class Vision_TransformerSuper(nn.Module):
 
         # start_time = time.time()
         for blk in self.blocks:
-            x = blk(x)
             if blk.is_identity_layer:
                 continue
+            x_att, x = blk.extract_res_features(x)
+            if x_att.requires_grad:
+                x_att.retain_grad()
             if x.requires_grad:
                 x.retain_grad()
-            blk_features.append(x)
+            res_features.append(x_att)
+            res_features.append(x)
 
-        return blk_features
+        return res_features
 
     def forward_features(self, x):
         B = x.shape[0]
@@ -294,6 +297,45 @@ class TransformerEncoderLayer(nn.Module):
         self.fc2.set_sample_config(sample_in_dim=self.sample_ffn_embed_dim_this_layer, sample_out_dim=self.sample_out_dim)
 
         self.ffn_layer_norm.set_sample_config(sample_embed_dim=self.sample_embed_dim)
+
+    def extract_res_features(self, x):
+        """
+        Args:
+            x (Tensor): input to the layer of shape `(batch, patch_num , sample_embed_dim)`
+
+        Returns:
+            encoded output of shape `(batch, patch_num, sample_embed_dim)`
+        """
+        if self.is_identity_layer:
+            return x
+
+        # compute attn
+        # start_time = time.time()
+
+        residual = x
+        x = self.maybe_layer_norm(self.attn_layer_norm, x, before=True)
+        x = self.attn(x)
+        x = F.dropout(x, p=self.sample_attn_dropout, training=self.training)
+        x = self.drop_path(x)
+        x = residual + x
+        x = self.maybe_layer_norm(self.attn_layer_norm, x, after=True)
+        # print("attn :", time.time() - start_time)
+        # compute the ffn
+        # start_time = time.time()
+        x_att = x
+        residual = x
+        x = self.maybe_layer_norm(self.ffn_layer_norm, x, before=True)
+        x = self.activation_fn(self.fc1(x))
+        x = F.dropout(x, p=self.sample_dropout, training=self.training)
+        x = self.fc2(x)
+        x = F.dropout(x, p=self.sample_dropout, training=self.training)
+        if self.scale:
+            x = x * (self.super_mlp_ratio / self.sample_mlp_ratio)
+        x = self.drop_path(x)
+        x = residual + x
+        x = self.maybe_layer_norm(self.ffn_layer_norm, x, after=True)
+        # print("ffn :", time.time() - start_time)
+        return x_att, x
 
 
     def forward(self, x):

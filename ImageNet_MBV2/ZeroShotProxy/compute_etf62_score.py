@@ -45,7 +45,7 @@ def init_model(model, method='kaiming_norm_fanin'):
     return model
 
 
-def compute_nas_score(model, gpu, trainloader, resolution, batch_size, fp16=False):
+def compute_nas_score(model, gpu, trainloader, resolution, batch_size, fp16=False, init=True):
     model.train()
     model.cuda()
     info = {}
@@ -60,7 +60,8 @@ def compute_nas_score(model, gpu, trainloader, resolution, batch_size, fp16=Fals
     else:
         dtype = torch.float32
 
-    init_model(model, 'kaiming_norm_fanin')
+    if init:
+        init_model(model, 'kaiming_norm_fanin')
 
     if trainloader == None:
         input_ = torch.randn(size=[batch_size, 3, resolution, resolution], device=device, dtype=dtype)
