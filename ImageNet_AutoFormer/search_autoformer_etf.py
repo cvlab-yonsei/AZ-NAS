@@ -66,7 +66,7 @@ def sample_configs(choices):
     config['layer_num'] = depth
     return config
 
-@torch.no_grad()
+# @torch.no_grad()
 def set_arc(data_loader, model, device, amp=True, choices=None, mode='super', retrain_config=None):
     metric_logger = utils.MetricLogger(delimiter="  ")
 

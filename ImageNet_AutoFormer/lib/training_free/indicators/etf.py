@@ -4,41 +4,48 @@ import torch
 from torch import nn
 import numpy as np
 
-def kaiming_normal_fanin_init(m):
-    if isinstance(m, nn.Conv2d) or isinstance(m, nn.Linear):
-        nn.init.kaiming_normal_(m.weight, mode='fan_in', nonlinearity='relu')
-        if hasattr(m, 'bias') and m.bias is not None:
-            nn.init.zeros_(m.bias)
-    elif isinstance(m, (nn.BatchNorm2d, nn.GroupNorm)):
-        if m.affine:
-            nn.init.ones_(m.weight)
-            nn.init.zeros_(m.bias)
+from model.module.Linear_super import LinearSuper
+from model.module.embedding_super import PatchembedSuper
+from model.module.qkv_super import qkv_super
 
-def kaiming_normal_fanout_init(m):
-    if isinstance(m, nn.Conv2d) or isinstance(m, nn.Linear):
-        nn.init.kaiming_normal_(m.weight, mode='fan_out', nonlinearity='relu')
-        if hasattr(m, 'bias') and m.bias is not None:
-            nn.init.zeros_(m.bias)
-    elif isinstance(m, (nn.BatchNorm2d, nn.GroupNorm)):
-        if m.affine:
-            nn.init.ones_(m.weight)
-            nn.init.zeros_(m.bias)
+def kaiming_normal_fanin_init(m):
+    if isinstance(m, LinearSuper) or isinstance(m, qkv_super):
+        if 'weight' in m.samples.keys():
+            nn.init.kaiming_normal_(m.samples['weight'], mode='fan_in', nonlinearity='relu')
+            if m.samples['bias'] is not None:
+                nn.init.constant_(m.samples['bias'], 0)
+    if isinstance(m, PatchembedSuper):
+        nn.init.kaiming_normal_(m.sampled_weight, mode='fan_in', nonlinearity='relu')
+        if m.sampled_bias is not None:
+            nn.init.constant_(m.sampled_bias, 0)
+    elif isinstance(m, nn.LayerNorm):
+        nn.init.constant_(m.bias, 0)
+        nn.init.constant_(m.weight, 1.0)
+
+# def kaiming_normal_fanout_init(m):
+#     if isinstance(m, nn.Conv2d) or isinstance(m, nn.Linear):
+#         nn.init.kaiming_normal_(m.weight, mode='fan_out', nonlinearity='relu')
+#         if m.bias is not None:
+#             nn.init.constant_(m.bias, 0)
+#     elif isinstance(m, nn.LayerNorm):
+#         nn.init.constant_(m.bias, 0)
+#         nn.init.constant_(m.weight, 1.0)
 
 def init_model(model, method='kaiming_norm_fanin'):
     if method == 'kaiming_norm_fanin':
         model.apply(kaiming_normal_fanin_init)
-    elif method == 'kaiming_norm_fanout':
-        model.apply(kaiming_normal_fanout_init)
+    # elif method == 'kaiming_norm_fanout':
+    #     model.apply(kaiming_normal_fanout_init)
     else:
         raise NotImplementedError
     return model
 
 
 def compute_nas_score(model, device, trainloader, resolution, batch_size):
+    init_model(model, 'kaiming_norm_fanin')
+    
     model.eval() # eval mode
     info = {}
-
-    init_model(model, 'kaiming_norm_fanin')
 
     if trainloader == None:
         input_ = torch.randn(size=[batch_size, 3, resolution, resolution], device=device)
@@ -48,37 +55,37 @@ def compute_nas_score(model, device, trainloader, resolution, batch_size):
     
     res_features = model.extract_res_features(input_)
 
-    ################ fwrd pca score ################
-    """
-    pca score across residual block features / normalize each score by upper bound
-    """
-    info_flow_scores = []
-    expressivity_scores = []
-    prev_feat = None
-    for i in range(len(res_features)):
-        feat = res_features[i].detach().clone()
-        ### avoid duplicated features
-        if prev_feat is None:
-            prev_feat = res_features[i].detach().clone()
-        else:
-            assert not torch.all(feat == prev_feat)
-            prev_feat = res_features[i].detach().clone()
-        ### 
-        b,n,c = feat.size()
-        feat = feat.view(b*n,c)
-        m = feat.mean(dim=0, keepdim=True)
-        feat = feat - m
-        sigma = torch.mm(feat.transpose(1,0),feat) / (feat.size(0))
-        s = torch.linalg.eigvalsh(sigma) # faster version for computing eignevalues, can be adopted since sigma is symmetric
-        prob_s = s / s.sum()
-        score = (-prob_s)*torch.log(prob_s+1e-8)
-        score = score.sum().item()
-        info_flow_scores.append(score)
-        expressivity_scores.append(score / np.log(c)) # normalize by an upper bound (= np.log(c))
-    info_flow_scores = np.array(info_flow_scores)
-    info_flow = np.min(info_flow_scores[1:] - info_flow_scores[:-1])
-    expressivity = np.mean(expressivity_scores)
-    #################################################
+    # ################ fwrd pca score ################
+    # """
+    # pca score across residual block features / normalize each score by upper bound
+    # """
+    # info_flow_scores = []
+    # expressivity_scores = []
+    # prev_feat = None
+    # for i in range(len(res_features)):
+    #     feat = res_features[i].detach().clone()
+    #     ### avoid duplicated features
+    #     if prev_feat is None:
+    #         prev_feat = res_features[i].detach().clone()
+    #     else:
+    #         assert not torch.all(feat == prev_feat)
+    #         prev_feat = res_features[i].detach().clone()
+    #     ### 
+    #     b,n,c = feat.size()
+    #     feat = feat.view(b*n,c)
+    #     m = feat.mean(dim=0, keepdim=True)
+    #     feat = feat - m
+    #     sigma = torch.mm(feat.transpose(1,0),feat) / (feat.size(0))
+    #     s = torch.linalg.eigvalsh(sigma) # faster version for computing eignevalues, can be adopted since sigma is symmetric
+    #     prob_s = s / s.sum()
+    #     score = (-prob_s)*torch.log(prob_s+1e-8)
+    #     score = score.sum().item()
+    #     info_flow_scores.append(score)
+    #     expressivity_scores.append(score / np.log(c)) # normalize by an upper bound (= np.log(c))
+    # info_flow_scores = np.array(info_flow_scores)
+    # info_flow = np.min(info_flow_scores[1:] - info_flow_scores[:-1])
+    # expressivity = np.mean(expressivity_scores)
+    # #################################################
 
     ################ spec norm score ##############
     """
@@ -115,8 +122,6 @@ def compute_nas_score(model, device, trainloader, resolution, batch_size):
     bkwd_norm_score = np.mean(scores)
     #################################################
 
-    info['expressivity'] = float(expressivity) if not np.isnan(expressivity) else -np.inf
-    info['info_flow'] = float(info_flow) if not np.isnan(info_flow) else -np.inf
     info['trainability'] = float(bkwd_norm_score) if not np.isnan(bkwd_norm_score) else -np.inf
     info['complexity'] = float(model.get_complexity(model.patch_embed_super.num_patches+1))
 

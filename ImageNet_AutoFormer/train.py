@@ -215,6 +215,9 @@ def get_args_parser():
     parser.add_argument('--no-amp', action='store_false', dest='amp')
     parser.set_defaults(amp=True)
 
+    parser.add_argument('--kaiming_init', action='store_true')
+    parser.set_defaults(kaiming_init=False)
+
 
     return parser
 
@@ -286,20 +289,53 @@ def main(args):
 
     print(cfg)
     if args.model_type == 'AUTOFORMER':
-        model_type = args.model_type
-        model = Vision_TransformerSuper(img_size=args.input_size,
-                                        patch_size=args.patch_size,
-                                        embed_dim=cfg.SUPERNET.EMBED_DIM, depth=cfg.SUPERNET.DEPTH,
-                                        num_heads=cfg.SUPERNET.NUM_HEADS,mlp_ratio=cfg.SUPERNET.MLP_RATIO,
-                                        qkv_bias=True, drop_rate=args.drop,
-                                        drop_path_rate=args.drop_path,
-                                        gp=args.gp,
-                                        num_classes=args.nb_classes,
-                                        max_relative_position=args.max_relative_position,
-                                        relative_position=args.relative_position,
-                                        change_qkv=args.change_qkv, abs_pos=not args.no_abs_pos)
-        choices = {'num_heads': cfg.SEARCH_SPACE.NUM_HEADS, 'mlp_ratio': cfg.SEARCH_SPACE.MLP_RATIO,
-                   'embed_dim': cfg.SEARCH_SPACE.EMBED_DIM, 'depth': cfg.SEARCH_SPACE.DEPTH}
+        if args.mode == 'retrain' and "RETRAIN" in cfg and model_type == 'AUTOFORMER':
+            model_type = args.model_type
+            model = Vision_TransformerSuper(img_size=args.input_size,
+                                            patch_size=args.patch_size,
+                                            embed_dim=cfg.RETRAIN.EMBED_DIM, depth=cfg.RETRAIN.DEPTH,
+                                            num_heads=cfg.RETRAIN.NUM_HEADS,mlp_ratio=cfg.RETRAIN.MLP_RATIO,
+                                            qkv_bias=True, drop_rate=args.drop,
+                                            drop_path_rate=args.drop_path,
+                                            gp=args.gp,
+                                            num_classes=args.nb_classes,
+                                            max_relative_position=args.max_relative_position,
+                                            relative_position=args.relative_position,
+                                            change_qkv=args.change_qkv, abs_pos=not args.no_abs_pos)
+            if args.kaiming_init:
+                def kaiming_normal_fanout_init(m):
+                    if isinstance(m, nn.Conv2d) or isinstance(m, nn.Linear):
+                        nn.init.kaiming_normal_(m.weight, mode='fan_in', nonlinearity='relu')
+                        if m.bias is not None:
+                            nn.init.constant_(m.bias, 0)
+                    elif isinstance(m, nn.LayerNorm):
+                        nn.init.constant_(m.bias, 0)
+                        nn.init.constant_(m.weight, 1.0)
+
+                def init_model(model, method='kaiming_norm_fanin'):
+                    if method == 'kaiming_norm_fanin':
+                        model.apply(kaiming_normal_fanin_init)
+                    else:
+                        raise NotImplementedError
+                    return model
+
+                init_model(model, 'kaiming_norm_fanin') ### kaiming init
+            choices = None
+        else:
+            model_type = args.model_type
+            model = Vision_TransformerSuper(img_size=args.input_size,
+                                            patch_size=args.patch_size,
+                                            embed_dim=cfg.SUPERNET.EMBED_DIM, depth=cfg.SUPERNET.DEPTH,
+                                            num_heads=cfg.SUPERNET.NUM_HEADS,mlp_ratio=cfg.SUPERNET.MLP_RATIO,
+                                            qkv_bias=True, drop_rate=args.drop,
+                                            drop_path_rate=args.drop_path,
+                                            gp=args.gp,
+                                            num_classes=args.nb_classes,
+                                            max_relative_position=args.max_relative_position,
+                                            relative_position=args.relative_position,
+                                            change_qkv=args.change_qkv, abs_pos=not args.no_abs_pos)
+            choices = {'num_heads': cfg.SEARCH_SPACE.NUM_HEADS, 'mlp_ratio': cfg.SEARCH_SPACE.MLP_RATIO,
+                    'embed_dim': cfg.SEARCH_SPACE.EMBED_DIM, 'depth': cfg.SEARCH_SPACE.DEPTH}
     elif args.model_type == 'PIT':
         model_type = args.model_type
         retrain_config = None
