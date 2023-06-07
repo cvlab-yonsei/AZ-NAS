@@ -289,7 +289,7 @@ def main(args):
 
     print(cfg)
     if args.model_type == 'AUTOFORMER':
-        if args.mode == 'retrain' and "RETRAIN" in cfg and model_type == 'AUTOFORMER':
+        if args.mode == 'retrain':
             model_type = args.model_type
             model = Vision_TransformerSuper(img_size=args.input_size,
                                             patch_size=args.patch_size,
