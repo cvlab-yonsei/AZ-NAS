@@ -29,6 +29,7 @@ from collections import OrderedDict
 from torch.utils.tensorboard import SummaryWriter
 import logging
 import distutils.dir_util
+import torch.nn as nn
 
 def mkfilepath(filename):
     distutils.dir_util.mkpath(os.path.dirname(filename))
