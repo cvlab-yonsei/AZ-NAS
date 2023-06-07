@@ -303,15 +303,16 @@ def main(args):
                                             relative_position=args.relative_position,
                                             change_qkv=args.change_qkv, abs_pos=not args.no_abs_pos)
             if args.kaiming_init:
-                def init_model(model, method='kaiming_norm_fanin'):
-                    def kaiming_normal_fanout_init(m):
-                        if isinstance(m, nn.Conv2d) or isinstance(m, nn.Linear):
-                            nn.init.kaiming_normal_(m.weight, mode='fan_in', nonlinearity='relu')
-                            if m.bias is not None:
-                                nn.init.constant_(m.bias, 0)
-                        elif isinstance(m, nn.LayerNorm):
+                def kaiming_normal_fanin_init(m):
+                    if isinstance(m, nn.Conv2d) or isinstance(m, nn.Linear):
+                        nn.init.kaiming_normal_(m.weight, mode='fan_in', nonlinearity='relu')
+                        if m.bias is not None:
                             nn.init.constant_(m.bias, 0)
-                            nn.init.constant_(m.weight, 1.0)
+                    elif isinstance(m, nn.LayerNorm):
+                        nn.init.constant_(m.bias, 0)
+                        nn.init.constant_(m.weight, 1.0)
+
+                def init_model(model, method='kaiming_norm_fanin'):
                     if method == 'kaiming_norm_fanin':
                         model.apply(kaiming_normal_fanin_init)
                     else:
