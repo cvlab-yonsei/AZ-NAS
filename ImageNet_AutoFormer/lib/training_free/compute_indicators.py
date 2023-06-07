@@ -49,7 +49,7 @@ def find_indicators_arrays(net_orig, trainloader, dataload_info, device, indicat
                         val = indicators.calc_indicator(indicator_name, net_orig, device)
                     else:
                         val = indicators.calc_indicator(indicator_name, net_orig, device, inputs, targets, loss_fn=loss_fn, split_data=ds)
-                        indicator_values[indicator_name] = val
+                    indicator_values[indicator_name] = val
 
             done = True
         except RuntimeError as e:
