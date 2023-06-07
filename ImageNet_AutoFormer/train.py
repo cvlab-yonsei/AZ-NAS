@@ -23,13 +23,17 @@ from lib import utils
 from lib.config import cfg, update_config_from_file
 import timm
 from model.pit_space import pit
-from model.autoformer_space import Vision_TransformerSuper, Vision_TransformerSub
+from model.autoformer_space import Vision_TransformerSuper
 from collections import OrderedDict
 
 from torch.utils.tensorboard import SummaryWriter
 import logging
 import distutils.dir_util
 import torch.nn as nn
+
+from model.module.Linear_super import LinearSuper
+from model.module.embedding_super import PatchembedSuper
+from model.module.qkv_super import qkv_super
 
 def mkfilepath(filename):
     distutils.dir_util.mkpath(os.path.dirname(filename))
@@ -290,53 +294,48 @@ def main(args):
 
     print(cfg)
     if args.model_type == 'AUTOFORMER':
-        if args.mode == 'retrain':
-            model_type = args.model_type
-            model = Vision_TransformerSub(img_size=args.input_size,
-                                            patch_size=args.patch_size,
-                                            embed_dim=cfg.RETRAIN.EMBED_DIM, depth=cfg.RETRAIN.DEPTH,
-                                            num_heads=cfg.RETRAIN.NUM_HEADS,mlp_ratio=cfg.RETRAIN.MLP_RATIO,
-                                            qkv_bias=True, drop_rate=args.drop,
-                                            drop_path_rate=args.drop_path,
-                                            gp=args.gp,
-                                            num_classes=args.nb_classes,
-                                            max_relative_position=args.max_relative_position,
-                                            relative_position=args.relative_position,
-                                            change_qkv=args.change_qkv, abs_pos=not args.no_abs_pos)
-            if args.kaiming_init:
-                def kaiming_normal_fanin_init(m):
-                    if isinstance(m, nn.Conv2d) or isinstance(m, nn.Linear):
-                        nn.init.kaiming_normal_(m.weight, mode='fan_in', nonlinearity='relu')
-                        if m.bias is not None:
-                            nn.init.constant_(m.bias, 0)
-                    elif isinstance(m, nn.LayerNorm):
-                        nn.init.constant_(m.bias, 0)
-                        nn.init.constant_(m.weight, 1.0)
+        model_type = args.model_type
+        model = Vision_TransformerSuper(img_size=args.input_size,
+                                        patch_size=args.patch_size,
+                                        embed_dim=cfg.SUPERNET.EMBED_DIM, depth=cfg.SUPERNET.DEPTH,
+                                        num_heads=cfg.SUPERNET.NUM_HEADS,mlp_ratio=cfg.SUPERNET.MLP_RATIO,
+                                        qkv_bias=True, drop_rate=args.drop,
+                                        drop_path_rate=args.drop_path,
+                                        gp=args.gp,
+                                        num_classes=args.nb_classes,
+                                        max_relative_position=args.max_relative_position,
+                                        relative_position=args.relative_position,
+                                        change_qkv=args.change_qkv, abs_pos=not args.no_abs_pos)
+        choices = {'num_heads': cfg.SEARCH_SPACE.NUM_HEADS, 'mlp_ratio': cfg.SEARCH_SPACE.MLP_RATIO,
+                'embed_dim': cfg.SEARCH_SPACE.EMBED_DIM, 'depth': cfg.SEARCH_SPACE.DEPTH}
 
-                def init_model(model, method='kaiming_norm_fanin'):
-                    if method == 'kaiming_norm_fanin':
-                        model.apply(kaiming_normal_fanin_init)
-                    else:
-                        raise NotImplementedError
-                    return model
+        if args.mode == 'retrain' and args.kaiming_init:
+            def kaiming_normal_fanin_init(m):
+                if isinstance(m, LinearSuper) or isinstance(m, qkv_super):
+                    if 'weight' in m.samples.keys():
+                        nn.init.kaiming_normal_(m.samples['weight'], mode='fan_in', nonlinearity='relu')
+                        if m.samples['bias'] is not None:
+                            nn.init.constant_(m.samples['bias'], 0)
+                if isinstance(m, PatchembedSuper):
+                    nn.init.kaiming_normal_(m.sampled_weight, mode='fan_in', nonlinearity='relu')
+                    if m.sampled_bias is not None:
+                        nn.init.constant_(m.sampled_bias, 0)
+                elif isinstance(m, nn.LayerNorm):
+                    nn.init.constant_(m.bias, 0)
+                    nn.init.constant_(m.weight, 1.0)
 
-                init_model(model, 'kaiming_norm_fanin') ### kaiming init
-            choices = None
-        else:
-            model_type = args.model_type
-            model = Vision_TransformerSuper(img_size=args.input_size,
-                                            patch_size=args.patch_size,
-                                            embed_dim=cfg.SUPERNET.EMBED_DIM, depth=cfg.SUPERNET.DEPTH,
-                                            num_heads=cfg.SUPERNET.NUM_HEADS,mlp_ratio=cfg.SUPERNET.MLP_RATIO,
-                                            qkv_bias=True, drop_rate=args.drop,
-                                            drop_path_rate=args.drop_path,
-                                            gp=args.gp,
-                                            num_classes=args.nb_classes,
-                                            max_relative_position=args.max_relative_position,
-                                            relative_position=args.relative_position,
-                                            change_qkv=args.change_qkv, abs_pos=not args.no_abs_pos)
-            choices = {'num_heads': cfg.SEARCH_SPACE.NUM_HEADS, 'mlp_ratio': cfg.SEARCH_SPACE.MLP_RATIO,
-                    'embed_dim': cfg.SEARCH_SPACE.EMBED_DIM, 'depth': cfg.SEARCH_SPACE.DEPTH}
+            def init_model(model, method='kaiming_norm_fanin'):
+                if method == 'kaiming_norm_fanin':
+                    model.apply(kaiming_normal_fanin_init)
+                else:
+                    raise NotImplementedError
+                return model
+
+            retrain_config = {'layer_num': cfg.RETRAIN.DEPTH, 'embed_dim': [cfg.RETRAIN.EMBED_DIM]*cfg.RETRAIN.DEPTH,
+                              'num_heads': cfg.RETRAIN.NUM_HEADS,'mlp_ratio': cfg.RETRAIN.MLP_RATIO}
+            model.set_sample_config(config=config)
+            init_model(model, 'kaiming_norm_fanin') ### kaiming init
+            
     elif args.model_type == 'PIT':
         model_type = args.model_type
         retrain_config = None
