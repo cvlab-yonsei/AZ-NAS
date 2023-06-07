@@ -333,7 +333,7 @@ def main(args):
 
             retrain_config = {'layer_num': cfg.RETRAIN.DEPTH, 'embed_dim': [cfg.RETRAIN.EMBED_DIM]*cfg.RETRAIN.DEPTH,
                               'num_heads': cfg.RETRAIN.NUM_HEADS,'mlp_ratio': cfg.RETRAIN.MLP_RATIO}
-            model.set_sample_config(config=config)
+            model.set_sample_config(config=retrain_config)
             init_model(model, 'kaiming_norm_fanin') ### kaiming init
             
     elif args.model_type == 'PIT':
