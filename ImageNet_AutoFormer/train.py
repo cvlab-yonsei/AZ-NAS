@@ -23,7 +23,7 @@ from lib import utils
 from lib.config import cfg, update_config_from_file
 import timm
 from model.pit_space import pit
-from model.autoformer_space import Vision_TransformerSuper
+from model.autoformer_space import Vision_TransformerSuper, Vision_TransformerSub
 from collections import OrderedDict
 
 from torch.utils.tensorboard import SummaryWriter
@@ -291,9 +291,9 @@ def main(args):
     if args.model_type == 'AUTOFORMER':
         if args.mode == 'retrain':
             model_type = args.model_type
-            model = Vision_TransformerSuper(img_size=args.input_size,
+            model = Vision_TransformerSub(img_size=args.input_size,
                                             patch_size=args.patch_size,
-                                            embed_dim=cfg.RETRAIN.EMBED_DIM, depth=cfg.RETRAIN.DEPTH,
+                                            embed_dim=cfg.RETRAIN.EMBED_DIM[0], depth=cfg.RETRAIN.DEPTH,
                                             num_heads=cfg.RETRAIN.NUM_HEADS,mlp_ratio=cfg.RETRAIN.MLP_RATIO,
                                             qkv_bias=True, drop_rate=args.drop,
                                             drop_path_rate=args.drop_path,
