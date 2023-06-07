@@ -293,7 +293,7 @@ def main(args):
             model_type = args.model_type
             model = Vision_TransformerSub(img_size=args.input_size,
                                             patch_size=args.patch_size,
-                                            embed_dim=cfg.RETRAIN.EMBED_DIM[0], depth=cfg.RETRAIN.DEPTH,
+                                            embed_dim=cfg.RETRAIN.EMBED_DIM, depth=cfg.RETRAIN.DEPTH,
                                             num_heads=cfg.RETRAIN.NUM_HEADS,mlp_ratio=cfg.RETRAIN.MLP_RATIO,
                                             qkv_bias=True, drop_rate=args.drop,
                                             drop_path_rate=args.drop_path,
