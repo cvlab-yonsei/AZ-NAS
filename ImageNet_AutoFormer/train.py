@@ -220,8 +220,7 @@ def get_args_parser():
     parser.add_argument('--no-amp', action='store_false', dest='amp')
     parser.set_defaults(amp=True)
 
-    parser.add_argument('--kaiming_init', action='store_true')
-    parser.set_defaults(kaiming_init=False)
+    parser.add_argument('--init', default='trunc_normal', choices=['trunc_normal', 'xavier_uniform', 'kaiming_normal'], type=str)
 
 
     return parser
@@ -309,7 +308,7 @@ def main(args):
         choices = {'num_heads': cfg.SEARCH_SPACE.NUM_HEADS, 'mlp_ratio': cfg.SEARCH_SPACE.MLP_RATIO,
                 'embed_dim': cfg.SEARCH_SPACE.EMBED_DIM, 'depth': cfg.SEARCH_SPACE.DEPTH}
 
-        if args.mode == 'retrain' and args.kaiming_init:
+        if args.mode == 'retrain' and args.init != 'trunc_normal':
             def kaiming_normal_fanin_init(m):
                 if isinstance(m, LinearSuper) or isinstance(m, qkv_super):
                     if 'weight' in m.samples.keys():
@@ -324,9 +323,25 @@ def main(args):
                     nn.init.constant_(m.bias, 0)
                     nn.init.constant_(m.weight, 1.0)
 
-            def init_model(model, method='kaiming_norm_fanin'):
-                if method == 'kaiming_norm_fanin':
+            def xavier_uniform(m):
+                if isinstance(m, LinearSuper) or isinstance(m, qkv_super):
+                    if 'weight' in m.samples.keys():
+                        nn.init.xavier_uniform_(m.samples['weight'])
+                        if m.samples['bias'] is not None:
+                            nn.init.constant_(m.samples['bias'], 0)
+                if isinstance(m, PatchembedSuper):
+                    nn.init.xavier_uniform_(m.sampled_weight)
+                    if m.sampled_bias is not None:
+                        nn.init.constant_(m.sampled_bias, 0)
+                elif isinstance(m, nn.LayerNorm):
+                    nn.init.constant_(m.bias, 0)
+                    nn.init.constant_(m.weight, 1.0)
+
+            def init_model(model, method='kaiming_normal'):
+                if method == 'kaiming_normal':
                     model.apply(kaiming_normal_fanin_init)
+                elif method == 'xavier_uniform':
+                    model.apply(xavier_uniform)
                 else:
                     raise NotImplementedError
                 return model
@@ -334,7 +349,7 @@ def main(args):
             retrain_config = {'layer_num': cfg.RETRAIN.DEPTH, 'embed_dim': [cfg.RETRAIN.EMBED_DIM]*cfg.RETRAIN.DEPTH,
                               'num_heads': cfg.RETRAIN.NUM_HEADS,'mlp_ratio': cfg.RETRAIN.MLP_RATIO}
             model.set_sample_config(config=retrain_config)
-            init_model(model, 'kaiming_norm_fanin') ### kaiming init
+            init_model(model, args.init) ### kaiming init
             
     elif args.model_type == 'PIT':
         model_type = args.model_type

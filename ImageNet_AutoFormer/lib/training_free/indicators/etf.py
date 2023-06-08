@@ -22,6 +22,20 @@ def kaiming_normal_fanin_init(m):
         nn.init.constant_(m.bias, 0)
         nn.init.constant_(m.weight, 1.0)
 
+def xavier_uniform(m):
+    if isinstance(m, LinearSuper) or isinstance(m, qkv_super):
+        if 'weight' in m.samples.keys():
+            nn.init.xavier_uniform_(m.samples['weight'])
+            if m.samples['bias'] is not None:
+                nn.init.constant_(m.samples['bias'], 0)
+    if isinstance(m, PatchembedSuper):
+        nn.init.xavier_uniform_(m.sampled_weight)
+        if m.sampled_bias is not None:
+            nn.init.constant_(m.sampled_bias, 0)
+    elif isinstance(m, nn.LayerNorm):
+        nn.init.constant_(m.bias, 0)
+        nn.init.constant_(m.weight, 1.0)
+
 # def kaiming_normal_fanout_init(m):
 #     if isinstance(m, nn.Conv2d) or isinstance(m, nn.Linear):
 #         nn.init.kaiming_normal_(m.weight, mode='fan_out', nonlinearity='relu')
@@ -34,6 +48,8 @@ def kaiming_normal_fanin_init(m):
 def init_model(model, method='kaiming_norm_fanin'):
     if method == 'kaiming_norm_fanin':
         model.apply(kaiming_normal_fanin_init)
+    elif method == 'xavier_uniform':
+        model.apply(xavier_uniform)
     # elif method == 'kaiming_norm_fanout':
     #     model.apply(kaiming_normal_fanout_init)
     else:
@@ -42,7 +58,8 @@ def init_model(model, method='kaiming_norm_fanin'):
 
 
 def compute_nas_score(model, device, trainloader, resolution, batch_size):
-    init_model(model, 'kaiming_norm_fanin')
+    # init_model(model, 'kaiming_norm_fanin')
+    init_model(model, 'xavier_uniform')
     
     model.eval() # eval mode
     info = {}
