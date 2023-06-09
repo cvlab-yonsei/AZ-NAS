@@ -310,12 +310,21 @@ def main(args):
 
         if args.mode == 'retrain' and args.init != 'trunc_normal':
             def kaiming_normal_fanin_init(m):
-                if isinstance(m, LinearSuper) or isinstance(m, qkv_super):
+                if isinstance(m, LinearSuper):
                     if 'weight' in m.samples.keys():
                         nn.init.kaiming_normal_(m.samples['weight'], mode='fan_in', nonlinearity='relu')
                         if m.samples['bias'] is not None:
                             nn.init.constant_(m.samples['bias'], 0)
-                if isinstance(m, PatchembedSuper):
+                elif isinstance(m, qkv_super):
+                    if 'weight' in m.samples.keys():
+                        ci, co = m.samples['weight'].size()
+                        cs = co // 3
+                        nn.init.kaiming_normal_(m.samples['weight'][:,:cs], mode='fan_in', nonlinearity='relu')
+                        nn.init.kaiming_normal_(m.samples['weight'][:,cs:cs*2], mode='fan_in', nonlinearity='relu')
+                        nn.init.kaiming_normal_(m.samples['weight'][:,cs*2:], mode='fan_in', nonlinearity='relu')
+                        if m.samples['bias'] is not None:
+                            nn.init.constant_(m.samples['bias'], 0)
+                elif isinstance(m, PatchembedSuper):
                     nn.init.kaiming_normal_(m.sampled_weight, mode='fan_in', nonlinearity='relu')
                     if m.sampled_bias is not None:
                         nn.init.constant_(m.sampled_bias, 0)
@@ -324,12 +333,21 @@ def main(args):
                     nn.init.constant_(m.weight, 1.0)
 
             def xavier_uniform(m):
-                if isinstance(m, LinearSuper) or isinstance(m, qkv_super):
+                if isinstance(m, LinearSuper):
                     if 'weight' in m.samples.keys():
                         nn.init.xavier_uniform_(m.samples['weight'])
                         if m.samples['bias'] is not None:
                             nn.init.constant_(m.samples['bias'], 0)
-                if isinstance(m, PatchembedSuper):
+                elif isinstance(m, qkv_super):
+                    if 'weight' in m.samples.keys():
+                        ci, co = m.samples['weight'].size()
+                        cs = co // 3
+                        nn.init.xavier_uniform_(m.samples['weight'][:,:cs])
+                        nn.init.xavier_uniform_(m.samples['weight'][:,cs:cs*2])
+                        nn.init.xavier_uniform_(m.samples['weight'][:,cs*2:])
+                        if m.samples['bias'] is not None:
+                            nn.init.constant_(m.samples['bias'], 0)
+                elif isinstance(m, PatchembedSuper):
                     nn.init.xavier_uniform_(m.sampled_weight)
                     if m.sampled_bias is not None:
                         nn.init.constant_(m.sampled_bias, 0)
