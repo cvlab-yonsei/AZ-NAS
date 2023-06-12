@@ -4,7 +4,9 @@ set -e
 
 cd ../
 
-save_dir=./save_dir/Zen_NAS_ImageNet_flops450M-reproduce-123
+seed=123
+
+save_dir=./save_dir/Zen_NAS_ImageNet_flops450M-reproduce-${seed}
 mkdir -p ${save_dir}
 
 
@@ -35,7 +37,7 @@ python evolution_search_etf.py --gpu 0 \
   --num_worker 16 \
   --rand_input False \
   --search_no_res True \
-  --seed 123 \
+  --seed ${seed} \
   --datapath /dataset/ILSVRC2012/
 
 python analyze_model.py \
