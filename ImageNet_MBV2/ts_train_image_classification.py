@@ -846,8 +846,7 @@ def train_all_epochs(opt, model, optimizer, train_sampler, train_loader, criteri
             ))
 
         # ----- save latest epoch -----#
-        if save_params and (opt.rank == 0 or save_all_ranks) and \
-                ((epoch + 1) % opt.save_freq == 0 or epoch + 1 == opt.epochs):
+        if save_params and (opt.rank == 0 or save_all_ranks):
             checkpoint_filename = os.path.join(opt.save_dir, 'latest-params_rank{}.pth'.format(opt.rank))
             save_checkpoint(checkpoint_filename, {
                 'epoch': epoch,
