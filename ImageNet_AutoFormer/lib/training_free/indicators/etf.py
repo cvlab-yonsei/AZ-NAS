@@ -8,51 +8,51 @@ from model.module.Linear_super import LinearSuper
 from model.module.embedding_super import PatchembedSuper
 from model.module.qkv_super import qkv_super
 
-def kaiming_normal_fanin_init(m):
-    if isinstance(m, LinearSuper):
-        if 'weight' in m.samples.keys():
-            nn.init.kaiming_normal_(m.samples['weight'], mode='fan_in', nonlinearity='relu')
-            if m.samples['bias'] is not None:
-                nn.init.constant_(m.samples['bias'], 0)
-    elif isinstance(m, qkv_super):
-        if 'weight' in m.samples.keys():
-            ci, co = m.samples['weight'].size()
-            cs = co // 3
-            nn.init.kaiming_normal_(m.samples['weight'][:,:cs], mode='fan_in', nonlinearity='relu')
-            nn.init.kaiming_normal_(m.samples['weight'][:,cs:cs*2], mode='fan_in', nonlinearity='relu')
-            nn.init.kaiming_normal_(m.samples['weight'][:,cs*2:], mode='fan_in', nonlinearity='relu')
-            if m.samples['bias'] is not None:
-                nn.init.constant_(m.samples['bias'], 0)
-    elif isinstance(m, PatchembedSuper):
-        nn.init.kaiming_normal_(m.sampled_weight, mode='fan_in', nonlinearity='relu')
-        if m.sampled_bias is not None:
-            nn.init.constant_(m.sampled_bias, 0)
-    elif isinstance(m, nn.LayerNorm):
-        nn.init.constant_(m.bias, 0)
-        nn.init.constant_(m.weight, 1.0)
+# def kaiming_normal_fanin_init(m):
+#     if isinstance(m, LinearSuper):
+#         if 'weight' in m.samples.keys():
+#             nn.init.kaiming_normal_(m.samples['weight'], mode='fan_in', nonlinearity='relu')
+#             if m.samples['bias'] is not None:
+#                 nn.init.constant_(m.samples['bias'], 0)
+#     elif isinstance(m, qkv_super):
+#         if 'weight' in m.samples.keys():
+#             ci, co = m.samples['weight'].size()
+#             cs = co // 3
+#             nn.init.kaiming_normal_(m.samples['weight'][:,:cs], mode='fan_in', nonlinearity='relu')
+#             nn.init.kaiming_normal_(m.samples['weight'][:,cs:cs*2], mode='fan_in', nonlinearity='relu')
+#             nn.init.kaiming_normal_(m.samples['weight'][:,cs*2:], mode='fan_in', nonlinearity='relu')
+#             if m.samples['bias'] is not None:
+#                 nn.init.constant_(m.samples['bias'], 0)
+#     elif isinstance(m, PatchembedSuper):
+#         nn.init.kaiming_normal_(m.sampled_weight, mode='fan_in', nonlinearity='relu')
+#         if m.sampled_bias is not None:
+#             nn.init.constant_(m.sampled_bias, 0)
+#     elif isinstance(m, nn.LayerNorm):
+#         nn.init.constant_(m.bias, 0)
+#         nn.init.constant_(m.weight, 1.0)
 
-def xavier_uniform(m):
-    if isinstance(m, LinearSuper):
-        if 'weight' in m.samples.keys():
-            nn.init.xavier_uniform_(m.samples['weight'])
-            if m.samples['bias'] is not None:
-                nn.init.constant_(m.samples['bias'], 0)
-    elif isinstance(m, qkv_super):
-        if 'weight' in m.samples.keys():
-            ci, co = m.samples['weight'].size()
-            cs = co // 3
-            nn.init.xavier_uniform_(m.samples['weight'][:,:cs])
-            nn.init.xavier_uniform_(m.samples['weight'][:,cs:cs*2])
-            nn.init.xavier_uniform_(m.samples['weight'][:,cs*2:])
-            if m.samples['bias'] is not None:
-                nn.init.constant_(m.samples['bias'], 0)
-    elif isinstance(m, PatchembedSuper):
-        nn.init.xavier_uniform_(m.sampled_weight)
-        if m.sampled_bias is not None:
-            nn.init.constant_(m.sampled_bias, 0)
-    elif isinstance(m, nn.LayerNorm):
-        nn.init.constant_(m.bias, 0)
-        nn.init.constant_(m.weight, 1.0)
+# def xavier_uniform(m):
+#     if isinstance(m, LinearSuper):
+#         if 'weight' in m.samples.keys():
+#             nn.init.xavier_uniform_(m.samples['weight'])
+#             if m.samples['bias'] is not None:
+#                 nn.init.constant_(m.samples['bias'], 0)
+#     elif isinstance(m, qkv_super):
+#         if 'weight' in m.samples.keys():
+#             ci, co = m.samples['weight'].size()
+#             cs = co // 3
+#             nn.init.xavier_uniform_(m.samples['weight'][:,:cs])
+#             nn.init.xavier_uniform_(m.samples['weight'][:,cs:cs*2])
+#             nn.init.xavier_uniform_(m.samples['weight'][:,cs*2:])
+#             if m.samples['bias'] is not None:
+#                 nn.init.constant_(m.samples['bias'], 0)
+#     elif isinstance(m, PatchembedSuper):
+#         nn.init.xavier_uniform_(m.sampled_weight)
+#         if m.sampled_bias is not None:
+#             nn.init.constant_(m.sampled_bias, 0)
+#     elif isinstance(m, nn.LayerNorm):
+#         nn.init.constant_(m.bias, 0)
+#         nn.init.constant_(m.weight, 1.0)
 
 # def kaiming_normal_fanout_init(m):
 #     if isinstance(m, nn.Conv2d) or isinstance(m, nn.Linear):
@@ -63,21 +63,21 @@ def xavier_uniform(m):
 #         nn.init.constant_(m.bias, 0)
 #         nn.init.constant_(m.weight, 1.0)
 
-def init_model(model, method='kaiming_norm_fanin'):
-    if method == 'kaiming_norm_fanin':
-        model.apply(kaiming_normal_fanin_init)
-    elif method == 'xavier_uniform':
-        model.apply(xavier_uniform)
-    # elif method == 'kaiming_norm_fanout':
-    #     model.apply(kaiming_normal_fanout_init)
-    else:
-        raise NotImplementedError
-    return model
+# def init_model(model, method='kaiming_norm_fanin'):
+#     if method == 'kaiming_norm_fanin':
+#         model.apply(kaiming_normal_fanin_init)
+#     elif method == 'xavier_uniform':
+#         model.apply(xavier_uniform)
+#     # elif method == 'kaiming_norm_fanout':
+#     #     model.apply(kaiming_normal_fanout_init)
+#     else:
+#         raise NotImplementedError
+#     return model
 
 
 def compute_nas_score(model, device, trainloader, resolution, batch_size):
     # init_model(model, 'kaiming_norm_fanin')
-    init_model(model, 'xavier_uniform')
+    # init_model(model, 'xavier_uniform')
     
     model.eval() # eval mode
     info = {}
@@ -89,38 +89,6 @@ def compute_nas_score(model, device, trainloader, resolution, batch_size):
         input_ = input_.to(device)
     
     res_features = model.extract_res_features(input_)
-
-    # ################ fwrd pca score ################
-    # """
-    # pca score across residual block features / normalize each score by upper bound
-    # """
-    # info_flow_scores = []
-    # expressivity_scores = []
-    # prev_feat = None
-    # for i in range(len(res_features)):
-    #     feat = res_features[i].detach().clone()
-    #     ### avoid duplicated features
-    #     if prev_feat is None:
-    #         prev_feat = res_features[i].detach().clone()
-    #     else:
-    #         assert not torch.all(feat == prev_feat)
-    #         prev_feat = res_features[i].detach().clone()
-    #     ### 
-    #     b,n,c = feat.size()
-    #     feat = feat.view(b*n,c)
-    #     m = feat.mean(dim=0, keepdim=True)
-    #     feat = feat - m
-    #     sigma = torch.mm(feat.transpose(1,0),feat) / (feat.size(0))
-    #     s = torch.linalg.eigvalsh(sigma) # faster version for computing eignevalues, can be adopted since sigma is symmetric
-    #     prob_s = s / s.sum()
-    #     score = (-prob_s)*torch.log(prob_s+1e-8)
-    #     score = score.sum().item()
-    #     info_flow_scores.append(score)
-    #     expressivity_scores.append(score / np.log(c)) # normalize by an upper bound (= np.log(c))
-    # info_flow_scores = np.array(info_flow_scores)
-    # info_flow = np.min(info_flow_scores[1:] - info_flow_scores[:-1])
-    # expressivity = np.mean(expressivity_scores)
-    # #################################################
 
     ################ spec norm score ##############
     """
