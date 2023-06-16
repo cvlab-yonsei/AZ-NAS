@@ -270,7 +270,8 @@ def main(args, argv):
 
     start_timer = time.time()
     lossfunc = nn.CrossEntropyLoss().cuda()
-    for loop_count in range(args.evolution_max_iter):
+    loop_count = 0
+    while loop_count < args.evolution_max_iter:
         # too many networks in the population pool, remove one with the smallest score
         # while len(popu_structure_list) > args.population_size:
         #     tmp_idx = np.argmin(popu_zero_shot_score_list)
@@ -281,25 +282,6 @@ def main(args, argv):
         #     popu_structure_list.pop(tmp_idx)
         #     popu_latency_list.pop(tmp_idx)
         # pass
-
-        if loop_count >= 1 and loop_count % 100 == 0:
-            if 'etf' in args.zero_shot_score.lower():
-                max_idx = np.argmax(popu_zero_shot_score_list)
-                min_idx = np.argmin(popu_zero_shot_score_list)
-                elasp_time = time.time() - start_timer
-                log_string = f'loop_count={loop_count}/{args.evolution_max_iter}, time={elasp_time/3600:4g}h,\n'
-                for key in popu_zero_shot_score_dict.keys():
-                    _max = popu_zero_shot_score_dict[key][max_idx]
-                    _min = popu_zero_shot_score_dict[key][min_idx]
-                    log_string += f'max_{key}={_max:4g}, min_{key}={_min:4g}\n'
-                best_structure = popu_structure_list[max_idx]
-                logging.info('{}'.format(best_structure))
-                logging.info(log_string)
-            else:
-                max_score = max(popu_zero_shot_score_list)
-                min_score = min(popu_zero_shot_score_list)
-                elasp_time = time.time() - start_timer
-                logging.info(f'loop_count={loop_count}/{args.evolution_max_iter}, max_score={max_score:4g}, min_score={min_score:4g}, time={elasp_time/3600:4g}h')
 
         # ----- generate a random structure ----- #
         if len(popu_structure_list) <= 10:
@@ -355,6 +337,26 @@ def main(args, argv):
             if args.budget_latency < the_latency:
                 continue
 
+        if loop_count >= 1 and loop_count % 100 == 0:
+            if 'etf' in args.zero_shot_score.lower():
+                max_idx = np.argmax(popu_zero_shot_score_list)
+                min_idx = np.argmin(popu_zero_shot_score_list)
+                elasp_time = time.time() - start_timer
+                log_string = f'loop_count={loop_count}/{args.evolution_max_iter}, time={elasp_time/3600:4g}h,\n'
+                for key in popu_zero_shot_score_dict.keys():
+                    _max = popu_zero_shot_score_dict[key][max_idx]
+                    _min = popu_zero_shot_score_dict[key][min_idx]
+                    log_string += f'max_{key}={_max:4g}, min_{key}={_min:4g}\n'
+                best_structure = popu_structure_list[max_idx]
+                logging.info('{}'.format(best_structure))
+                logging.info(log_string)
+            else:
+                max_score = max(popu_zero_shot_score_list)
+                min_score = min(popu_zero_shot_score_list)
+                elasp_time = time.time() - start_timer
+                logging.info(f'loop_count={loop_count}/{args.evolution_max_iter}, max_score={max_score:4g}, min_score={min_score:4g}, time={elasp_time/3600:4g}h')
+        
+        loop_count += 1
         if 'etf' in args.zero_shot_score.lower():
             the_nas_core = compute_nas_score(AnyPlainNet, random_structure_str, gpu, args, trainbatches, lossfunc)
             if popu_zero_shot_score_dict is None: # initialize dict

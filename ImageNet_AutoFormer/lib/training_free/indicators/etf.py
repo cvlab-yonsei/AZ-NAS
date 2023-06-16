@@ -54,11 +54,25 @@ from model.module.qkv_super import qkv_super
 #         nn.init.constant_(m.bias, 0)
 #         nn.init.constant_(m.weight, 1.0)
 
-# def kaiming_normal_fanout_init(m):
-#     if isinstance(m, nn.Conv2d) or isinstance(m, nn.Linear):
-#         nn.init.kaiming_normal_(m.weight, mode='fan_out', nonlinearity='relu')
-#         if m.bias is not None:
-#             nn.init.constant_(m.bias, 0)
+# def xavier_normal(m):
+#     if isinstance(m, LinearSuper):
+#         if 'weight' in m.samples.keys():
+#             nn.init.xavier_normal_(m.samples['weight'])
+#             if m.samples['bias'] is not None:
+#                 nn.init.constant_(m.samples['bias'], 0)
+#     elif isinstance(m, qkv_super):
+#         if 'weight' in m.samples.keys():
+#             ci, co = m.samples['weight'].size()
+#             cs = co // 3
+#             nn.init.xavier_normal_(m.samples['weight'][:,:cs])
+#             nn.init.xavier_normal_(m.samples['weight'][:,cs:cs*2])
+#             nn.init.xavier_normal_(m.samples['weight'][:,cs*2:])
+#             if m.samples['bias'] is not None:
+#                 nn.init.constant_(m.samples['bias'], 0)
+#     elif isinstance(m, PatchembedSuper):
+#         nn.init.xavier_normal_(m.sampled_weight)
+#         if m.sampled_bias is not None:
+#             nn.init.constant_(m.sampled_bias, 0)
 #     elif isinstance(m, nn.LayerNorm):
 #         nn.init.constant_(m.bias, 0)
 #         nn.init.constant_(m.weight, 1.0)
@@ -68,6 +82,8 @@ from model.module.qkv_super import qkv_super
 #         model.apply(kaiming_normal_fanin_init)
 #     elif method == 'xavier_uniform':
 #         model.apply(xavier_uniform)
+#     elif method == 'xavier_normal':
+#         model.apply(xavier_normal)
 #     # elif method == 'kaiming_norm_fanout':
 #     #     model.apply(kaiming_normal_fanout_init)
 #     else:
@@ -77,7 +93,7 @@ from model.module.qkv_super import qkv_super
 
 def compute_nas_score(model, device, trainloader, resolution, batch_size):
     # init_model(model, 'kaiming_norm_fanin')
-    # init_model(model, 'xavier_uniform')
+    # init_model(model, 'xavier_normal')
     
     model.eval() # eval mode
     info = {}
@@ -125,7 +141,19 @@ def compute_nas_score(model, device, trainloader, resolution, batch_size):
     bkwd_norm_score = np.mean(scores)
     #################################################
 
+    ####
+    numels = []
+    for name, module in model.named_modules():
+        if hasattr(module, 'calc_sampled_param_num'):
+            if name.split('.')[0] == 'blocks' and int(name.split('.')[1]) >= model.sample_layer_num:
+                continue
+            numels.append(module.calc_sampled_param_num())
+
+    n_params = sum(numels) + model.sample_embed_dim[0] * (2 + model.patch_embed_super.num_patches)
+    ####
+
     info['trainability'] = float(bkwd_norm_score) if not np.isnan(bkwd_norm_score) else -np.inf
+    info['capacity'] = float(n_params)
     info['complexity'] = float(model.get_complexity(model.patch_embed_super.num_patches+1))
 
     return info
