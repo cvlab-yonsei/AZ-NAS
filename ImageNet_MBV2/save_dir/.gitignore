@@ -1,4 +1,4 @@
-*.log
+train_image_classification.log
 *.pth
 *.done
 events.*
