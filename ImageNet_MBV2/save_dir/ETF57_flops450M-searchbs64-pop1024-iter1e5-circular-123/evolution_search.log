@@ -1,0 +1,2827 @@
+The seed number is set to 123
+The seed number is set to 123
+SuperConvK3BNRELU(3,8,2,1)SuperResIDWE1K3(8,16,2,16,1)SuperResIDWE6K3(16,48,2,32,1)SuperResIDWE6K3(48,144,2,120,2)SuperResIDWE4K7(144,256,2,192,1)SuperConvK1BNRELU(256,2048,1,1)
+loop_count=100/100000, time=0.00814692h,
+max_expressivity=-0.133319, min_expressivity=-1.60373
+max_stability=-0.133738, min_stability=-0.967389
+max_trainability=-0.372998, min_trainability=-0.452259
+max_capacity=4.36235e+06, min_capacity=3.52964e+06
+max_complexity=3.21986e+08, min_complexity=1.64694e+08
+
+SuperConvK3BNRELU(3,8,2,1)SuperResIDWE1K3(8,16,2,16,1)SuperResIDWE6K3(16,48,2,32,1)SuperResIDWE1K7(48,64,2,72,1)SuperResIDWE2K5(64,384,2,384,3)SuperConvK1BNRELU(384,2048,1,1)
+loop_count=200/100000, time=0.0142029h,
+max_expressivity=-0.0747747, min_expressivity=-1.60373
+max_stability=-0.0810653, min_stability=-0.967389
+max_trainability=-0.276737, min_trainability=-0.452259
+max_capacity=6.35535e+06, min_capacity=3.52964e+06
+max_complexity=2.70659e+08, min_complexity=1.64694e+08
+
+SuperConvK3BNRELU(3,8,2,1)SuperResIDWE1K3(8,16,2,16,1)SuperResIDWE6K3(16,48,2,32,1)SuperResIDWE1K7(48,64,2,72,1)SuperResIDWE2K5(64,384,2,384,3)SuperConvK1BNRELU(384,2048,1,1)
+loop_count=300/100000, time=0.0198323h,
+max_expressivity=-0.0747747, min_expressivity=-1.83884
+max_stability=-0.0810653, min_stability=-0.722724
+max_trainability=-0.276737, min_trainability=-0.454573
+max_capacity=6.35535e+06, min_capacity=2.42848e+06
+max_complexity=2.70659e+08, min_complexity=1.62967e+08
+
+SuperConvK3BNRELU(3,16,2,1)SuperResIDWE2K7(16,24,2,32,4)SuperResIDWE1K7(24,32,2,96,1)SuperResIDWE1K7(32,64,2,72,1)SuperResIDWE2K5(64,384,2,384,3)SuperConvK1BNRELU(384,2048,1,1)
+loop_count=400/100000, time=0.0269728h,
+max_expressivity=-0.853554, min_expressivity=-2.28193
+max_stability=-0.0443803, min_stability=-1.1974
+max_trainability=-0.222456, min_trainability=-0.67331
+max_capacity=6.39364e+06, min_capacity=4.8762e+06
+max_complexity=4.32069e+08, min_complexity=3.68727e+08
+
+SuperConvK3BNRELU(3,16,2,1)SuperResIDWE2K7(16,24,2,32,4)SuperResIDWE1K7(24,32,2,96,1)SuperResIDWE1K7(32,64,2,72,1)SuperResIDWE2K5(64,384,2,384,3)SuperConvK1BNRELU(384,2048,1,1)
+loop_count=500/100000, time=0.0331105h,
+max_expressivity=-0.853554, min_expressivity=-2.28193
+max_stability=-0.0443803, min_stability=-1.1974
+max_trainability=-0.222456, min_trainability=-0.67331
+max_capacity=6.39364e+06, min_capacity=4.8762e+06
+max_complexity=4.32069e+08, min_complexity=3.68727e+08
+
+SuperConvK3BNRELU(3,16,2,1)SuperResIDWE2K7(16,24,2,32,4)SuperResIDWE1K3(24,40,2,40,3)SuperResIDWE1K7(40,64,2,72,1)SuperResIDWE2K5(64,384,2,384,3)SuperConvK1BNRELU(384,2048,1,1)
+loop_count=600/100000, time=0.0407978h,
+max_expressivity=-0.251426, min_expressivity=-2.28193
+max_stability=-0.103201, min_stability=-1.1974
+max_trainability=-0.163713, min_trainability=-0.67331
+max_capacity=6.38946e+06, min_capacity=4.8762e+06
+max_complexity=4.25896e+08, min_complexity=3.68727e+08
+
+SuperConvK3BNRELU(3,16,2,1)SuperResIDWE2K7(16,24,2,32,4)SuperResIDWE1K3(24,40,2,40,3)SuperResIDWE1K7(40,64,2,72,1)SuperResIDWE2K5(64,384,2,384,3)SuperConvK1BNRELU(384,2048,1,1)
+loop_count=700/100000, time=0.0462644h,
+max_expressivity=-0.251426, min_expressivity=-2.28193
+max_stability=-0.103201, min_stability=-1.1974
+max_trainability=-0.163713, min_trainability=-0.67331
+max_capacity=6.38946e+06, min_capacity=4.8762e+06
+max_complexity=4.25896e+08, min_complexity=3.68727e+08
+
+SuperConvK3BNRELU(3,16,2,1)SuperResIDWE2K7(16,24,2,32,4)SuperResIDWE1K3(24,40,2,40,3)SuperResIDWE1K7(40,64,2,72,1)SuperResIDWE2K5(64,384,2,384,3)SuperConvK1BNRELU(384,2048,1,1)
+loop_count=800/100000, time=0.0520803h,
+max_expressivity=-0.251426, min_expressivity=-2.29942
+max_stability=-0.103201, min_stability=-1.03637
+max_trainability=-0.163713, min_trainability=-0.760011
+max_capacity=6.38946e+06, min_capacity=4.56595e+06
+max_complexity=4.25896e+08, min_complexity=2.525e+08
+
+SuperConvK3BNRELU(3,16,2,1)SuperResIDWE2K7(16,24,2,32,4)SuperResIDWE1K3(24,40,2,40,3)SuperResIDWE1K7(40,64,2,72,1)SuperResIDWE2K5(64,384,2,384,3)SuperConvK1BNRELU(384,2048,1,1)
+loop_count=900/100000, time=0.0579769h,
+max_expressivity=-0.251426, min_expressivity=-2.29942
+max_stability=-0.103201, min_stability=-1.03637
+max_trainability=-0.163713, min_trainability=-0.760011
+max_capacity=6.38946e+06, min_capacity=4.56595e+06
+max_complexity=4.25896e+08, min_complexity=2.525e+08
+
+SuperConvK3BNRELU(3,16,2,1)SuperResIDWE2K7(16,24,2,32,4)SuperResIDWE1K3(24,40,2,40,3)SuperResIDWE1K7(40,64,2,72,1)SuperResIDWE2K5(64,384,2,384,3)SuperConvK1BNRELU(384,2048,1,1)
+loop_count=1000/100000, time=0.0632081h,
+max_expressivity=-0.251426, min_expressivity=-2.29942
+max_stability=-0.103201, min_stability=-1.03637
+max_trainability=-0.163713, min_trainability=-0.760011
+max_capacity=6.38946e+06, min_capacity=4.56595e+06
+max_complexity=4.25896e+08, min_complexity=2.525e+08
+
+SuperConvK3BNRELU(3,16,2,1)SuperResIDWE2K7(16,24,2,32,4)SuperResIDWE1K3(24,40,2,40,3)SuperResIDWE1K7(40,64,2,72,1)SuperResIDWE2K5(64,384,2,384,3)SuperConvK1BNRELU(384,2048,1,1)
+loop_count=1100/100000, time=0.0682658h,
+max_expressivity=-0.251426, min_expressivity=-2.29942
+max_stability=-0.103201, min_stability=-1.03637
+max_trainability=-0.163713, min_trainability=-0.760011
+max_capacity=6.38946e+06, min_capacity=4.56595e+06
+max_complexity=4.25896e+08, min_complexity=2.525e+08
+
+SuperConvK3BNRELU(3,16,2,1)SuperResIDWE2K7(16,24,2,32,4)SuperResIDWE1K3(24,40,2,40,3)SuperResIDWE1K7(40,64,2,72,1)SuperResIDWE2K5(64,384,2,384,3)SuperConvK1BNRELU(384,2048,1,1)
+loop_count=1200/100000, time=0.0734031h,
+max_expressivity=-0.251426, min_expressivity=-2.29942
+max_stability=-0.103201, min_stability=-1.03637
+max_trainability=-0.163713, min_trainability=-0.760011
+max_capacity=6.38946e+06, min_capacity=4.56595e+06
+max_complexity=4.25896e+08, min_complexity=2.525e+08
+
+SuperConvK3BNRELU(3,16,2,1)SuperResIDWE2K7(16,24,2,32,4)SuperResIDWE1K3(24,40,2,40,3)SuperResIDWE1K7(40,64,2,72,1)SuperResIDWE2K5(64,384,2,384,3)SuperConvK1BNRELU(384,2048,1,1)
+loop_count=1300/100000, time=0.0790414h,
+max_expressivity=-0.251426, min_expressivity=-2.29942
+max_stability=-0.103201, min_stability=-1.03637
+max_trainability=-0.163713, min_trainability=-0.760011
+max_capacity=6.38946e+06, min_capacity=4.56595e+06
+max_complexity=4.25896e+08, min_complexity=2.525e+08
+
+SuperConvK3BNRELU(3,16,2,1)SuperResIDWE2K7(16,24,2,32,4)SuperResIDWE1K3(24,40,2,40,3)SuperResIDWE1K7(40,64,2,72,1)SuperResIDWE2K5(64,384,2,384,3)SuperConvK1BNRELU(384,2048,1,1)
+loop_count=1400/100000, time=0.0849882h,
+max_expressivity=-0.251426, min_expressivity=-2.29942
+max_stability=-0.103201, min_stability=-1.03637
+max_trainability=-0.163713, min_trainability=-0.760011
+max_capacity=6.38946e+06, min_capacity=4.56595e+06
+max_complexity=4.25896e+08, min_complexity=2.525e+08
+
+SuperConvK3BNRELU(3,16,2,1)SuperResIDWE2K7(16,24,2,32,4)SuperResIDWE1K3(24,40,2,40,3)SuperResIDWE1K7(40,64,2,72,1)SuperResIDWE2K5(64,384,2,384,3)SuperConvK1BNRELU(384,2048,1,1)
+loop_count=1500/100000, time=0.0903616h,
+max_expressivity=-0.251426, min_expressivity=-2.29942
+max_stability=-0.103201, min_stability=-1.03637
+max_trainability=-0.163713, min_trainability=-0.760011
+max_capacity=6.38946e+06, min_capacity=4.56595e+06
+max_complexity=4.25896e+08, min_complexity=2.525e+08
+
+SuperConvK3BNRELU(3,16,2,1)SuperResIDWE2K7(16,24,2,32,4)SuperResIDWE1K3(24,40,2,40,3)SuperResIDWE1K7(40,64,2,72,1)SuperResIDWE2K5(64,384,2,384,3)SuperConvK1BNRELU(384,2048,1,1)
+loop_count=1600/100000, time=0.095711h,
+max_expressivity=-0.251426, min_expressivity=-2.29942
+max_stability=-0.103201, min_stability=-1.03637
+max_trainability=-0.163713, min_trainability=-0.760011
+max_capacity=6.38946e+06, min_capacity=4.56595e+06
+max_complexity=4.25896e+08, min_complexity=2.525e+08
+
+SuperConvK3BNRELU(3,16,2,1)SuperResIDWE2K7(16,24,2,32,4)SuperResIDWE1K3(24,40,2,40,3)SuperResIDWE1K7(40,64,2,72,1)SuperResIDWE2K5(64,384,2,384,3)SuperConvK1BNRELU(384,2048,1,1)
+loop_count=1700/100000, time=0.102371h,
+max_expressivity=-0.251426, min_expressivity=-2.29942
+max_stability=-0.103201, min_stability=-1.03637
+max_trainability=-0.163713, min_trainability=-0.760011
+max_capacity=6.38946e+06, min_capacity=4.56595e+06
+max_complexity=4.25896e+08, min_complexity=2.525e+08
+
+SuperConvK3BNRELU(3,16,2,1)SuperResIDWE2K7(16,24,2,32,4)SuperResIDWE1K3(24,40,2,40,3)SuperResIDWE1K7(40,64,2,72,1)SuperResIDWE2K5(64,384,2,384,3)SuperConvK1BNRELU(384,2048,1,1)
+loop_count=1800/100000, time=0.107943h,
+max_expressivity=-0.251426, min_expressivity=-2.29942
+max_stability=-0.103201, min_stability=-1.03637
+max_trainability=-0.163713, min_trainability=-0.760011
+max_capacity=6.38946e+06, min_capacity=4.56595e+06
+max_complexity=4.25896e+08, min_complexity=2.525e+08
+
+SuperConvK3BNRELU(3,16,2,1)SuperResIDWE2K7(16,24,2,32,4)SuperResIDWE1K3(24,40,2,40,3)SuperResIDWE1K7(40,64,2,72,1)SuperResIDWE2K5(64,384,2,384,3)SuperConvK1BNRELU(384,2048,1,1)
+loop_count=1900/100000, time=0.113751h,
+max_expressivity=-0.251426, min_expressivity=-2.29942
+max_stability=-0.103201, min_stability=-1.03637
+max_trainability=-0.163713, min_trainability=-0.760011
+max_capacity=6.38946e+06, min_capacity=4.56595e+06
+max_complexity=4.25896e+08, min_complexity=2.525e+08
+
+SuperConvK3BNRELU(3,16,2,1)SuperResIDWE2K7(16,24,2,32,4)SuperResIDWE1K3(24,40,2,40,3)SuperResIDWE1K7(40,64,2,72,1)SuperResIDWE2K5(64,384,2,384,3)SuperConvK1BNRELU(384,2048,1,1)
+loop_count=2000/100000, time=0.119679h,
+max_expressivity=-0.251426, min_expressivity=-0.475301
+max_stability=-0.103201, min_stability=-0.37563
+max_trainability=-0.163713, min_trainability=-0.481941
+max_capacity=6.38946e+06, min_capacity=2.58262e+06
+max_complexity=4.25896e+08, min_complexity=6.02596e+07
+
+SuperConvK3BNRELU(3,16,2,1)SuperResIDWE2K7(16,24,2,32,4)SuperResIDWE1K3(24,40,2,40,3)SuperResIDWE1K7(40,64,2,72,1)SuperResIDWE2K5(64,384,2,384,3)SuperConvK1BNRELU(384,2048,1,1)
+loop_count=2100/100000, time=0.126681h,
+max_expressivity=-0.251426, min_expressivity=-1.27643
+max_stability=-0.103201, min_stability=-0.583706
+max_trainability=-0.163713, min_trainability=-0.284791
+max_capacity=6.38946e+06, min_capacity=2.60631e+06
+max_complexity=4.25896e+08, min_complexity=2.93388e+08
+
+SuperConvK3BNRELU(3,16,2,1)SuperResIDWE2K7(16,24,2,32,4)SuperResIDWE1K3(24,40,2,40,3)SuperResIDWE1K7(40,64,2,72,1)SuperResIDWE2K5(64,384,2,384,3)SuperConvK1BNRELU(384,2048,1,1)
+loop_count=2200/100000, time=0.133804h,
+max_expressivity=-0.251426, min_expressivity=-0.0600538
+max_stability=-0.103201, min_stability=-0.317019
+max_trainability=-0.163713, min_trainability=-0.47887
+max_capacity=6.38946e+06, min_capacity=3.14676e+06
+max_complexity=4.25896e+08, min_complexity=9.93078e+07
+
+SuperConvK3BNRELU(3,16,2,1)SuperResIDWE2K7(16,24,2,32,4)SuperResIDWE1K3(24,40,2,40,3)SuperResIDWE1K7(40,64,2,72,1)SuperResIDWE2K5(64,384,2,384,3)SuperConvK1BNRELU(384,2048,1,1)
+loop_count=2300/100000, time=0.140041h,
+max_expressivity=-0.251426, min_expressivity=-1.77087
+max_stability=-0.103201, min_stability=-0.471217
+max_trainability=-0.163713, min_trainability=-0.452799
+max_capacity=6.38946e+06, min_capacity=4.45601e+06
+max_complexity=4.25896e+08, min_complexity=3.30461e+08
+
+SuperConvK3BNRELU(3,16,2,1)SuperResIDWE2K7(16,24,2,32,4)SuperResIDWE1K3(24,40,2,40,3)SuperResIDWE1K7(40,64,2,72,1)SuperResIDWE2K5(64,384,2,384,3)SuperConvK1BNRELU(384,2048,1,1)
+loop_count=2400/100000, time=0.144898h,
+max_expressivity=-0.251426, min_expressivity=-0.926506
+max_stability=-0.103201, min_stability=-0.480379
+max_trainability=-0.163713, min_trainability=-0.431925
+max_capacity=6.38946e+06, min_capacity=2.89147e+06
+max_complexity=4.25896e+08, min_complexity=2.45734e+08
+
+SuperConvK3BNRELU(3,16,2,1)SuperResIDWE2K7(16,24,2,32,4)SuperResIDWE1K3(24,40,2,40,3)SuperResIDWE1K7(40,64,2,72,1)SuperResIDWE2K5(64,384,2,384,3)SuperConvK1BNRELU(384,2048,1,1)
+loop_count=2500/100000, time=0.151011h,
+max_expressivity=-0.251426, min_expressivity=-1.39459
+max_stability=-0.103201, min_stability=-0.427196
+max_trainability=-0.163713, min_trainability=-0.403016
+max_capacity=6.38946e+06, min_capacity=3.52788e+06
+max_complexity=4.25896e+08, min_complexity=1.42498e+08
+
+SuperConvK3BNRELU(3,16,2,1)SuperResIDWE2K7(16,24,2,32,4)SuperResIDWE1K3(24,40,2,40,3)SuperResIDWE1K7(40,64,2,72,1)SuperResIDWE2K5(64,384,2,384,3)SuperConvK1BNRELU(384,2048,1,1)
+loop_count=2600/100000, time=0.156085h,
+max_expressivity=-0.251426, min_expressivity=-1.59784
+max_stability=-0.103201, min_stability=-0.430638
+max_trainability=-0.163713, min_trainability=-0.418798
+max_capacity=6.38946e+06, min_capacity=9.47477e+06
+max_complexity=4.25896e+08, min_complexity=4.44348e+08
+
+SuperConvK3BNRELU(3,16,2,1)SuperResIDWE2K7(16,24,2,32,4)SuperResIDWE1K3(24,40,2,40,3)SuperResIDWE1K7(40,64,2,72,1)SuperResIDWE2K5(64,384,2,384,3)SuperConvK1BNRELU(384,2048,1,1)
+loop_count=2700/100000, time=0.161423h,
+max_expressivity=-0.251426, min_expressivity=0.015655
+max_stability=-0.103201, min_stability=-0.290849
+max_trainability=-0.163713, min_trainability=-0.44399
+max_capacity=6.38946e+06, min_capacity=3.58412e+06
+max_complexity=4.25896e+08, min_complexity=1.20826e+08
+
+SuperConvK3BNRELU(3,16,2,1)SuperResIDWE2K3(16,24,2,32,3)SuperResIDWE4K3(24,24,1,32,2)SuperResIDWE1K7(24,48,2,40,3)SuperResIDWE1K7(48,120,2,224,1)SuperResIDWE2K5(120,384,2,384,2)SuperConvK1BNRELU(384,2048,1,1)
+loop_count=2800/100000, time=0.167071h,
+max_expressivity=-0.360223, min_expressivity=-0.309286
+max_stability=-0.0315373, min_stability=-0.401029
+max_trainability=-0.178485, min_trainability=-0.384283
+max_capacity=5.38931e+06, min_capacity=3.60238e+06
+max_complexity=4.41756e+08, min_complexity=1.64807e+08
+
+SuperConvK3BNRELU(3,16,2,1)SuperResIDWE2K3(16,24,2,32,3)SuperResIDWE4K3(24,24,1,32,2)SuperResIDWE1K7(24,48,2,40,3)SuperResIDWE1K7(48,120,2,224,1)SuperResIDWE2K5(120,384,2,384,2)SuperConvK1BNRELU(384,2048,1,1)
+loop_count=2900/100000, time=0.172863h,
+max_expressivity=-0.360223, min_expressivity=0.0567842
+max_stability=-0.0315373, min_stability=-0.279332
+max_trainability=-0.178485, min_trainability=-0.437893
+max_capacity=5.38931e+06, min_capacity=3.591e+06
+max_complexity=4.41756e+08, min_complexity=1.25331e+08
+
+SuperConvK3BNRELU(3,16,2,1)SuperResIDWE2K3(16,24,2,32,3)SuperResIDWE4K3(24,24,1,32,2)SuperResIDWE1K7(24,48,2,40,3)SuperResIDWE1K7(48,120,2,224,1)SuperResIDWE2K5(120,384,2,384,2)SuperConvK1BNRELU(384,2048,1,1)
+loop_count=3000/100000, time=0.177664h,
+max_expressivity=-0.360223, min_expressivity=-0.00746155
+max_stability=-0.0315373, min_stability=-0.279051
+max_trainability=-0.178485, min_trainability=-0.37071
+max_capacity=5.38931e+06, min_capacity=3.59021e+06
+max_complexity=4.41756e+08, min_complexity=1.27895e+08
+
+SuperConvK3BNRELU(3,16,2,1)SuperResIDWE2K3(16,24,2,32,3)SuperResIDWE4K3(24,24,1,32,2)SuperResIDWE1K7(24,48,2,40,3)SuperResIDWE1K7(48,120,2,224,1)SuperResIDWE2K5(120,384,2,384,2)SuperConvK1BNRELU(384,2048,1,1)
+loop_count=3100/100000, time=0.183211h,
+max_expressivity=-0.360223, min_expressivity=-0.0194581
+max_stability=-0.0315373, min_stability=-0.296403
+max_trainability=-0.178485, min_trainability=-0.434594
+max_capacity=5.38931e+06, min_capacity=3.59148e+06
+max_complexity=4.41756e+08, min_complexity=1.29847e+08
+
+SuperConvK3BNRELU(3,16,2,1)SuperResIDWE2K3(16,24,2,32,3)SuperResIDWE4K3(24,24,1,32,2)SuperResIDWE1K7(24,48,2,40,3)SuperResIDWE1K7(48,120,2,224,1)SuperResIDWE2K5(120,384,2,384,2)SuperConvK1BNRELU(384,2048,1,1)
+loop_count=3200/100000, time=0.189948h,
+max_expressivity=-0.360223, min_expressivity=-0.346432
+max_stability=-0.0315373, min_stability=-0.300105
+max_trainability=-0.178485, min_trainability=-0.481177
+max_capacity=5.38931e+06, min_capacity=3.85353e+06
+max_complexity=4.41756e+08, min_complexity=1.4909e+08
+
+SuperConvK3BNRELU(3,16,2,1)SuperResIDWE2K3(16,24,2,32,3)SuperResIDWE4K3(24,24,1,32,2)SuperResIDWE1K7(24,48,2,40,3)SuperResIDWE1K7(48,120,2,224,1)SuperResIDWE2K5(120,384,2,384,2)SuperConvK1BNRELU(384,2048,1,1)
+loop_count=3300/100000, time=0.196476h,
+max_expressivity=-0.360223, min_expressivity=-0.574557
+max_stability=-0.0315373, min_stability=-0.315706
+max_trainability=-0.178485, min_trainability=-0.507023
+max_capacity=5.38931e+06, min_capacity=4.16097e+06
+max_complexity=4.41756e+08, min_complexity=2.40818e+08
+
+SuperConvK3BNRELU(3,16,2,1)SuperResIDWE2K3(16,24,2,32,3)SuperResIDWE4K3(24,24,1,32,2)SuperResIDWE1K7(24,48,2,40,3)SuperResIDWE1K7(48,120,2,224,1)SuperResIDWE2K5(120,384,2,384,2)SuperConvK1BNRELU(384,2048,1,1)
+loop_count=3400/100000, time=0.203028h,
+max_expressivity=-0.360223, min_expressivity=-0.337993
+max_stability=-0.0315373, min_stability=-0.200812
+max_trainability=-0.178485, min_trainability=-0.451387
+max_capacity=5.38931e+06, min_capacity=3.6085e+06
+max_complexity=4.41756e+08, min_complexity=1.48654e+08
+
+SuperConvK3BNRELU(3,16,2,1)SuperResIDWE2K3(16,24,2,32,3)SuperResIDWE4K3(24,24,1,32,2)SuperResIDWE1K7(24,48,2,40,3)SuperResIDWE1K7(48,120,2,224,1)SuperResIDWE2K5(120,384,2,384,2)SuperConvK1BNRELU(384,2048,1,1)
+loop_count=3500/100000, time=0.20896h,
+max_expressivity=-0.360223, min_expressivity=-1.28322
+max_stability=-0.0315373, min_stability=-0.292111
+max_trainability=-0.178485, min_trainability=-0.0872436
+max_capacity=5.38931e+06, min_capacity=2.83954e+06
+max_complexity=4.41756e+08, min_complexity=2.68218e+08
+
+SuperConvK3BNRELU(3,16,2,1)SuperResIDWE2K3(16,24,2,32,3)SuperResIDWE4K3(24,24,1,32,2)SuperResIDWE1K7(24,48,2,40,3)SuperResIDWE1K7(48,120,2,224,1)SuperResIDWE2K5(120,384,2,384,2)SuperConvK1BNRELU(384,2048,1,1)
+loop_count=3600/100000, time=0.214294h,
+max_expressivity=-0.360223, min_expressivity=-0.924739
+max_stability=-0.0315373, min_stability=-0.358929
+max_trainability=-0.178485, min_trainability=-0.382387
+max_capacity=5.38931e+06, min_capacity=4.1736e+06
+max_complexity=4.41756e+08, min_complexity=4.43031e+08
+
+SuperConvK3BNRELU(3,16,2,1)SuperResIDWE2K3(16,24,2,32,3)SuperResIDWE4K3(24,24,1,32,2)SuperResIDWE1K7(24,48,2,40,3)SuperResIDWE1K7(48,120,2,224,1)SuperResIDWE2K5(120,384,2,384,2)SuperConvK1BNRELU(384,2048,1,1)
+loop_count=3700/100000, time=0.219575h,
+max_expressivity=-0.360223, min_expressivity=-0.904521
+max_stability=-0.0315373, min_stability=-0.336174
+max_trainability=-0.178485, min_trainability=-0.368976
+max_capacity=5.38931e+06, min_capacity=4.16669e+06
+max_complexity=4.41756e+08, min_complexity=4.36296e+08
+
+SuperConvK3BNRELU(3,16,2,1)SuperResIDWE2K3(16,24,2,32,3)SuperResIDWE4K3(24,24,1,32,2)SuperResIDWE1K7(24,48,2,40,3)SuperResIDWE1K7(48,120,2,224,1)SuperResIDWE2K5(120,384,2,384,2)SuperConvK1BNRELU(384,2048,1,1)
+loop_count=3800/100000, time=0.224585h,
+max_expressivity=-0.360223, min_expressivity=-1.27884
+max_stability=-0.0315373, min_stability=-0.31345
+max_trainability=-0.178485, min_trainability=-0.0652029
+max_capacity=5.38931e+06, min_capacity=3.02246e+06
+max_complexity=4.41756e+08, min_complexity=3.15024e+08
+
+SuperConvK3BNRELU(3,16,2,1)SuperResIDWE2K3(16,24,2,32,3)SuperResIDWE4K3(24,24,1,32,2)SuperResIDWE1K7(24,48,2,40,3)SuperResIDWE1K7(48,120,2,224,1)SuperResIDWE2K5(120,384,2,384,2)SuperConvK1BNRELU(384,2048,1,1)
+loop_count=3900/100000, time=0.229402h,
+max_expressivity=-0.360223, min_expressivity=-1.27144
+max_stability=-0.0315373, min_stability=-0.311353
+max_trainability=-0.178485, min_trainability=-0.0684945
+max_capacity=5.38931e+06, min_capacity=3.02246e+06
+max_complexity=4.41756e+08, min_complexity=3.15024e+08
+
+SuperConvK3BNRELU(3,16,2,1)SuperResIDWE2K3(16,24,2,32,3)SuperResIDWE4K3(24,24,1,32,2)SuperResIDWE1K7(24,48,2,40,3)SuperResIDWE1K7(48,120,2,224,1)SuperResIDWE2K5(120,384,2,384,2)SuperConvK1BNRELU(384,2048,1,1)
+loop_count=4000/100000, time=0.234613h,
+max_expressivity=-0.360223, min_expressivity=-1.35694
+max_stability=-0.0315373, min_stability=-0.318154
+max_trainability=-0.178485, min_trainability=-0.307605
+max_capacity=5.38931e+06, min_capacity=6.33144e+06
+max_complexity=4.41756e+08, min_complexity=4.391e+08
+
+SuperConvK3BNRELU(3,16,2,1)SuperResIDWE1K5(16,32,2,40,3)SuperResIDWE1K5(32,24,1,32,4)SuperResIDWE2K5(24,40,2,64,1)SuperResIDWE4K3(40,96,2,152,1)SuperResIDWE2K5(96,384,2,384,2)SuperConvK1BNRELU(384,2048,1,1)
+loop_count=4100/100000, time=0.240058h,
+max_expressivity=-0.32743, min_expressivity=-0.764052
+max_stability=-0.0226575, min_stability=-0.315253
+max_trainability=-0.180844, min_trainability=-0.0818753
+max_capacity=5.42423e+06, min_capacity=3.04138e+06
+max_complexity=4.31775e+08, min_complexity=4.41612e+08
+
+SuperConvK3BNRELU(3,16,2,1)SuperResIDWE1K5(16,32,2,40,3)SuperResIDWE1K5(32,24,1,32,4)SuperResIDWE2K5(24,40,2,64,1)SuperResIDWE4K3(40,80,2,104,2)SuperResIDWE2K5(80,384,2,384,2)SuperConvK1BNRELU(384,2048,1,1)
+loop_count=4200/100000, time=0.246134h,
+max_expressivity=-0.333043, min_expressivity=-0.603787
+max_stability=-0.0231517, min_stability=-0.285759
+max_trainability=-0.171088, min_trainability=-0.440116
+max_capacity=5.46201e+06, min_capacity=3.93231e+06
+max_complexity=4.35969e+08, min_complexity=1.86216e+08
+
+SuperConvK3BNRELU(3,16,2,1)SuperResIDWE1K5(16,32,2,40,3)SuperResIDWE1K5(32,24,1,32,4)SuperResIDWE2K5(24,40,2,64,1)SuperResIDWE4K3(40,80,2,104,2)SuperResIDWE2K5(80,384,2,384,2)SuperConvK1BNRELU(384,2048,1,1)
+loop_count=4300/100000, time=0.252595h,
+max_expressivity=-0.333043, min_expressivity=-0.457768
+max_stability=-0.0231517, min_stability=-0.283392
+max_trainability=-0.171088, min_trainability=-0.409263
+max_capacity=5.46201e+06, min_capacity=3.61172e+06
+max_complexity=4.35969e+08, min_complexity=1.91156e+08
+
+SuperConvK3BNRELU(3,16,2,1)SuperResIDWE1K5(16,32,2,40,3)SuperResIDWE1K5(32,24,1,32,4)SuperResIDWE2K5(24,40,2,64,1)SuperResIDWE4K3(40,80,2,104,2)SuperResIDWE2K5(80,384,2,384,2)SuperConvK1BNRELU(384,2048,1,1)
+loop_count=4400/100000, time=0.258516h,
+max_expressivity=-0.333043, min_expressivity=-1.59489
+max_stability=-0.0231517, min_stability=-0.22027
+max_trainability=-0.171088, min_trainability=-0.0952939
+max_capacity=5.46201e+06, min_capacity=3.16976e+06
+max_complexity=4.35969e+08, min_complexity=2.60342e+08
+
+SuperConvK3BNRELU(3,16,2,1)SuperResIDWE1K5(16,32,2,40,3)SuperResIDWE1K5(32,24,1,32,4)SuperResIDWE2K5(24,40,2,64,1)SuperResIDWE4K3(40,80,2,104,2)SuperResIDWE2K5(80,384,2,384,2)SuperConvK1BNRELU(384,2048,1,1)
+loop_count=4500/100000, time=0.263745h,
+max_expressivity=-0.333043, min_expressivity=-0.237065
+max_stability=-0.0231517, min_stability=-0.249124
+max_trainability=-0.171088, min_trainability=-0.36025
+max_capacity=5.46201e+06, min_capacity=3.60239e+06
+max_complexity=4.35969e+08, min_complexity=1.63898e+08
+
+SuperConvK3BNRELU(3,16,2,1)SuperResIDWE1K5(16,32,2,40,3)SuperResIDWE1K5(32,24,1,32,4)SuperResIDWE2K5(24,40,2,64,1)SuperResIDWE4K3(40,192,2,80,1)SuperResIDWE2K5(192,384,2,384,2)SuperConvK1BNRELU(384,2048,1,1)
+loop_count=4600/100000, time=0.26867h,
+max_expressivity=-0.332969, min_expressivity=-0.472161
+max_stability=-0.0393561, min_stability=-0.248956
+max_trainability=-0.167224, min_trainability=-0.479059
+max_capacity=5.56914e+06, min_capacity=3.77627e+06
+max_complexity=4.46895e+08, min_complexity=2.29274e+08
+
+SuperConvK3BNRELU(3,16,2,1)SuperResIDWE1K5(16,32,2,40,3)SuperResIDWE1K5(32,24,1,32,4)SuperResIDWE2K5(24,40,2,64,1)SuperResIDWE4K3(40,192,2,80,1)SuperResIDWE2K5(192,384,2,384,2)SuperConvK1BNRELU(384,2048,1,1)
+loop_count=4700/100000, time=0.273504h,
+max_expressivity=-0.332969, min_expressivity=-1.04272
+max_stability=-0.0393561, min_stability=-0.278548
+max_trainability=-0.167224, min_trainability=-0.0707052
+max_capacity=5.56914e+06, min_capacity=3.01727e+06
+max_complexity=4.46895e+08, min_complexity=2.59027e+08
+
+SuperConvK3BNRELU(3,16,2,1)SuperResIDWE1K5(16,32,2,40,3)SuperResIDWE1K5(32,24,1,32,4)SuperResIDWE2K5(24,40,2,64,1)SuperResIDWE4K3(40,192,2,80,1)SuperResIDWE2K5(192,384,2,384,2)SuperConvK1BNRELU(384,2048,1,1)
+loop_count=4800/100000, time=0.278254h,
+max_expressivity=-0.332969, min_expressivity=-0.393737
+max_stability=-0.0393561, min_stability=-0.187897
+max_trainability=-0.167224, min_trainability=-0.319939
+max_capacity=5.56914e+06, min_capacity=3.59988e+06
+max_complexity=4.46895e+08, min_complexity=1.7414e+08
+
+SuperConvK3BNRELU(3,16,2,1)SuperResIDWE1K5(16,32,2,40,3)SuperResIDWE1K5(32,24,1,32,4)SuperResIDWE2K5(24,40,2,64,1)SuperResIDWE4K3(40,192,2,80,1)SuperResIDWE2K5(192,384,2,384,2)SuperConvK1BNRELU(384,2048,1,1)
+loop_count=4900/100000, time=0.283427h,
+max_expressivity=-0.332969, min_expressivity=-1.05104
+max_stability=-0.0393561, min_stability=-0.272843
+max_trainability=-0.167224, min_trainability=-0.0938853
+max_capacity=5.56914e+06, min_capacity=3.02081e+06
+max_complexity=4.46895e+08, min_complexity=2.71245e+08
+
+SuperConvK3BNRELU(3,16,2,1)SuperResIDWE1K5(16,32,2,40,3)SuperResIDWE1K5(32,24,1,32,4)SuperResIDWE2K5(24,40,2,64,1)SuperResIDWE4K3(40,192,2,80,1)SuperResIDWE2K5(192,384,2,384,2)SuperConvK1BNRELU(384,2048,1,1)
+loop_count=5000/100000, time=0.288983h,
+max_expressivity=-0.332969, min_expressivity=-1.41922
+max_stability=-0.0393561, min_stability=-0.279068
+max_trainability=-0.167224, min_trainability=-0.431081
+max_capacity=5.56914e+06, min_capacity=9.42644e+06
+max_complexity=4.46895e+08, min_complexity=4.28971e+08
+
+SuperConvK3BNRELU(3,16,2,1)SuperResIDWE1K5(16,32,2,40,3)SuperResIDWE1K5(32,24,1,32,4)SuperResIDWE2K5(24,40,2,64,1)SuperResIDWE4K3(40,192,2,80,1)SuperResIDWE2K5(192,384,2,384,2)SuperConvK1BNRELU(384,2048,1,1)
+loop_count=5100/100000, time=0.293466h,
+max_expressivity=-0.332969, min_expressivity=-1.40994
+max_stability=-0.0393561, min_stability=-0.271797
+max_trainability=-0.167224, min_trainability=-0.396292
+max_capacity=5.56914e+06, min_capacity=6.00327e+06
+max_complexity=4.46895e+08, min_complexity=2.67878e+08
+
+SuperConvK3BNRELU(3,16,2,1)SuperResIDWE1K5(16,32,2,40,3)SuperResIDWE1K5(32,24,1,32,4)SuperResIDWE2K5(24,40,2,64,1)SuperResIDWE4K3(40,192,2,80,1)SuperResIDWE2K5(192,384,2,384,2)SuperConvK1BNRELU(384,2048,1,1)
+loop_count=5200/100000, time=0.298682h,
+max_expressivity=-0.332969, min_expressivity=-0.927776
+max_stability=-0.0393561, min_stability=-0.268044
+max_trainability=-0.167224, min_trainability=-0.0749612
+max_capacity=5.56914e+06, min_capacity=3.01554e+06
+max_complexity=4.46895e+08, min_complexity=2.40362e+08
+
+SuperConvK3BNRELU(3,16,2,1)SuperResIDWE1K5(16,32,2,40,3)SuperResIDWE1K5(32,24,1,32,4)SuperResIDWE2K5(24,40,2,64,1)SuperResIDWE2K5(40,144,2,192,1)SuperResIDWE2K5(144,384,2,384,2)SuperConvK1BNRELU(384,2048,1,1)
+loop_count=5300/100000, time=0.30345h,
+max_expressivity=-0.315867, min_expressivity=-0.554263
+max_stability=-0.0238764, min_stability=-0.266568
+max_trainability=-0.173486, min_trainability=-0.371281
+max_capacity=5.47548e+06, min_capacity=3.77003e+06
+max_complexity=4.32792e+08, min_complexity=2.25751e+08
+
+SuperConvK3BNRELU(3,16,2,1)SuperResIDWE1K5(16,32,2,40,3)SuperResIDWE1K5(32,24,1,32,4)SuperResIDWE2K5(24,40,2,64,1)SuperResIDWE2K5(40,144,2,192,1)SuperResIDWE2K5(144,384,2,384,2)SuperConvK1BNRELU(384,2048,1,1)
+loop_count=5400/100000, time=0.307925h,
+max_expressivity=-0.315867, min_expressivity=-0.593042
+max_stability=-0.0238764, min_stability=-0.253704
+max_trainability=-0.173486, min_trainability=-0.330181
+max_capacity=5.47548e+06, min_capacity=3.61415e+06
+max_complexity=4.32792e+08, min_complexity=1.98162e+08
+
+SuperConvK3BNRELU(3,16,2,1)SuperResIDWE1K5(16,32,2,40,3)SuperResIDWE1K5(32,24,1,32,4)SuperResIDWE2K5(24,40,2,64,1)SuperResIDWE2K5(40,144,2,192,1)SuperResIDWE2K5(144,384,2,384,2)SuperConvK1BNRELU(384,2048,1,1)
+loop_count=5500/100000, time=0.313488h,
+max_expressivity=-0.315867, min_expressivity=0.119707
+max_stability=-0.0238764, min_stability=-0.236886
+max_trainability=-0.173486, min_trainability=-0.453961
+max_capacity=5.47548e+06, min_capacity=3.68886e+06
+max_complexity=4.32792e+08, min_complexity=2.19391e+08
+
+SuperConvK3BNRELU(3,16,2,1)SuperResIDWE1K5(16,32,2,40,3)SuperResIDWE1K5(32,24,1,32,4)SuperResIDWE2K5(24,40,2,64,1)SuperResIDWE2K5(40,144,2,192,1)SuperResIDWE2K5(144,384,2,384,2)SuperConvK1BNRELU(384,2048,1,1)
+loop_count=5600/100000, time=0.320796h,
+max_expressivity=-0.315867, min_expressivity=-1.03975
+max_stability=-0.0238764, min_stability=-0.269625
+max_trainability=-0.173486, min_trainability=-0.262786
+max_capacity=5.47548e+06, min_capacity=6.38378e+06
+max_complexity=4.32792e+08, min_complexity=3.13726e+08
+
+SuperConvK3BNRELU(3,16,2,1)SuperResIDWE1K5(16,32,2,40,3)SuperResIDWE1K5(32,24,1,32,4)SuperResIDWE2K5(24,40,2,64,1)SuperResIDWE2K5(40,144,2,192,1)SuperResIDWE2K5(144,384,2,384,2)SuperConvK1BNRELU(384,2048,1,1)
+loop_count=5700/100000, time=0.327468h,
+max_expressivity=-0.315867, min_expressivity=-1.1334
+max_stability=-0.0238764, min_stability=-0.212623
+max_trainability=-0.173486, min_trainability=-0.325229
+max_capacity=5.47548e+06, min_capacity=3.95139e+06
+max_complexity=4.32792e+08, min_complexity=2.05967e+08
+
+SuperConvK3BNRELU(3,16,2,1)SuperResIDWE1K5(16,32,2,40,3)SuperResIDWE1K5(32,24,1,32,4)SuperResIDWE2K5(24,40,2,64,1)SuperResIDWE2K5(40,144,2,192,1)SuperResIDWE2K5(144,384,2,384,2)SuperConvK1BNRELU(384,2048,1,1)
+loop_count=5800/100000, time=0.333669h,
+max_expressivity=-0.315867, min_expressivity=-0.190493
+max_stability=-0.0238764, min_stability=-0.161416
+max_trainability=-0.173486, min_trainability=-0.331551
+max_capacity=5.47548e+06, min_capacity=3.69224e+06
+max_complexity=4.32792e+08, min_complexity=2.11717e+08
+
+SuperConvK3BNRELU(3,16,2,1)SuperResIDWE1K5(16,32,2,40,3)SuperResIDWE1K5(32,24,1,32,4)SuperResIDWE2K5(24,40,2,64,1)SuperResIDWE2K5(40,144,2,192,1)SuperResIDWE2K5(144,384,2,384,2)SuperConvK1BNRELU(384,2048,1,1)
+loop_count=5900/100000, time=0.339148h,
+max_expressivity=-0.315867, min_expressivity=-0.537091
+max_stability=-0.0238764, min_stability=-0.249997
+max_trainability=-0.173486, min_trainability=-0.461011
+max_capacity=5.47548e+06, min_capacity=4.13485e+06
+max_complexity=4.32792e+08, min_complexity=2.99376e+08
+
+SuperConvK3BNRELU(3,16,2,1)SuperResIDWE1K5(16,32,2,40,3)SuperResIDWE1K5(32,24,1,32,4)SuperResIDWE2K5(24,40,2,64,1)SuperResIDWE2K5(40,144,2,192,1)SuperResIDWE2K5(144,384,2,384,2)SuperConvK1BNRELU(384,2048,1,1)
+loop_count=6000/100000, time=0.3446h,
+max_expressivity=-0.315867, min_expressivity=-0.548663
+max_stability=-0.0238764, min_stability=-0.233354
+max_trainability=-0.173486, min_trainability=-0.389044
+max_capacity=5.47548e+06, min_capacity=3.3761e+06
+max_complexity=4.32792e+08, min_complexity=2.67338e+08
+
+SuperConvK3BNRELU(3,16,2,1)SuperResIDWE1K5(16,32,2,40,3)SuperResIDWE1K5(32,24,1,32,4)SuperResIDWE2K5(24,40,2,64,1)SuperResIDWE2K5(40,144,2,192,1)SuperResIDWE2K5(144,384,2,384,2)SuperConvK1BNRELU(384,2048,1,1)
+loop_count=6100/100000, time=0.349726h,
+max_expressivity=-0.315867, min_expressivity=-2.08586
+max_stability=-0.0238764, min_stability=-0.188072
+max_trainability=-0.173486, min_trainability=-0.249791
+max_capacity=5.47548e+06, min_capacity=5.34302e+06
+max_complexity=4.32792e+08, min_complexity=4.00503e+08
+
+SuperConvK3BNRELU(3,16,2,1)SuperResIDWE1K5(16,32,2,40,3)SuperResIDWE1K5(32,24,1,32,4)SuperResIDWE2K5(24,40,2,64,1)SuperResIDWE2K5(40,144,2,192,1)SuperResIDWE2K5(144,384,2,384,2)SuperConvK1BNRELU(384,2048,1,1)
+loop_count=6200/100000, time=0.357162h,
+max_expressivity=-0.315867, min_expressivity=-0.741202
+max_stability=-0.0238764, min_stability=-0.271478
+max_trainability=-0.173486, min_trainability=-0.405996
+max_capacity=5.47548e+06, min_capacity=6.80803e+06
+max_complexity=4.32792e+08, min_complexity=3.83569e+08
+
+SuperConvK3BNRELU(3,16,2,1)SuperResIDWE1K5(16,32,2,40,3)SuperResIDWE1K5(32,24,1,32,4)SuperResIDWE2K5(24,40,2,64,1)SuperResIDWE2K5(40,144,2,192,1)SuperResIDWE2K5(144,384,2,384,2)SuperConvK1BNRELU(384,2048,1,1)
+loop_count=6300/100000, time=0.364068h,
+max_expressivity=-0.315867, min_expressivity=-1.36518
+max_stability=-0.0238764, min_stability=-0.213021
+max_trainability=-0.173486, min_trainability=-0.0960747
+max_capacity=5.47548e+06, min_capacity=3.12522e+06
+max_complexity=4.32792e+08, min_complexity=3.91757e+08
+
+SuperConvK3BNRELU(3,16,2,1)SuperResIDWE1K5(16,32,2,40,3)SuperResIDWE1K5(32,24,1,32,4)SuperResIDWE2K5(24,40,2,64,1)SuperResIDWE2K5(40,144,2,192,1)SuperResIDWE2K5(144,384,2,384,2)SuperConvK1BNRELU(384,2048,1,1)
+loop_count=6400/100000, time=0.369184h,
+max_expressivity=-0.315867, min_expressivity=-0.346193
+max_stability=-0.0238764, min_stability=-0.0645568
+max_trainability=-0.173486, min_trainability=-0.234781
+max_capacity=5.47548e+06, min_capacity=2.94678e+06
+max_complexity=4.32792e+08, min_complexity=2.8088e+08
+
+SuperConvK3BNRELU(3,16,2,1)SuperResIDWE1K5(16,32,2,40,3)SuperResIDWE1K5(32,24,1,32,4)SuperResIDWE2K5(24,40,2,64,1)SuperResIDWE2K5(40,144,2,192,1)SuperResIDWE2K5(144,384,2,384,2)SuperConvK1BNRELU(384,2048,1,1)
+loop_count=6500/100000, time=0.374385h,
+max_expressivity=-0.315867, min_expressivity=-0.153612
+max_stability=-0.0238764, min_stability=-0.156116
+max_trainability=-0.173486, min_trainability=-0.410837
+max_capacity=5.47548e+06, min_capacity=6.4719e+06
+max_complexity=4.32792e+08, min_complexity=2.65133e+08
+
+SuperConvK3BNRELU(3,16,2,1)SuperResIDWE1K5(16,32,2,40,3)SuperResIDWE1K5(32,24,1,32,3)SuperResIDWE2K5(24,40,2,64,1)SuperResIDWE6K5(40,64,2,80,3)SuperResIDWE2K5(64,384,2,384,2)SuperConvK1BNRELU(384,2048,1,1)
+loop_count=6600/100000, time=0.380316h,
+max_expressivity=-0.317907, min_expressivity=-0.969971
+max_stability=-0.0261732, min_stability=-0.194866
+max_trainability=-0.161093, min_trainability=-0.0839226
+max_capacity=5.5984e+06, min_capacity=3.11361e+06
+max_complexity=4.47008e+08, min_complexity=3.26492e+08
+
+SuperConvK3BNRELU(3,16,2,1)SuperResIDWE1K5(16,32,2,40,3)SuperResIDWE1K5(32,24,1,32,3)SuperResIDWE2K5(24,40,2,64,1)SuperResIDWE6K5(40,64,2,80,3)SuperResIDWE2K5(64,384,2,384,2)SuperConvK1BNRELU(384,2048,1,1)
+loop_count=6700/100000, time=0.385373h,
+max_expressivity=-0.317907, min_expressivity=-0.970404
+max_stability=-0.0261732, min_stability=-0.235078
+max_trainability=-0.161093, min_trainability=-0.447477
+max_capacity=5.5984e+06, min_capacity=5.95709e+06
+max_complexity=4.47008e+08, min_complexity=4.31067e+08
+
+SuperConvK3BNRELU(3,16,2,1)SuperResIDWE1K5(16,32,2,40,3)SuperResIDWE1K5(32,24,1,32,3)SuperResIDWE2K5(24,40,2,64,1)SuperResIDWE6K5(40,64,2,80,3)SuperResIDWE2K5(64,384,2,384,2)SuperConvK1BNRELU(384,2048,1,1)
+loop_count=6800/100000, time=0.390119h,
+max_expressivity=-0.317907, min_expressivity=-0.336594
+max_stability=-0.0261732, min_stability=-0.1856
+max_trainability=-0.161093, min_trainability=-0.40038
+max_capacity=5.5984e+06, min_capacity=3.79301e+06
+max_complexity=4.47008e+08, min_complexity=3.0659e+08
+
+SuperConvK3BNRELU(3,16,2,1)SuperResIDWE1K5(16,32,2,40,3)SuperResIDWE1K5(32,24,1,32,3)SuperResIDWE2K5(24,40,2,64,1)SuperResIDWE6K5(40,64,2,80,3)SuperResIDWE2K5(64,384,2,384,2)SuperConvK1BNRELU(384,2048,1,1)
+loop_count=6900/100000, time=0.395237h,
+max_expressivity=-0.317907, min_expressivity=-0.664062
+max_stability=-0.0261732, min_stability=-0.16542
+max_trainability=-0.161093, min_trainability=-0.0900728
+max_capacity=5.5984e+06, min_capacity=3.28678e+06
+max_complexity=4.47008e+08, min_complexity=2.96153e+08
+
+SuperConvK3BNRELU(3,16,2,1)SuperResIDWE1K5(16,32,2,40,3)SuperResIDWE1K5(32,24,1,32,3)SuperResIDWE2K5(24,40,2,64,1)SuperResIDWE6K5(40,64,2,80,3)SuperResIDWE2K5(64,384,2,384,2)SuperConvK1BNRELU(384,2048,1,1)
+loop_count=7000/100000, time=0.400483h,
+max_expressivity=-0.317907, min_expressivity=-1.17502
+max_stability=-0.0261732, min_stability=-0.164832
+max_trainability=-0.161093, min_trainability=-0.093051
+max_capacity=5.5984e+06, min_capacity=3.29741e+06
+max_complexity=4.47008e+08, min_complexity=3.56782e+08
+
+SuperConvK3BNRELU(3,16,2,1)SuperResIDWE1K5(16,32,2,40,3)SuperResIDWE1K5(32,24,1,32,3)SuperResIDWE2K5(24,40,2,64,1)SuperResIDWE6K5(40,64,2,80,3)SuperResIDWE2K5(64,384,2,384,2)SuperConvK1BNRELU(384,2048,1,1)
+loop_count=7100/100000, time=0.405327h,
+max_expressivity=-0.317907, min_expressivity=-0.244671
+max_stability=-0.0261732, min_stability=-0.100753
+max_trainability=-0.161093, min_trainability=-0.296192
+max_capacity=5.5984e+06, min_capacity=3.82192e+06
+max_complexity=4.47008e+08, min_complexity=2.76718e+08
+
+SuperConvK3BNRELU(3,16,2,1)SuperResIDWE1K5(16,32,2,40,3)SuperResIDWE1K5(32,24,1,32,3)SuperResIDWE2K5(24,40,2,64,1)SuperResIDWE6K5(40,64,2,80,3)SuperResIDWE2K5(64,384,2,384,2)SuperConvK1BNRELU(384,2048,1,1)
+loop_count=7200/100000, time=0.411198h,
+max_expressivity=-0.317907, min_expressivity=-1.17119
+max_stability=-0.0261732, min_stability=-0.231277
+max_trainability=-0.161093, min_trainability=-0.390244
+max_capacity=5.5984e+06, min_capacity=9.25542e+06
+max_complexity=4.47008e+08, min_complexity=4.00923e+08
+
+SuperConvK3BNRELU(3,16,2,1)SuperResIDWE1K5(16,32,2,40,3)SuperResIDWE1K5(32,24,1,32,3)SuperResIDWE2K5(24,40,2,64,1)SuperResIDWE6K5(40,64,2,80,3)SuperResIDWE2K5(64,384,2,384,2)SuperConvK1BNRELU(384,2048,1,1)
+loop_count=7300/100000, time=0.416581h,
+max_expressivity=-0.317907, min_expressivity=-1.40023
+max_stability=-0.0261732, min_stability=-0.221548
+max_trainability=-0.161093, min_trainability=-0.381099
+max_capacity=5.5984e+06, min_capacity=9.5257e+06
+max_complexity=4.47008e+08, min_complexity=4.48891e+08
+
+SuperConvK3BNRELU(3,16,2,1)SuperResIDWE1K5(16,32,2,40,3)SuperResIDWE1K5(32,24,1,32,3)SuperResIDWE2K5(24,40,2,64,1)SuperResIDWE6K5(40,64,2,80,3)SuperResIDWE2K5(64,384,2,384,2)SuperConvK1BNRELU(384,2048,1,1)
+loop_count=7400/100000, time=0.421575h,
+max_expressivity=-0.317907, min_expressivity=-0.57075
+max_stability=-0.0261732, min_stability=-0.19627
+max_trainability=-0.161093, min_trainability=-0.463714
+max_capacity=5.5984e+06, min_capacity=5.93238e+06
+max_complexity=4.47008e+08, min_complexity=3.33555e+08
+
+SuperConvK3BNRELU(3,16,2,1)SuperResIDWE1K5(16,32,2,40,3)SuperResIDWE1K5(32,24,1,32,3)SuperResIDWE2K5(24,40,2,64,1)SuperResIDWE6K5(40,64,2,80,3)SuperResIDWE2K5(64,384,2,384,2)SuperConvK1BNRELU(384,2048,1,1)
+loop_count=7500/100000, time=0.427449h,
+max_expressivity=-0.317907, min_expressivity=-0.382795
+max_stability=-0.0261732, min_stability=-0.157295
+max_trainability=-0.161093, min_trainability=-0.303721
+max_capacity=5.5984e+06, min_capacity=4.00263e+06
+max_complexity=4.47008e+08, min_complexity=3.04189e+08
+
+SuperConvK3BNRELU(3,16,2,1)SuperResIDWE1K5(16,32,2,40,3)SuperResIDWE1K5(32,24,1,32,3)SuperResIDWE2K5(24,40,2,64,1)SuperResIDWE6K5(40,64,2,80,3)SuperResIDWE2K5(64,384,2,384,2)SuperConvK1BNRELU(384,2048,1,1)
+loop_count=7600/100000, time=0.434366h,
+max_expressivity=-0.317907, min_expressivity=-1.63486
+max_stability=-0.0261732, min_stability=-0.12076
+max_trainability=-0.161093, min_trainability=-0.244565
+max_capacity=5.5984e+06, min_capacity=5.32615e+06
+max_complexity=4.47008e+08, min_complexity=3.76387e+08
+
+SuperConvK3BNRELU(3,16,2,1)SuperResIDWE1K5(16,32,2,40,3)SuperResIDWE1K5(32,24,1,32,3)SuperResIDWE2K5(24,40,2,64,1)SuperResIDWE6K5(40,64,2,80,3)SuperResIDWE2K5(64,384,2,384,2)SuperConvK1BNRELU(384,2048,1,1)
+loop_count=7700/100000, time=0.4398h,
+max_expressivity=-0.317907, min_expressivity=-0.567225
+max_stability=-0.0261732, min_stability=-0.186668
+max_trainability=-0.161093, min_trainability=-0.367823
+max_capacity=5.5984e+06, min_capacity=3.91494e+06
+max_complexity=4.47008e+08, min_complexity=3.64178e+08
+
+SuperConvK3BNRELU(3,16,2,1)SuperResIDWE1K5(16,32,2,40,3)SuperResIDWE1K5(32,24,1,32,3)SuperResIDWE2K5(24,40,2,64,1)SuperResIDWE6K5(40,64,2,80,3)SuperResIDWE2K5(64,384,2,384,2)SuperConvK1BNRELU(384,2048,1,1)
+loop_count=7800/100000, time=0.444609h,
+max_expressivity=-0.317907, min_expressivity=-0.209436
+max_stability=-0.0261732, min_stability=-0.247554
+max_trainability=-0.161093, min_trainability=-0.300507
+max_capacity=5.5984e+06, min_capacity=4.58632e+06
+max_complexity=4.47008e+08, min_complexity=4.0878e+08
+
+SuperConvK3BNRELU(3,16,2,1)SuperResIDWE1K5(16,32,2,40,3)SuperResIDWE1K5(32,24,1,32,3)SuperResIDWE2K5(24,40,2,64,1)SuperResIDWE6K5(40,64,2,80,3)SuperResIDWE2K5(64,384,2,384,2)SuperConvK1BNRELU(384,2048,1,1)
+loop_count=7900/100000, time=0.45214h,
+max_expressivity=-0.317907, min_expressivity=-0.648098
+max_stability=-0.0261732, min_stability=-0.169542
+max_trainability=-0.161093, min_trainability=-0.464923
+max_capacity=5.5984e+06, min_capacity=8.42813e+06
+max_complexity=4.47008e+08, min_complexity=3.60869e+08
+
+SuperConvK3BNRELU(3,16,2,1)SuperResIDWE1K5(16,32,2,40,3)SuperResIDWE1K5(32,24,1,32,3)SuperResIDWE2K5(24,40,2,64,1)SuperResIDWE6K5(40,64,2,80,3)SuperResIDWE2K5(64,384,2,384,2)SuperConvK1BNRELU(384,2048,1,1)
+loop_count=8000/100000, time=0.457726h,
+max_expressivity=-0.317907, min_expressivity=-0.966331
+max_stability=-0.0261732, min_stability=-0.190669
+max_trainability=-0.161093, min_trainability=-0.317859
+max_capacity=5.5984e+06, min_capacity=6.38498e+06
+max_complexity=4.47008e+08, min_complexity=3.5196e+08
+
+SuperConvK3BNRELU(3,16,2,1)SuperResIDWE1K5(16,32,2,40,3)SuperResIDWE1K5(32,24,1,32,3)SuperResIDWE2K5(24,40,2,64,1)SuperResIDWE6K5(40,64,2,80,3)SuperResIDWE2K5(64,384,2,384,2)SuperConvK1BNRELU(384,2048,1,1)
+loop_count=8100/100000, time=0.462757h,
+max_expressivity=-0.317907, min_expressivity=-0.809248
+max_stability=-0.0261732, min_stability=-0.0694648
+max_trainability=-0.161093, min_trainability=-0.200535
+max_capacity=5.5984e+06, min_capacity=5.10958e+06
+max_complexity=4.47008e+08, min_complexity=2.79268e+08
+
+SuperConvK3BNRELU(3,16,2,1)SuperResIDWE1K5(16,32,2,40,3)SuperResIDWE1K5(32,24,1,32,3)SuperResIDWE2K5(24,40,2,64,1)SuperResIDWE6K5(40,64,2,80,3)SuperResIDWE2K5(64,384,2,384,2)SuperConvK1BNRELU(384,2048,1,1)
+loop_count=8200/100000, time=0.467689h,
+max_expressivity=-0.317907, min_expressivity=-1.2858
+max_stability=-0.0261732, min_stability=-0.167406
+max_trainability=-0.161093, min_trainability=-0.244102
+max_capacity=5.5984e+06, min_capacity=5.35142e+06
+max_complexity=4.47008e+08, min_complexity=3.8123e+08
+
+SuperConvK3BNRELU(3,16,2,1)SuperResIDWE1K5(16,32,2,40,3)SuperResIDWE1K5(32,24,1,32,3)SuperResIDWE2K5(24,40,2,64,1)SuperResIDWE6K5(40,64,2,80,3)SuperResIDWE2K5(64,384,2,384,2)SuperConvK1BNRELU(384,2048,1,1)
+loop_count=8300/100000, time=0.472837h,
+max_expressivity=-0.317907, min_expressivity=-0.133319
+max_stability=-0.0261732, min_stability=-0.133738
+max_trainability=-0.161093, min_trainability=-0.372998
+max_capacity=5.5984e+06, min_capacity=4.36235e+06
+max_complexity=4.47008e+08, min_complexity=3.21986e+08
+
+SuperConvK3BNRELU(3,16,2,1)SuperResIDWE1K5(16,32,2,40,3)SuperResIDWE1K5(32,24,1,32,3)SuperResIDWE2K5(24,40,2,64,1)SuperResIDWE6K5(40,64,2,80,3)SuperResIDWE2K5(64,384,2,384,2)SuperConvK1BNRELU(384,2048,1,1)
+loop_count=8400/100000, time=0.477814h,
+max_expressivity=-0.317907, min_expressivity=-0.971247
+max_stability=-0.0261732, min_stability=-0.147279
+max_trainability=-0.161093, min_trainability=-0.304409
+max_capacity=5.5984e+06, min_capacity=5.07414e+06
+max_complexity=4.47008e+08, min_complexity=3.66387e+08
+
+SuperConvK3BNRELU(3,16,2,1)SuperResIDWE1K5(16,32,2,40,3)SuperResIDWE1K5(32,24,1,32,3)SuperResIDWE2K5(24,40,2,64,1)SuperResIDWE6K5(40,64,2,80,3)SuperResIDWE2K5(64,384,2,384,2)SuperConvK1BNRELU(384,2048,1,1)
+loop_count=8500/100000, time=0.482264h,
+max_expressivity=-0.317907, min_expressivity=-1.14272
+max_stability=-0.0261732, min_stability=-0.199868
+max_trainability=-0.161093, min_trainability=-0.260773
+max_capacity=5.5984e+06, min_capacity=6.36726e+06
+max_complexity=4.47008e+08, min_complexity=4.40379e+08
+
+SuperConvK3BNRELU(3,16,2,1)SuperResIDWE1K5(16,32,2,40,3)SuperResIDWE1K5(32,24,1,32,3)SuperResIDWE2K5(24,40,2,64,1)SuperResIDWE6K5(40,64,2,80,3)SuperResIDWE2K5(64,384,2,384,2)SuperConvK1BNRELU(384,2048,1,1)
+loop_count=8600/100000, time=0.487732h,
+max_expressivity=-0.317907, min_expressivity=-0.738442
+max_stability=-0.0261732, min_stability=-0.186619
+max_trainability=-0.161093, min_trainability=-0.0831255
+max_capacity=5.5984e+06, min_capacity=3.25559e+06
+max_complexity=4.47008e+08, min_complexity=4.02544e+08
+
+SuperConvK3BNRELU(3,16,2,1)SuperResIDWE1K5(16,32,2,40,3)SuperResIDWE1K5(32,24,1,32,3)SuperResIDWE2K5(24,40,2,64,1)SuperResIDWE6K5(40,64,2,80,3)SuperResIDWE2K5(64,384,2,384,2)SuperConvK1BNRELU(384,2048,1,1)
+loop_count=8700/100000, time=0.494044h,
+max_expressivity=-0.317907, min_expressivity=-0.386095
+max_stability=-0.0261732, min_stability=-0.1489
+max_trainability=-0.161093, min_trainability=-0.0790529
+max_capacity=5.5984e+06, min_capacity=3.30021e+06
+max_complexity=4.47008e+08, min_complexity=3.4192e+08
+
+SuperConvK3BNRELU(3,16,2,1)SuperResIDWE1K5(16,32,2,40,3)SuperResIDWE1K5(32,24,1,32,3)SuperResIDWE2K5(24,40,2,64,1)SuperResIDWE6K5(40,64,2,80,3)SuperResIDWE2K5(64,384,2,384,2)SuperConvK1BNRELU(384,2048,1,1)
+loop_count=8800/100000, time=0.498007h,
+max_expressivity=-0.317907, min_expressivity=-0.967299
+max_stability=-0.0261732, min_stability=-0.117581
+max_trainability=-0.161093, min_trainability=-0.234754
+max_capacity=5.5984e+06, min_capacity=4.08123e+06
+max_complexity=4.47008e+08, min_complexity=3.42384e+08
+
+SuperConvK3BNRELU(3,16,2,1)SuperResIDWE1K5(16,32,2,40,3)SuperResIDWE1K5(32,24,1,32,3)SuperResIDWE2K5(24,40,2,64,1)SuperResIDWE6K5(40,64,2,80,3)SuperResIDWE2K5(64,384,2,384,2)SuperConvK1BNRELU(384,2048,1,1)
+loop_count=8900/100000, time=0.504419h,
+max_expressivity=-0.317907, min_expressivity=-1.1172
+max_stability=-0.0261732, min_stability=-0.141531
+max_trainability=-0.161093, min_trainability=-0.195932
+max_capacity=5.5984e+06, min_capacity=5.29779e+06
+max_complexity=4.47008e+08, min_complexity=3.33761e+08
+
+SuperConvK3BNRELU(3,16,2,1)SuperResIDWE1K5(16,32,2,40,3)SuperResIDWE1K5(32,24,1,32,3)SuperResIDWE2K5(24,40,2,64,1)SuperResIDWE6K5(40,64,2,80,3)SuperResIDWE2K5(64,384,2,384,2)SuperConvK1BNRELU(384,2048,1,1)
+loop_count=9000/100000, time=0.509892h,
+max_expressivity=-0.317907, min_expressivity=-0.956412
+max_stability=-0.0261732, min_stability=-0.201649
+max_trainability=-0.161093, min_trainability=-0.273783
+max_capacity=5.5984e+06, min_capacity=6.4089e+06
+max_complexity=4.47008e+08, min_complexity=4.26973e+08
+
+SuperConvK3BNRELU(3,16,2,1)SuperResIDWE1K5(16,32,2,40,3)SuperResIDWE1K5(32,24,1,32,3)SuperResIDWE2K5(24,40,2,64,1)SuperResIDWE6K5(40,64,2,80,3)SuperResIDWE2K5(64,384,2,384,2)SuperConvK1BNRELU(384,2048,1,1)
+loop_count=9100/100000, time=0.515173h,
+max_expressivity=-0.317907, min_expressivity=-0.42735
+max_stability=-0.0261732, min_stability=-0.164577
+max_trainability=-0.161093, min_trainability=-0.376711
+max_capacity=5.5984e+06, min_capacity=7.61204e+06
+max_complexity=4.47008e+08, min_complexity=3.54543e+08
+
+SuperConvK3BNRELU(3,16,2,1)SuperResIDWE1K5(16,32,2,40,3)SuperResIDWE1K5(32,24,1,32,3)SuperResIDWE2K5(24,40,2,64,1)SuperResIDWE6K5(40,64,2,80,3)SuperResIDWE2K5(64,384,2,384,2)SuperConvK1BNRELU(384,2048,1,1)
+loop_count=9200/100000, time=0.520018h,
+max_expressivity=-0.317907, min_expressivity=-0.625215
+max_stability=-0.0261732, min_stability=-0.168321
+max_trainability=-0.161093, min_trainability=-0.336889
+max_capacity=5.5984e+06, min_capacity=9.51035e+06
+max_complexity=4.47008e+08, min_complexity=4.44263e+08
+
+SuperConvK3BNRELU(3,16,2,1)SuperResIDWE1K5(16,32,2,40,3)SuperResIDWE1K5(32,24,1,32,3)SuperResIDWE2K5(24,40,2,64,1)SuperResIDWE6K5(40,64,2,80,3)SuperResIDWE2K5(64,384,2,384,2)SuperConvK1BNRELU(384,2048,1,1)
+loop_count=9300/100000, time=0.526226h,
+max_expressivity=-0.317907, min_expressivity=-1.10556
+max_stability=-0.0261732, min_stability=-0.155274
+max_trainability=-0.161093, min_trainability=-0.305352
+max_capacity=5.5984e+06, min_capacity=9.3233e+06
+max_complexity=4.47008e+08, min_complexity=4.1297e+08
+
+SuperConvK3BNRELU(3,16,2,1)SuperResIDWE1K5(16,32,2,40,3)SuperResIDWE1K5(32,24,1,32,3)SuperResIDWE2K5(24,40,2,64,1)SuperResIDWE6K5(40,64,2,80,3)SuperResIDWE2K5(64,384,2,384,2)SuperConvK1BNRELU(384,2048,1,1)
+loop_count=9400/100000, time=0.532529h,
+max_expressivity=-0.317907, min_expressivity=0.00643539
+max_stability=-0.0261732, min_stability=-0.143714
+max_trainability=-0.161093, min_trainability=-0.317247
+max_capacity=5.5984e+06, min_capacity=5.41501e+06
+max_complexity=4.47008e+08, min_complexity=3.13871e+08
+
+SuperConvK3BNRELU(3,16,2,1)SuperResIDWE1K5(16,32,2,40,3)SuperResIDWE1K5(32,24,1,32,3)SuperResIDWE2K5(24,40,2,64,1)SuperResIDWE6K5(40,64,2,80,3)SuperResIDWE2K5(64,384,2,384,2)SuperConvK1BNRELU(384,2048,1,1)
+loop_count=9500/100000, time=0.538668h,
+max_expressivity=-0.317907, min_expressivity=-0.435833
+max_stability=-0.0261732, min_stability=-0.142359
+max_trainability=-0.161093, min_trainability=-0.331045
+max_capacity=5.5984e+06, min_capacity=4.77714e+06
+max_complexity=4.47008e+08, min_complexity=4.20477e+08
+
+SuperConvK3BNRELU(3,16,2,1)SuperResIDWE1K5(16,32,2,40,3)SuperResIDWE1K5(32,24,1,32,3)SuperResIDWE2K5(24,40,2,64,1)SuperResIDWE6K5(40,64,2,80,3)SuperResIDWE2K5(64,384,2,384,2)SuperConvK1BNRELU(384,2048,1,1)
+loop_count=9600/100000, time=0.544328h,
+max_expressivity=-0.317907, min_expressivity=-0.650116
+max_stability=-0.0261732, min_stability=-0.142107
+max_trainability=-0.161093, min_trainability=-0.102305
+max_capacity=5.5984e+06, min_capacity=3.38707e+06
+max_complexity=4.47008e+08, min_complexity=4.38442e+08
+
+SuperConvK3BNRELU(3,16,2,1)SuperResIDWE1K5(16,32,2,40,3)SuperResIDWE1K5(32,24,1,32,3)SuperResIDWE2K5(24,40,2,64,1)SuperResIDWE6K5(40,64,2,80,3)SuperResIDWE2K5(64,384,2,384,2)SuperConvK1BNRELU(384,2048,1,1)
+loop_count=9700/100000, time=0.549319h,
+max_expressivity=-0.317907, min_expressivity=-0.64634
+max_stability=-0.0261732, min_stability=-0.0745043
+max_trainability=-0.161093, min_trainability=-0.241541
+max_capacity=5.5984e+06, min_capacity=5.15022e+06
+max_complexity=4.47008e+08, min_complexity=3.09176e+08
+
+SuperConvK3BNRELU(3,16,2,1)SuperResIDWE1K5(16,32,2,40,3)SuperResIDWE1K5(32,24,1,32,3)SuperResIDWE2K5(24,40,2,64,1)SuperResIDWE6K5(40,64,2,80,3)SuperResIDWE2K5(64,384,2,384,2)SuperConvK1BNRELU(384,2048,1,1)
+loop_count=9800/100000, time=0.554504h,
+max_expressivity=-0.317907, min_expressivity=-1.1922
+max_stability=-0.0261732, min_stability=-0.121157
+max_trainability=-0.161093, min_trainability=-0.260373
+max_capacity=5.5984e+06, min_capacity=5.24282e+06
+max_complexity=4.47008e+08, min_complexity=4.07561e+08
+
+SuperConvK3BNRELU(3,16,2,1)SuperResIDWE1K5(16,32,2,40,3)SuperResIDWE1K5(32,24,1,32,3)SuperResIDWE2K5(24,40,2,64,1)SuperResIDWE6K5(40,64,2,80,3)SuperResIDWE2K5(64,384,2,384,2)SuperConvK1BNRELU(384,2048,1,1)
+loop_count=9900/100000, time=0.560405h,
+max_expressivity=-0.317907, min_expressivity=-0.519825
+max_stability=-0.0261732, min_stability=-0.146333
+max_trainability=-0.161093, min_trainability=-0.248299
+max_capacity=5.5984e+06, min_capacity=5.7606e+06
+max_complexity=4.47008e+08, min_complexity=3.77262e+08
+
+SuperConvK3BNRELU(3,16,2,1)SuperResIDWE1K5(16,32,2,40,3)SuperResIDWE1K5(32,24,1,32,3)SuperResIDWE2K5(24,40,2,64,1)SuperResIDWE6K5(40,64,2,80,3)SuperResIDWE2K5(64,384,2,384,2)SuperConvK1BNRELU(384,2048,1,1)
+loop_count=10000/100000, time=0.56591h,
+max_expressivity=-0.317907, min_expressivity=-0.587038
+max_stability=-0.0261732, min_stability=-0.121303
+max_trainability=-0.161093, min_trainability=-0.222265
+max_capacity=5.5984e+06, min_capacity=4.54251e+06
+max_complexity=4.47008e+08, min_complexity=3.30581e+08
+
+SuperConvK3BNRELU(3,16,2,1)SuperResIDWE1K5(16,32,2,40,3)SuperResIDWE1K5(32,24,1,32,3)SuperResIDWE2K5(24,40,2,64,1)SuperResIDWE6K5(40,64,2,80,3)SuperResIDWE2K5(64,384,2,384,2)SuperConvK1BNRELU(384,2048,1,1)
+loop_count=10100/100000, time=0.57091h,
+max_expressivity=-0.317907, min_expressivity=-0.815915
+max_stability=-0.0261732, min_stability=-0.0497924
+max_trainability=-0.161093, min_trainability=-0.19631
+max_capacity=5.5984e+06, min_capacity=5.26596e+06
+max_complexity=4.47008e+08, min_complexity=3.08556e+08
+
+SuperConvK3BNRELU(3,16,2,1)SuperResIDWE1K5(16,32,2,40,3)SuperResIDWE1K5(32,24,1,32,3)SuperResIDWE2K5(24,40,2,64,1)SuperResIDWE6K5(40,64,2,80,3)SuperResIDWE2K5(64,384,2,384,2)SuperConvK1BNRELU(384,2048,1,1)
+loop_count=10200/100000, time=0.576282h,
+max_expressivity=-0.317907, min_expressivity=-0.956934
+max_stability=-0.0261732, min_stability=-0.132652
+max_trainability=-0.161093, min_trainability=-0.252609
+max_capacity=5.5984e+06, min_capacity=6.4136e+06
+max_complexity=4.47008e+08, min_complexity=4.30962e+08
+
+SuperConvK3BNRELU(3,16,2,1)SuperResIDWE1K5(16,32,2,40,3)SuperResIDWE1K5(32,24,1,32,3)SuperResIDWE2K5(24,40,2,64,1)SuperResIDWE6K5(40,64,2,80,3)SuperResIDWE2K5(64,384,2,384,2)SuperConvK1BNRELU(384,2048,1,1)
+loop_count=10300/100000, time=0.582584h,
+max_expressivity=-0.317907, min_expressivity=-0.381941
+max_stability=-0.0261732, min_stability=-0.0621847
+max_trainability=-0.161093, min_trainability=-0.174906
+max_capacity=5.5984e+06, min_capacity=5.17127e+06
+max_complexity=4.47008e+08, min_complexity=3.12705e+08
+
+SuperConvK3BNRELU(3,16,2,1)SuperResIDWE1K5(16,32,2,40,3)SuperResIDWE1K5(32,24,1,32,3)SuperResIDWE2K5(24,40,2,64,1)SuperResIDWE6K5(40,64,2,80,3)SuperResIDWE2K5(64,384,2,384,2)SuperConvK1BNRELU(384,2048,1,1)
+loop_count=10400/100000, time=0.588494h,
+max_expressivity=-0.317907, min_expressivity=-0.362973
+max_stability=-0.0261732, min_stability=-0.108411
+max_trainability=-0.161093, min_trainability=-0.484313
+max_capacity=5.5984e+06, min_capacity=9.34058e+06
+max_complexity=4.47008e+08, min_complexity=4.15509e+08
+
+SuperConvK3BNRELU(3,16,2,1)SuperResIDWE1K5(16,32,2,40,3)SuperResIDWE1K5(32,24,1,32,3)SuperResIDWE2K5(24,40,2,64,1)SuperResIDWE6K5(40,64,2,80,3)SuperResIDWE2K5(64,384,2,384,2)SuperConvK1BNRELU(384,2048,1,1)
+loop_count=10500/100000, time=0.594685h,
+max_expressivity=-0.317907, min_expressivity=-0.930696
+max_stability=-0.0261732, min_stability=-0.133114
+max_trainability=-0.161093, min_trainability=-0.241451
+max_capacity=5.5984e+06, min_capacity=6.40235e+06
+max_complexity=4.47008e+08, min_complexity=4.44888e+08
+
+SuperConvK3BNRELU(3,16,2,1)SuperResIDWE1K5(16,32,2,40,3)SuperResIDWE1K5(32,24,1,32,3)SuperResIDWE2K5(24,40,2,64,1)SuperResIDWE6K5(40,64,2,80,3)SuperResIDWE2K5(64,384,2,384,2)SuperConvK1BNRELU(384,2048,1,1)
+loop_count=10600/100000, time=0.601518h,
+max_expressivity=-0.317907, min_expressivity=-0.35937
+max_stability=-0.0261732, min_stability=-0.0263639
+max_trainability=-0.161093, min_trainability=-0.226558
+max_capacity=5.5984e+06, min_capacity=4.08638e+06
+max_complexity=4.47008e+08, min_complexity=3.29517e+08
+
+SuperConvK3BNRELU(3,16,2,1)SuperResIDWE1K5(16,32,2,40,3)SuperResIDWE1K5(32,24,1,32,3)SuperResIDWE2K5(24,40,2,64,1)SuperResIDWE6K5(40,64,2,80,3)SuperResIDWE2K5(64,384,2,384,2)SuperConvK1BNRELU(384,2048,1,1)
+loop_count=10700/100000, time=0.607323h,
+max_expressivity=-0.317907, min_expressivity=-0.871548
+max_stability=-0.0261732, min_stability=-0.0642994
+max_trainability=-0.161093, min_trainability=-0.294614
+max_capacity=5.5984e+06, min_capacity=5.12938e+06
+max_complexity=4.47008e+08, min_complexity=3.6691e+08
+
+SuperConvK3BNRELU(3,16,2,1)SuperResIDWE1K5(16,32,2,40,3)SuperResIDWE1K5(32,24,1,32,3)SuperResIDWE2K5(24,40,2,64,1)SuperResIDWE6K5(40,64,2,80,3)SuperResIDWE2K5(64,384,2,384,2)SuperConvK1BNRELU(384,2048,1,1)
+loop_count=10800/100000, time=0.614148h,
+max_expressivity=-0.317907, min_expressivity=-0.972865
+max_stability=-0.0261732, min_stability=-0.130527
+max_trainability=-0.161093, min_trainability=-0.235201
+max_capacity=5.5984e+06, min_capacity=6.41558e+06
+max_complexity=4.47008e+08, min_complexity=4.49828e+08
+
+SuperConvK3BNRELU(3,16,2,1)SuperResIDWE1K5(16,32,2,40,3)SuperResIDWE1K5(32,24,1,32,3)SuperResIDWE2K5(24,40,2,64,1)SuperResIDWE6K5(40,64,2,80,3)SuperResIDWE2K5(64,384,2,384,2)SuperConvK1BNRELU(384,2048,1,1)
+loop_count=10900/100000, time=0.620738h,
+max_expressivity=-0.317907, min_expressivity=-0.95828
+max_stability=-0.0261732, min_stability=-0.129521
+max_trainability=-0.161093, min_trainability=-0.24079
+max_capacity=5.5984e+06, min_capacity=6.41459e+06
+max_complexity=4.47008e+08, min_complexity=4.40395e+08
+
+SuperConvK3BNRELU(3,16,2,1)SuperResIDWE1K5(16,32,2,40,3)SuperResIDWE1K5(32,24,1,32,3)SuperResIDWE2K5(24,40,2,64,1)SuperResIDWE6K5(40,64,2,80,3)SuperResIDWE2K5(64,384,2,384,2)SuperConvK1BNRELU(384,2048,1,1)
+loop_count=11000/100000, time=0.627077h,
+max_expressivity=-0.317907, min_expressivity=-1.25755
+max_stability=-0.0261732, min_stability=-0.103518
+max_trainability=-0.161093, min_trainability=-0.169195
+max_capacity=5.5984e+06, min_capacity=5.3079e+06
+max_complexity=4.47008e+08, min_complexity=3.88781e+08
+
+SuperConvK3BNRELU(3,16,2,1)SuperResIDWE1K5(16,32,2,40,3)SuperResIDWE1K5(32,24,1,32,3)SuperResIDWE2K5(24,40,2,64,1)SuperResIDWE6K5(40,64,2,80,3)SuperResIDWE2K5(64,384,2,384,2)SuperConvK1BNRELU(384,2048,1,1)
+loop_count=11100/100000, time=0.634162h,
+max_expressivity=-0.317907, min_expressivity=-1.12541
+max_stability=-0.0261732, min_stability=-0.0453392
+max_trainability=-0.161093, min_trainability=-0.20548
+max_capacity=5.5984e+06, min_capacity=5.29506e+06
+max_complexity=4.47008e+08, min_complexity=3.73333e+08
+
+SuperConvK3BNRELU(3,16,2,1)SuperResIDWE1K5(16,32,2,40,3)SuperResIDWE1K5(32,24,1,32,3)SuperResIDWE2K5(24,40,2,64,1)SuperResIDWE6K5(40,64,2,80,3)SuperResIDWE2K5(64,384,2,384,2)SuperConvK1BNRELU(384,2048,1,1)
+loop_count=11200/100000, time=0.640816h,
+max_expressivity=-0.317907, min_expressivity=-0.842073
+max_stability=-0.0261732, min_stability=-0.123358
+max_trainability=-0.161093, min_trainability=-0.251224
+max_capacity=5.5984e+06, min_capacity=5.38368e+06
+max_complexity=4.47008e+08, min_complexity=3.66813e+08
+
+SuperConvK3BNRELU(3,16,2,1)SuperResIDWE1K5(16,32,2,40,3)SuperResIDWE1K5(32,24,1,32,3)SuperResIDWE2K5(24,40,2,64,1)SuperResIDWE6K5(40,64,2,80,3)SuperResIDWE2K5(64,384,2,384,2)SuperConvK1BNRELU(384,2048,1,1)
+loop_count=11300/100000, time=0.645323h,
+max_expressivity=-0.317907, min_expressivity=-0.117107
+max_stability=-0.0261732, min_stability=-0.0485942
+max_trainability=-0.161093, min_trainability=-0.232692
+max_capacity=5.5984e+06, min_capacity=5.44592e+06
+max_complexity=4.47008e+08, min_complexity=3.38996e+08
+
+SuperConvK3BNRELU(3,16,2,1)SuperResIDWE1K5(16,32,2,40,3)SuperResIDWE1K5(32,24,1,32,3)SuperResIDWE2K5(24,40,2,64,1)SuperResIDWE6K5(40,64,2,80,3)SuperResIDWE2K5(64,384,2,384,2)SuperConvK1BNRELU(384,2048,1,1)
+loop_count=11400/100000, time=0.650769h,
+max_expressivity=-0.317907, min_expressivity=-1.01979
+max_stability=-0.0261732, min_stability=-0.0498926
+max_trainability=-0.161093, min_trainability=-0.263011
+max_capacity=5.5984e+06, min_capacity=5.36012e+06
+max_complexity=4.47008e+08, min_complexity=3.71431e+08
+
+SuperConvK3BNRELU(3,16,2,1)SuperResIDWE1K5(16,32,2,40,3)SuperResIDWE1K5(32,24,1,32,3)SuperResIDWE2K5(24,40,2,64,1)SuperResIDWE6K5(40,64,2,80,3)SuperResIDWE2K5(64,384,2,384,2)SuperConvK1BNRELU(384,2048,1,1)
+loop_count=11500/100000, time=0.655234h,
+max_expressivity=-0.317907, min_expressivity=-0.555794
+max_stability=-0.0261732, min_stability=-0.047171
+max_trainability=-0.161093, min_trainability=-0.237737
+max_capacity=5.5984e+06, min_capacity=5.29754e+06
+max_complexity=4.47008e+08, min_complexity=3.56706e+08
+
+SuperConvK3BNRELU(3,16,2,1)SuperResIDWE1K5(16,32,2,40,3)SuperResIDWE1K5(32,24,1,32,3)SuperResIDWE2K5(24,40,2,64,1)SuperResIDWE6K5(40,64,2,80,3)SuperResIDWE2K5(64,384,2,384,2)SuperConvK1BNRELU(384,2048,1,1)
+loop_count=11600/100000, time=0.660774h,
+max_expressivity=-0.317907, min_expressivity=-0.943653
+max_stability=-0.0261732, min_stability=-0.0959769
+max_trainability=-0.161093, min_trainability=-0.202558
+max_capacity=5.5984e+06, min_capacity=5.28936e+06
+max_complexity=4.47008e+08, min_complexity=3.74087e+08
+
+SuperConvK3BNRELU(3,16,2,1)SuperResIDWE1K5(16,32,2,40,3)SuperResIDWE1K5(32,24,1,32,3)SuperResIDWE2K5(24,40,2,64,1)SuperResIDWE6K5(40,64,2,80,3)SuperResIDWE2K5(64,384,2,384,2)SuperConvK1BNRELU(384,2048,1,1)
+loop_count=11700/100000, time=0.666161h,
+max_expressivity=-0.317907, min_expressivity=-0.938678
+max_stability=-0.0261732, min_stability=-0.0767063
+max_trainability=-0.161093, min_trainability=-0.236642
+max_capacity=5.5984e+06, min_capacity=5.46166e+06
+max_complexity=4.47008e+08, min_complexity=3.68814e+08
+
+SuperConvK3BNRELU(3,16,2,1)SuperResIDWE1K5(16,32,2,40,3)SuperResIDWE1K5(32,24,1,32,3)SuperResIDWE2K5(24,40,2,64,1)SuperResIDWE6K5(40,64,2,80,3)SuperResIDWE2K5(64,384,2,384,2)SuperConvK1BNRELU(384,2048,1,1)
+loop_count=11800/100000, time=0.672673h,
+max_expressivity=-0.317907, min_expressivity=-1.07399
+max_stability=-0.0261732, min_stability=-0.100525
+max_trainability=-0.161093, min_trainability=-0.225713
+max_capacity=5.5984e+06, min_capacity=5.31417e+06
+max_complexity=4.47008e+08, min_complexity=4.0993e+08
+
+SuperConvK3BNRELU(3,16,2,1)SuperResIDWE1K5(16,32,2,40,3)SuperResIDWE1K5(32,24,1,32,3)SuperResIDWE2K5(24,40,2,64,1)SuperResIDWE6K5(40,64,2,80,3)SuperResIDWE2K5(64,384,2,384,2)SuperConvK1BNRELU(384,2048,1,1)
+loop_count=11900/100000, time=0.679749h,
+max_expressivity=-0.317907, min_expressivity=-0.881855
+max_stability=-0.0261732, min_stability=-0.0438803
+max_trainability=-0.161093, min_trainability=-0.226689
+max_capacity=5.5984e+06, min_capacity=5.17175e+06
+max_complexity=4.47008e+08, min_complexity=3.72197e+08
+
+SuperConvK3BNRELU(3,16,2,1)SuperResIDWE1K5(16,32,2,40,3)SuperResIDWE1K5(32,24,1,32,3)SuperResIDWE2K5(24,40,2,64,1)SuperResIDWE6K5(40,64,2,80,3)SuperResIDWE2K5(64,384,2,384,2)SuperConvK1BNRELU(384,2048,1,1)
+loop_count=12000/100000, time=0.685957h,
+max_expressivity=-0.317907, min_expressivity=-0.658313
+max_stability=-0.0261732, min_stability=-0.119612
+max_trainability=-0.161093, min_trainability=-0.0952943
+max_capacity=5.5984e+06, min_capacity=3.33758e+06
+max_complexity=4.47008e+08, min_complexity=4.09098e+08
+
+SuperConvK3BNRELU(3,16,2,1)SuperResIDWE1K5(16,32,2,40,3)SuperResIDWE1K5(32,24,1,32,3)SuperResIDWE2K5(24,40,2,64,1)SuperResIDWE6K5(40,64,2,80,3)SuperResIDWE2K5(64,384,2,384,2)SuperConvK1BNRELU(384,2048,1,1)
+loop_count=12100/100000, time=0.689968h,
+max_expressivity=-0.317907, min_expressivity=-0.597532
+max_stability=-0.0261732, min_stability=-0.118127
+max_trainability=-0.161093, min_trainability=-0.094204
+max_capacity=5.5984e+06, min_capacity=3.33758e+06
+max_complexity=4.47008e+08, min_complexity=4.09098e+08
+
+SuperConvK3BNRELU(3,16,2,1)SuperResIDWE1K5(16,32,2,40,3)SuperResIDWE1K5(32,24,1,32,3)SuperResIDWE2K5(24,40,2,64,1)SuperResIDWE6K5(40,64,2,80,3)SuperResIDWE2K5(64,384,2,384,2)SuperConvK1BNRELU(384,2048,1,1)
+loop_count=12200/100000, time=0.695447h,
+max_expressivity=-0.317907, min_expressivity=-0.307618
+max_stability=-0.0261732, min_stability=-0.110969
+max_trainability=-0.161093, min_trainability=-0.0959652
+max_capacity=5.5984e+06, min_capacity=3.34798e+06
+max_complexity=4.47008e+08, min_complexity=4.17434e+08
+
+SuperConvK3BNRELU(3,16,2,1)SuperResIDWE1K5(16,32,2,40,3)SuperResIDWE1K5(32,24,1,32,3)SuperResIDWE2K5(24,40,2,64,1)SuperResIDWE6K5(40,64,2,80,3)SuperResIDWE2K5(64,384,2,384,2)SuperConvK1BNRELU(384,2048,1,1)
+loop_count=12300/100000, time=0.700466h,
+max_expressivity=-0.317907, min_expressivity=-0.273766
+max_stability=-0.0261732, min_stability=-0.0922904
+max_trainability=-0.161093, min_trainability=-0.32072
+max_capacity=5.5984e+06, min_capacity=4.00875e+06
+max_complexity=4.47008e+08, min_complexity=4.16626e+08
+
+SuperConvK3BNRELU(3,16,2,1)SuperResIDWE1K5(16,32,2,40,3)SuperResIDWE1K5(32,24,1,32,3)SuperResIDWE2K5(24,40,2,64,1)SuperResIDWE6K5(40,64,2,80,3)SuperResIDWE2K5(64,384,2,384,2)SuperConvK1BNRELU(384,2048,1,1)
+loop_count=12400/100000, time=0.706107h,
+max_expressivity=-0.317907, min_expressivity=-0.794261
+max_stability=-0.0261732, min_stability=-0.0484639
+max_trainability=-0.161093, min_trainability=-0.203299
+max_capacity=5.5984e+06, min_capacity=5.36164e+06
+max_complexity=4.47008e+08, min_complexity=3.66527e+08
+
+SuperConvK3BNRELU(3,16,2,1)SuperResIDWE1K5(16,32,2,40,3)SuperResIDWE1K5(32,24,1,32,3)SuperResIDWE2K5(24,40,2,64,1)SuperResIDWE6K5(40,64,2,80,3)SuperResIDWE2K5(64,384,2,384,2)SuperConvK1BNRELU(384,2048,1,1)
+loop_count=12500/100000, time=0.71152h,
+max_expressivity=-0.317907, min_expressivity=-1.22554
+max_stability=-0.0261732, min_stability=-0.0612215
+max_trainability=-0.161093, min_trainability=-0.214057
+max_capacity=5.5984e+06, min_capacity=5.32298e+06
+max_complexity=4.47008e+08, min_complexity=4.16337e+08
+
+SuperConvK3BNRELU(3,16,2,1)SuperResIDWE1K5(16,32,2,40,3)SuperResIDWE1K5(32,24,1,32,3)SuperResIDWE2K5(24,40,2,64,1)SuperResIDWE6K5(40,64,2,80,3)SuperResIDWE2K5(64,384,2,384,2)SuperConvK1BNRELU(384,2048,1,1)
+loop_count=12600/100000, time=0.716483h,
+max_expressivity=-0.317907, min_expressivity=-0.00118589
+max_stability=-0.0261732, min_stability=-0.222809
+max_trainability=-0.161093, min_trainability=-0.237179
+max_capacity=5.5984e+06, min_capacity=5.56846e+06
+max_complexity=4.47008e+08, min_complexity=4.44878e+08
+
+SuperConvK3BNRELU(3,16,2,1)SuperResIDWE1K5(16,32,2,40,3)SuperResIDWE1K5(32,24,1,32,3)SuperResIDWE2K5(24,40,2,64,1)SuperResIDWE6K5(40,64,2,80,3)SuperResIDWE2K5(64,384,2,384,2)SuperConvK1BNRELU(384,2048,1,1)
+loop_count=12700/100000, time=0.721464h,
+max_expressivity=-0.317907, min_expressivity=-0.375224
+max_stability=-0.0261732, min_stability=-0.0213468
+max_trainability=-0.161093, min_trainability=-0.229205
+max_capacity=5.5984e+06, min_capacity=5.3637e+06
+max_complexity=4.47008e+08, min_complexity=3.7059e+08
+
+SuperConvK3BNRELU(3,16,2,1)SuperResIDWE1K5(16,32,2,40,3)SuperResIDWE1K5(32,24,1,32,3)SuperResIDWE2K5(24,40,2,64,1)SuperResIDWE6K5(40,64,2,80,3)SuperResIDWE2K5(64,384,2,384,2)SuperConvK1BNRELU(384,2048,1,1)
+loop_count=12800/100000, time=0.72624h,
+max_expressivity=-0.317907, min_expressivity=-0.254661
+max_stability=-0.0261732, min_stability=-0.141679
+max_trainability=-0.161093, min_trainability=-0.311059
+max_capacity=5.5984e+06, min_capacity=5.43194e+06
+max_complexity=4.47008e+08, min_complexity=3.78893e+08
+
+SuperConvK3BNRELU(3,16,2,1)SuperResIDWE1K5(16,32,2,40,3)SuperResIDWE1K5(32,24,1,32,3)SuperResIDWE2K5(24,40,2,64,1)SuperResIDWE6K5(40,64,2,80,3)SuperResIDWE2K5(64,384,2,384,2)SuperConvK1BNRELU(384,2048,1,1)
+loop_count=12900/100000, time=0.731961h,
+max_expressivity=-0.317907, min_expressivity=-0.649019
+max_stability=-0.0261732, min_stability=-0.0789123
+max_trainability=-0.161093, min_trainability=-0.167366
+max_capacity=5.5984e+06, min_capacity=5.33014e+06
+max_complexity=4.47008e+08, min_complexity=3.78618e+08
+
+SuperConvK3BNRELU(3,16,2,1)SuperResIDWE1K5(16,32,2,40,3)SuperResIDWE1K5(32,24,1,32,3)SuperResIDWE2K5(24,40,2,64,1)SuperResIDWE6K5(40,64,2,80,3)SuperResIDWE2K5(64,384,2,384,2)SuperConvK1BNRELU(384,2048,1,1)
+loop_count=13000/100000, time=0.737412h,
+max_expressivity=-0.317907, min_expressivity=-0.700622
+max_stability=-0.0261732, min_stability=-0.0473263
+max_trainability=-0.161093, min_trainability=-0.195543
+max_capacity=5.5984e+06, min_capacity=5.30618e+06
+max_complexity=4.47008e+08, min_complexity=3.82427e+08
+
+SuperConvK3BNRELU(3,16,2,1)SuperResIDWE1K5(16,32,2,40,3)SuperResIDWE1K5(32,24,1,32,3)SuperResIDWE2K5(24,40,2,64,1)SuperResIDWE6K5(40,64,2,80,3)SuperResIDWE2K5(64,384,2,384,2)SuperConvK1BNRELU(384,2048,1,1)
+loop_count=13100/100000, time=0.742603h,
+max_expressivity=-0.317907, min_expressivity=-0.40197
+max_stability=-0.0261732, min_stability=-0.0268007
+max_trainability=-0.161093, min_trainability=-0.188964
+max_capacity=5.5984e+06, min_capacity=5.32033e+06
+max_complexity=4.47008e+08, min_complexity=3.81513e+08
+
+SuperConvK3BNRELU(3,16,2,1)SuperResIDWE1K5(16,32,2,40,3)SuperResIDWE1K5(32,24,1,32,3)SuperResIDWE2K5(24,40,2,64,1)SuperResIDWE6K5(40,64,2,80,3)SuperResIDWE2K5(64,384,2,384,2)SuperConvK1BNRELU(384,2048,1,1)
+loop_count=13200/100000, time=0.747984h,
+max_expressivity=-0.317907, min_expressivity=0.000909805
+max_stability=-0.0261732, min_stability=-0.21731
+max_trainability=-0.161093, min_trainability=-0.266873
+max_capacity=5.5984e+06, min_capacity=5.45303e+06
+max_complexity=4.47008e+08, min_complexity=4.35787e+08
+
+SuperConvK3BNRELU(3,16,2,1)SuperResIDWE1K5(16,32,2,40,3)SuperResIDWE1K5(32,24,1,32,3)SuperResIDWE2K5(24,40,2,64,1)SuperResIDWE6K5(40,64,2,80,3)SuperResIDWE2K5(64,384,2,384,2)SuperConvK1BNRELU(384,2048,1,1)
+loop_count=13300/100000, time=0.751822h,
+max_expressivity=-0.317907, min_expressivity=-0.147427
+max_stability=-0.0261732, min_stability=-0.211856
+max_trainability=-0.161093, min_trainability=-0.213631
+max_capacity=5.5984e+06, min_capacity=5.43357e+06
+max_complexity=4.47008e+08, min_complexity=3.99947e+08
+
+SuperConvK3BNRELU(3,16,2,1)SuperResIDWE1K5(16,32,2,40,3)SuperResIDWE1K5(32,24,1,32,3)SuperResIDWE2K5(24,40,2,64,1)SuperResIDWE6K5(40,64,2,80,3)SuperResIDWE2K5(64,384,2,384,2)SuperConvK1BNRELU(384,2048,1,1)
+loop_count=13400/100000, time=0.757188h,
+max_expressivity=-0.317907, min_expressivity=-0.000662327
+max_stability=-0.0261732, min_stability=-0.206775
+max_trainability=-0.161093, min_trainability=-0.278752
+max_capacity=5.5984e+06, min_capacity=5.45191e+06
+max_complexity=4.47008e+08, min_complexity=4.23243e+08
+
+The seed number is set to 123
+SuperConvK3BNRELU(3,16,2,1)SuperResIDWE4K3(16,32,2,24,3)SuperResIDWE6K3(32,48,2,32,1)SuperResIDWE6K3(48,96,2,48,1)SuperResIDWE4K5(96,320,2,288,1)SuperConvK1BNRELU(320,2048,1,1)
+loop_count=100/100000, time=0.00708243h,
+max_expressivity=-0.219185, min_expressivity=-2.02806
+max_stability=-0.136453, min_stability=-1.38987
+max_trainability=-0.315546, min_trainability=-0.773647
+max_capacity=4.33182e+06, min_capacity=2.62846e+06
+max_complexity=3.70463e+08, min_complexity=2.05726e+08
+
+SuperConvK3BNRELU(3,16,2,1)SuperResIDWE4K3(16,32,2,24,3)SuperResIDWE6K3(32,48,2,32,1)SuperResIDWE6K3(48,96,2,48,1)SuperResIDWE4K5(96,320,2,288,1)SuperConvK1BNRELU(320,2048,1,1)
+loop_count=200/100000, time=0.0142472h,
+max_expressivity=-0.219185, min_expressivity=-1.46826
+max_stability=-0.136453, min_stability=-1.27967
+max_trainability=-0.315546, min_trainability=-1.01641
+max_capacity=4.33182e+06, min_capacity=2.30998e+06
+max_complexity=3.70463e+08, min_complexity=1.33822e+08
+
+SuperConvK3BNRELU(3,16,2,1)SuperResIDWE4K3(16,32,2,24,3)SuperResIDWE6K3(32,48,2,32,1)SuperResIDWE6K3(48,96,2,48,1)SuperResIDWE4K5(96,320,2,288,1)SuperConvK1BNRELU(320,2048,1,1)
+loop_count=300/100000, time=0.0209089h,
+max_expressivity=-0.219185, min_expressivity=-1.46826
+max_stability=-0.136453, min_stability=-1.27967
+max_trainability=-0.315546, min_trainability=-1.01641
+max_capacity=4.33182e+06, min_capacity=2.30998e+06
+max_complexity=3.70463e+08, min_complexity=1.33822e+08
+
+SuperConvK3BNRELU(3,16,2,1)SuperResIDWE4K3(16,32,2,24,3)SuperResIDWE6K3(32,48,2,32,1)SuperResIDWE6K3(48,96,2,48,1)SuperResIDWE4K5(96,320,2,288,1)SuperConvK1BNRELU(320,2048,1,1)
+loop_count=400/100000, time=0.0274756h,
+max_expressivity=-0.219185, min_expressivity=-1.46826
+max_stability=-0.136453, min_stability=-1.27967
+max_trainability=-0.315546, min_trainability=-1.01641
+max_capacity=4.33182e+06, min_capacity=2.30998e+06
+max_complexity=3.70463e+08, min_complexity=1.33822e+08
+
+SuperConvK3BNRELU(3,16,2,1)SuperResIDWE4K3(16,32,2,24,3)SuperResIDWE6K3(32,48,2,32,1)SuperResIDWE6K3(48,96,2,48,1)SuperResIDWE4K5(96,320,2,288,1)SuperConvK1BNRELU(320,2048,1,1)
+loop_count=500/100000, time=0.0344451h,
+max_expressivity=-0.219185, min_expressivity=-1.46826
+max_stability=-0.136453, min_stability=-1.27967
+max_trainability=-0.315546, min_trainability=-1.01641
+max_capacity=4.33182e+06, min_capacity=2.30998e+06
+max_complexity=3.70463e+08, min_complexity=1.33822e+08
+
+SuperConvK3BNRELU(3,8,2,1)SuperResIDWE1K7(8,32,2,24,4)SuperResIDWE4K7(32,16,2,24,1)SuperResIDWE4K5(16,48,2,72,2)SuperResIDWE4K5(48,640,2,192,1)SuperConvK1BNRELU(640,2048,1,1)
+loop_count=600/100000, time=0.0422772h,
+max_expressivity=-0.391678, min_expressivity=-1.46826
+max_stability=-0.0946527, min_stability=-1.27967
+max_trainability=-0.279252, min_trainability=-1.01641
+max_capacity=6.08949e+06, min_capacity=2.30998e+06
+max_complexity=3.43947e+08, min_complexity=1.33822e+08
+
+SuperConvK3BNRELU(3,8,2,1)SuperResIDWE1K7(8,32,2,24,4)SuperResIDWE4K7(32,16,2,24,1)SuperResIDWE4K5(16,48,2,72,2)SuperResIDWE4K5(48,640,2,192,1)SuperConvK1BNRELU(640,2048,1,1)
+loop_count=700/100000, time=0.0491856h,
+max_expressivity=-0.391678, min_expressivity=-inf
+max_stability=-0.0946527, min_stability=-1.76238
+max_trainability=-0.279252, min_trainability=-1.3019
+max_capacity=6.08949e+06, min_capacity=2.29946e+06
+max_complexity=3.43947e+08, min_complexity=2.59575e+08
+
+SuperConvK3BNRELU(3,8,2,1)SuperResIDWE1K7(8,32,2,24,4)SuperResIDWE4K7(32,16,2,24,1)SuperResIDWE4K5(16,48,2,72,2)SuperResIDWE4K5(48,640,2,192,1)SuperConvK1BNRELU(640,2048,1,1)
+loop_count=800/100000, time=0.0563367h,
+max_expressivity=-0.391678, min_expressivity=-inf
+max_stability=-0.0946527, min_stability=-1.76238
+max_trainability=-0.279252, min_trainability=-1.3019
+max_capacity=6.08949e+06, min_capacity=2.29946e+06
+max_complexity=3.43947e+08, min_complexity=2.59575e+08
+
+SuperConvK3BNRELU(3,8,2,1)SuperResIDWE1K7(8,32,2,24,4)SuperResIDWE4K7(32,16,2,24,1)SuperResIDWE4K5(16,48,2,72,2)SuperResIDWE4K5(48,640,2,192,1)SuperConvK1BNRELU(640,2048,1,1)
+loop_count=900/100000, time=0.0628546h,
+max_expressivity=-0.391678, min_expressivity=-inf
+max_stability=-0.0946527, min_stability=-1.76238
+max_trainability=-0.279252, min_trainability=-1.3019
+max_capacity=6.08949e+06, min_capacity=2.29946e+06
+max_complexity=3.43947e+08, min_complexity=2.59575e+08
+
+SuperConvK3BNRELU(3,8,2,1)SuperResIDWE1K7(8,32,2,24,4)SuperResIDWE4K7(32,16,2,24,1)SuperResIDWE4K5(16,48,2,72,2)SuperResIDWE4K5(48,640,2,192,1)SuperConvK1BNRELU(640,2048,1,1)
+loop_count=1000/100000, time=0.0694419h,
+max_expressivity=-0.391678, min_expressivity=-inf
+max_stability=-0.0946527, min_stability=-1.76238
+max_trainability=-0.279252, min_trainability=-1.3019
+max_capacity=6.08949e+06, min_capacity=2.29946e+06
+max_complexity=3.43947e+08, min_complexity=2.59575e+08
+
+SuperConvK3BNRELU(3,8,2,1)SuperResIDWE1K7(8,32,2,24,4)SuperResIDWE4K7(32,16,2,24,1)SuperResIDWE4K5(16,48,2,72,2)SuperResIDWE4K5(48,640,2,192,1)SuperConvK1BNRELU(640,2048,1,1)
+loop_count=1100/100000, time=0.0766609h,
+max_expressivity=-0.391678, min_expressivity=-inf
+max_stability=-0.0946527, min_stability=-2.31655
+max_trainability=-0.279252, min_trainability=-1.56756
+max_capacity=6.08949e+06, min_capacity=2.19267e+06
+max_complexity=3.43947e+08, min_complexity=2.42948e+08
+
+SuperConvK3BNRELU(3,8,2,1)SuperResIDWE1K7(8,32,2,24,4)SuperResIDWE4K7(32,16,2,24,1)SuperResIDWE4K5(16,48,2,72,2)SuperResIDWE4K5(48,640,2,192,1)SuperConvK1BNRELU(640,2048,1,1)
+loop_count=1200/100000, time=0.085267h,
+max_expressivity=-0.391678, min_expressivity=-inf
+max_stability=-0.0946527, min_stability=-2.33868
+max_trainability=-0.279252, min_trainability=-1.77862
+max_capacity=6.08949e+06, min_capacity=2.15318e+06
+max_complexity=3.43947e+08, min_complexity=1.25888e+08
+
+SuperConvK3BNRELU(3,16,2,1)SuperResIDWE2K3(16,32,2,24,5)SuperResIDWE4K3(32,64,2,80,2)SuperResIDWE6K3(64,96,2,48,1)SuperResIDWE4K3(96,168,2,120,3)SuperConvK1BNRELU(168,2048,1,1)
+loop_count=1300/100000, time=0.0933842h,
+max_expressivity=-0.288561, min_expressivity=-1.95227
+max_stability=-0.113809, min_stability=-1.13279
+max_trainability=-0.239037, min_trainability=-0.538052
+max_capacity=3.87149e+06, min_capacity=2.95539e+06
+max_complexity=4.38481e+08, min_complexity=1.55915e+08
+
+SuperConvK3BNRELU(3,16,2,1)SuperResIDWE2K3(16,32,2,24,5)SuperResIDWE4K3(32,64,2,80,2)SuperResIDWE6K3(64,96,2,48,1)SuperResIDWE4K3(96,168,2,120,3)SuperConvK1BNRELU(168,2048,1,1)
+loop_count=1400/100000, time=0.100003h,
+max_expressivity=-0.288561, min_expressivity=-1.59
+max_stability=-0.113809, min_stability=-0.854037
+max_trainability=-0.239037, min_trainability=-0.601396
+max_capacity=3.87149e+06, min_capacity=2.93216e+06
+max_complexity=4.38481e+08, min_complexity=2.66329e+08
+
+SuperConvK3BNRELU(3,16,2,1)SuperResIDWE2K3(16,32,2,24,5)SuperResIDWE4K3(32,64,2,80,2)SuperResIDWE6K3(64,96,2,48,1)SuperResIDWE4K3(96,168,2,120,3)SuperConvK1BNRELU(168,2048,1,1)
+loop_count=1500/100000, time=0.10617h,
+max_expressivity=-0.288561, min_expressivity=-1.66888
+max_stability=-0.113809, min_stability=-0.825899
+max_trainability=-0.239037, min_trainability=-0.475976
+max_capacity=3.87149e+06, min_capacity=3.15886e+06
+max_complexity=4.38481e+08, min_complexity=2.54135e+08
+
+SuperConvK3BNRELU(3,16,2,1)SuperResIDWE2K3(16,32,2,24,5)SuperResIDWE4K3(32,64,2,80,2)SuperResIDWE6K3(64,96,2,48,1)SuperResIDWE4K3(96,168,2,120,3)SuperConvK1BNRELU(168,2048,1,1)
+loop_count=1600/100000, time=0.112258h,
+max_expressivity=-0.288561, min_expressivity=-1.20034
+max_stability=-0.113809, min_stability=-0.618856
+max_trainability=-0.239037, min_trainability=-0.478866
+max_capacity=3.87149e+06, min_capacity=2.78474e+06
+max_complexity=4.38481e+08, min_complexity=1.09194e+08
+
+SuperConvK3BNRELU(3,16,2,1)SuperResIDWE2K3(16,32,2,24,5)SuperResIDWE4K3(32,64,2,80,2)SuperResIDWE6K3(64,96,2,48,1)SuperResIDWE4K3(96,168,2,120,3)SuperConvK1BNRELU(168,2048,1,1)
+loop_count=1700/100000, time=0.118206h,
+max_expressivity=-0.288561, min_expressivity=-1.66909
+max_stability=-0.113809, min_stability=-0.642431
+max_trainability=-0.239037, min_trainability=-0.445505
+max_capacity=3.87149e+06, min_capacity=4.14618e+06
+max_complexity=4.38481e+08, min_complexity=3.15954e+08
+
+SuperConvK3BNRELU(3,16,2,1)SuperResIDWE2K3(16,32,2,24,5)SuperResIDWE4K3(32,64,2,80,2)SuperResIDWE6K3(64,96,2,48,1)SuperResIDWE4K3(96,168,2,120,3)SuperConvK1BNRELU(168,2048,1,1)
+loop_count=1800/100000, time=0.124643h,
+max_expressivity=-0.288561, min_expressivity=-1.74719
+max_stability=-0.113809, min_stability=-0.56995
+max_trainability=-0.239037, min_trainability=-0.372757
+max_capacity=3.87149e+06, min_capacity=3.99222e+06
+max_complexity=4.38481e+08, min_complexity=2.49709e+08
+
+SuperConvK3BNRELU(3,16,2,1)SuperResIDWE2K3(16,32,2,24,5)SuperResIDWE4K3(32,64,2,80,2)SuperResIDWE6K3(64,96,2,48,1)SuperResIDWE4K3(96,168,2,120,3)SuperConvK1BNRELU(168,2048,1,1)
+loop_count=1900/100000, time=0.130751h,
+max_expressivity=-0.288561, min_expressivity=-1.23109
+max_stability=-0.113809, min_stability=-0.563389
+max_trainability=-0.239037, min_trainability=-0.391621
+max_capacity=3.87149e+06, min_capacity=2.8743e+06
+max_complexity=4.38481e+08, min_complexity=2.02829e+08
+
+SuperConvK3BNRELU(3,16,2,1)SuperResIDWE2K3(16,32,2,24,5)SuperResIDWE4K3(32,64,2,80,2)SuperResIDWE6K3(64,96,2,48,1)SuperResIDWE4K3(96,168,2,120,3)SuperConvK1BNRELU(168,2048,1,1)
+loop_count=2000/100000, time=0.137461h,
+max_expressivity=-0.288561, min_expressivity=-1.35204
+max_stability=-0.113809, min_stability=-0.442382
+max_trainability=-0.239037, min_trainability=-0.481126
+max_capacity=3.87149e+06, min_capacity=2.8279e+06
+max_complexity=4.38481e+08, min_complexity=4.28454e+08
+
+SuperConvK3BNRELU(3,16,2,1)SuperResIDWE2K3(16,32,2,24,5)SuperResIDWE4K3(32,64,2,80,2)SuperResIDWE6K3(64,96,2,48,1)SuperResIDWE4K3(96,168,2,120,3)SuperConvK1BNRELU(168,2048,1,1)
+loop_count=2100/100000, time=0.144464h,
+max_expressivity=-0.288561, min_expressivity=0.0448294
+max_stability=-0.113809, min_stability=-0.326444
+max_trainability=-0.239037, min_trainability=-0.501006
+max_capacity=3.87149e+06, min_capacity=2.80024e+06
+max_complexity=4.38481e+08, min_complexity=1.18223e+08
+
+SuperConvK3BNRELU(3,16,2,1)SuperResIDWE2K3(16,32,2,24,5)SuperResIDWE4K3(32,64,2,80,2)SuperResIDWE6K3(64,96,2,48,1)SuperResIDWE4K3(96,168,2,120,3)SuperConvK1BNRELU(168,2048,1,1)
+loop_count=2200/100000, time=0.150715h,
+max_expressivity=-0.288561, min_expressivity=-1.35474
+max_stability=-0.113809, min_stability=-0.377527
+max_trainability=-0.239037, min_trainability=-0.452314
+max_capacity=3.87149e+06, min_capacity=3.2039e+06
+max_complexity=4.38481e+08, min_complexity=4.47658e+08
+
+SuperConvK3BNRELU(3,16,2,1)SuperResIDWE2K3(16,32,2,24,5)SuperResIDWE4K3(32,64,2,80,2)SuperResIDWE1K3(64,80,2,120,2)SuperResIDWE4K3(80,168,2,120,3)SuperConvK1BNRELU(168,2048,1,1)
+loop_count=2300/100000, time=0.157357h,
+max_expressivity=-0.325026, min_expressivity=-1.34308
+max_stability=-0.073295, min_stability=-0.367018
+max_trainability=-0.221383, min_trainability=-0.437211
+max_capacity=3.84898e+06, min_capacity=3.2039e+06
+max_complexity=4.27313e+08, min_complexity=4.47658e+08
+
+SuperConvK3BNRELU(3,16,2,1)SuperResIDWE2K3(16,32,2,24,5)SuperResIDWE4K3(32,64,2,80,2)SuperResIDWE1K3(64,80,2,120,2)SuperResIDWE4K3(80,168,2,120,3)SuperConvK1BNRELU(168,2048,1,1)
+loop_count=2400/100000, time=0.163295h,
+max_expressivity=-0.325026, min_expressivity=-1.3048
+max_stability=-0.073295, min_stability=-0.359385
+max_trainability=-0.221383, min_trainability=-0.301356
+max_capacity=3.84898e+06, min_capacity=3.2268e+06
+max_complexity=4.27313e+08, min_complexity=3.69987e+08
+
+SuperConvK3BNRELU(3,8,2,1)SuperResIDWE1K3(8,16,2,16,1)SuperResIDWE4K7(16,32,2,24,2)SuperResIDWE6K3(32,96,2,48,1)SuperResIDWE6K5(96,480,2,232,2)SuperConvK1BNRELU(480,2048,1,1)
+loop_count=2500/100000, time=0.16994h,
+max_expressivity=-0.538401, min_expressivity=-0.653018
+max_stability=-0.135683, min_stability=-0.251263
+max_trainability=-0.347867, min_trainability=-0.386018
+max_capacity=9.34466e+06, min_capacity=3.76338e+06
+max_complexity=4.49937e+08, min_complexity=1.34651e+08
+
+SuperConvK3BNRELU(3,8,2,1)SuperResIDWE1K3(8,16,2,16,1)SuperResIDWE4K7(16,32,2,24,2)SuperResIDWE6K3(32,96,2,48,1)SuperResIDWE6K5(96,480,2,232,2)SuperConvK1BNRELU(480,2048,1,1)
+loop_count=2600/100000, time=0.175828h,
+max_expressivity=-0.538401, min_expressivity=-0.542443
+max_stability=-0.135683, min_stability=-0.336125
+max_trainability=-0.347867, min_trainability=-0.422361
+max_capacity=9.34466e+06, min_capacity=3.25487e+06
+max_complexity=4.49937e+08, min_complexity=4.05665e+08
+
+SuperConvK3BNRELU(3,8,2,1)SuperResIDWE1K3(8,16,2,16,1)SuperResIDWE4K7(16,32,2,24,2)SuperResIDWE6K3(32,96,2,48,1)SuperResIDWE6K5(96,480,2,232,2)SuperConvK1BNRELU(480,2048,1,1)
+loop_count=2700/100000, time=0.182349h,
+max_expressivity=-0.538401, min_expressivity=-0.0911784
+max_stability=-0.135683, min_stability=-0.304848
+max_trainability=-0.347867, min_trainability=-0.439835
+max_capacity=9.34466e+06, min_capacity=3.53469e+06
+max_complexity=4.49937e+08, min_complexity=1.8687e+08
+
+SuperConvK3BNRELU(3,8,2,1)SuperResIDWE1K3(8,16,2,16,1)SuperResIDWE4K7(16,32,2,24,2)SuperResIDWE6K3(32,96,2,48,1)SuperResIDWE6K5(96,480,2,232,2)SuperConvK1BNRELU(480,2048,1,1)
+loop_count=2800/100000, time=0.18804h,
+max_expressivity=-0.538401, min_expressivity=-0.874857
+max_stability=-0.135683, min_stability=-0.297324
+max_trainability=-0.347867, min_trainability=-0.254198
+max_capacity=9.34466e+06, min_capacity=2.66598e+06
+max_complexity=4.49937e+08, min_complexity=2.74185e+08
+
+SuperConvK3BNRELU(3,8,2,1)SuperResIDWE1K3(8,16,2,16,1)SuperResIDWE4K7(16,32,2,24,2)SuperResIDWE6K3(32,96,2,48,1)SuperResIDWE6K5(96,480,2,232,2)SuperConvK1BNRELU(480,2048,1,1)
+loop_count=2900/100000, time=0.194283h,
+max_expressivity=-0.538401, min_expressivity=-0.942444
+max_stability=-0.135683, min_stability=-0.27662
+max_trainability=-0.347867, min_trainability=-0.267107
+max_capacity=9.34466e+06, min_capacity=3.00739e+06
+max_complexity=4.49937e+08, min_complexity=1.9939e+08
+
+SuperConvK3BNRELU(3,8,2,1)SuperResIDWE1K3(8,16,2,16,1)SuperResIDWE4K7(16,32,2,24,2)SuperResIDWE6K3(32,96,2,48,1)SuperResIDWE6K5(96,480,2,232,2)SuperConvK1BNRELU(480,2048,1,1)
+loop_count=3000/100000, time=0.20153h,
+max_expressivity=-0.538401, min_expressivity=-1.1482
+max_stability=-0.135683, min_stability=-0.190698
+max_trainability=-0.347867, min_trainability=-0.116191
+max_capacity=9.34466e+06, min_capacity=2.59054e+06
+max_complexity=4.49937e+08, min_complexity=1.92125e+08
+
+SuperConvK3BNRELU(3,8,2,1)SuperResIDWE1K3(8,16,2,16,1)SuperResIDWE4K7(16,32,2,24,2)SuperResIDWE6K3(32,96,2,48,1)SuperResIDWE6K5(96,480,2,232,2)SuperConvK1BNRELU(480,2048,1,1)
+loop_count=3100/100000, time=0.209179h,
+max_expressivity=-0.538401, min_expressivity=0.046613
+max_stability=-0.135683, min_stability=-0.184945
+max_trainability=-0.347867, min_trainability=-0.443184
+max_capacity=9.34466e+06, min_capacity=3.72584e+06
+max_complexity=4.49937e+08, min_complexity=1.5776e+08
+
+SuperConvK3BNRELU(3,8,2,1)SuperResIDWE1K3(8,16,2,16,1)SuperResIDWE4K7(16,32,2,24,2)SuperResIDWE6K3(32,96,2,48,1)SuperResIDWE6K5(96,480,2,232,2)SuperConvK1BNRELU(480,2048,1,1)
+loop_count=3200/100000, time=0.215773h,
+max_expressivity=-0.538401, min_expressivity=0.0357568
+max_stability=-0.135683, min_stability=-0.256027
+max_trainability=-0.347867, min_trainability=-0.444564
+max_capacity=9.34466e+06, min_capacity=3.89541e+06
+max_complexity=4.49937e+08, min_complexity=1.6681e+08
+
+SuperConvK3BNRELU(3,8,2,1)SuperResIDWE1K3(8,16,2,16,1)SuperResIDWE4K7(16,32,2,24,2)SuperResIDWE2K3(32,96,2,72,2)SuperResIDWE6K5(96,480,2,232,2)SuperConvK1BNRELU(480,2048,1,1)
+loop_count=3300/100000, time=0.222383h,
+max_expressivity=-0.550949, min_expressivity=-0.804391
+max_stability=-0.100937, min_stability=-0.266912
+max_trainability=-0.324263, min_trainability=-0.326903
+max_capacity=9.35752e+06, min_capacity=3.2627e+06
+max_complexity=4.49548e+08, min_complexity=1.76554e+08
+
+SuperConvK3BNRELU(3,8,2,1)SuperResIDWE1K3(8,16,2,16,1)SuperResIDWE4K7(16,32,2,24,2)SuperResIDWE2K3(32,96,2,72,2)SuperResIDWE6K5(96,480,2,232,2)SuperConvK1BNRELU(480,2048,1,1)
+loop_count=3400/100000, time=0.22901h,
+max_expressivity=-0.550949, min_expressivity=-0.993036
+max_stability=-0.100937, min_stability=-0.220385
+max_trainability=-0.324263, min_trainability=-0.156045
+max_capacity=9.35752e+06, min_capacity=2.56291e+06
+max_complexity=4.49548e+08, min_complexity=2.29403e+08
+
+SuperConvK3BNRELU(3,8,2,1)SuperResIDWE1K3(8,16,2,16,1)SuperResIDWE4K7(16,32,2,24,2)SuperResIDWE2K3(32,96,2,72,2)SuperResIDWE6K5(96,480,2,232,2)SuperConvK1BNRELU(480,2048,1,1)
+loop_count=3500/100000, time=0.235758h,
+max_expressivity=-0.550949, min_expressivity=-0.572781
+max_stability=-0.100937, min_stability=-0.272396
+max_trainability=-0.324263, min_trainability=-0.434385
+max_capacity=9.35752e+06, min_capacity=9.35778e+06
+max_complexity=4.49548e+08, min_complexity=4.49275e+08
+
+SuperConvK3BNRELU(3,8,2,1)SuperResIDWE1K3(8,16,2,16,1)SuperResIDWE4K7(16,32,2,24,2)SuperResIDWE2K3(32,96,2,72,2)SuperResIDWE6K5(96,480,2,232,2)SuperConvK1BNRELU(480,2048,1,1)
+loop_count=3600/100000, time=0.243106h,
+max_expressivity=-0.550949, min_expressivity=0.044292
+max_stability=-0.100937, min_stability=-0.181778
+max_trainability=-0.324263, min_trainability=-0.502821
+max_capacity=9.35752e+06, min_capacity=5.83381e+06
+max_complexity=4.49548e+08, min_complexity=2.62077e+08
+
+SuperConvK3BNRELU(3,8,2,1)SuperResIDWE1K3(8,16,2,16,1)SuperResIDWE4K7(16,32,2,24,2)SuperResIDWE2K3(32,96,2,72,2)SuperResIDWE6K5(96,480,2,232,2)SuperConvK1BNRELU(480,2048,1,1)
+loop_count=3700/100000, time=0.250793h,
+max_expressivity=-0.550949, min_expressivity=-0.82125
+max_stability=-0.100937, min_stability=-0.26164
+max_trainability=-0.324263, min_trainability=-0.314881
+max_capacity=9.35752e+06, min_capacity=4.10338e+06
+max_complexity=4.49548e+08, min_complexity=2.62251e+08
+
+SuperConvK3BNRELU(3,8,2,1)SuperResIDWE1K3(8,16,2,16,1)SuperResIDWE4K7(16,32,2,24,2)SuperResIDWE1K3(32,80,2,88,3)SuperResIDWE6K5(80,480,2,232,2)SuperConvK1BNRELU(480,2048,1,1)
+loop_count=3800/100000, time=0.257688h,
+max_expressivity=-0.534166, min_expressivity=-0.903344
+max_stability=-0.0812601, min_stability=-0.253651
+max_trainability=-0.28945, min_trainability=-0.393005
+max_capacity=9.32177e+06, min_capacity=6.06402e+06
+max_complexity=4.42058e+08, min_complexity=3.02297e+08
+
+SuperConvK3BNRELU(3,8,2,1)SuperResIDWE1K3(8,16,2,16,1)SuperResIDWE1K3(16,32,2,48,4)SuperResIDWE2K3(32,96,2,72,2)SuperResIDWE6K5(96,480,2,232,2)SuperConvK1BNRELU(480,2048,1,1)
+loop_count=3900/100000, time=0.264833h,
+max_expressivity=-0.55028, min_expressivity=-0.334249
+max_stability=-0.0714108, min_stability=-0.229869
+max_trainability=-0.282497, min_trainability=-0.368059
+max_capacity=9.34872e+06, min_capacity=2.82635e+06
+max_complexity=4.4049e+08, min_complexity=2.03422e+08
+
+SuperConvK3BNRELU(3,8,2,1)SuperResIDWE1K3(8,16,2,16,1)SuperResIDWE1K3(16,32,2,48,4)SuperResIDWE2K3(32,96,2,72,2)SuperResIDWE6K5(96,480,2,232,2)SuperConvK1BNRELU(480,2048,1,1)
+loop_count=4000/100000, time=0.272254h,
+max_expressivity=-0.55028, min_expressivity=0.0327649
+max_stability=-0.0714108, min_stability=-0.172456
+max_trainability=-0.282497, min_trainability=-0.447069
+max_capacity=9.34872e+06, min_capacity=4.28139e+06
+max_complexity=4.4049e+08, min_complexity=1.98328e+08
+
+SuperConvK3BNRELU(3,8,2,1)SuperResIDWE1K3(8,16,2,16,1)SuperResIDWE1K3(16,32,2,48,4)SuperResIDWE2K3(32,96,2,72,2)SuperResIDWE6K5(96,480,2,232,2)SuperConvK1BNRELU(480,2048,1,1)
+loop_count=4100/100000, time=0.280285h,
+max_expressivity=-0.55028, min_expressivity=0.09203
+max_stability=-0.0714108, min_stability=-0.156144
+max_trainability=-0.282497, min_trainability=-0.501173
+max_capacity=9.34872e+06, min_capacity=5.794e+06
+max_complexity=4.4049e+08, min_complexity=2.48279e+08
+
+SuperConvK3BNRELU(3,8,2,1)SuperResIDWE1K3(8,16,2,16,1)SuperResIDWE1K3(16,32,2,48,4)SuperResIDWE2K3(32,96,2,72,2)SuperResIDWE6K5(96,480,2,232,2)SuperConvK1BNRELU(480,2048,1,1)
+loop_count=4200/100000, time=0.2872h,
+max_expressivity=-0.55028, min_expressivity=-0.676231
+max_stability=-0.0714108, min_stability=-0.229761
+max_trainability=-0.282497, min_trainability=-0.310252
+max_capacity=9.34872e+06, min_capacity=2.58342e+06
+max_complexity=4.4049e+08, min_complexity=3.56643e+08
+
+SuperConvK3BNRELU(3,8,2,1)SuperResIDWE1K3(8,16,2,16,1)SuperResIDWE1K3(16,32,2,48,4)SuperResIDWE2K3(32,96,2,72,2)SuperResIDWE6K5(96,480,2,232,2)SuperConvK1BNRELU(480,2048,1,1)
+loop_count=4300/100000, time=0.293428h,
+max_expressivity=-0.55028, min_expressivity=-0.66168
+max_stability=-0.0714108, min_stability=-0.183317
+max_trainability=-0.282497, min_trainability=-0.482882
+max_capacity=9.34872e+06, min_capacity=6.36034e+06
+max_complexity=4.4049e+08, min_complexity=2.90844e+08
+
+SuperConvK3BNRELU(3,8,2,1)SuperResIDWE1K3(8,16,2,16,1)SuperResIDWE1K3(16,32,2,48,4)SuperResIDWE2K3(32,96,2,72,2)SuperResIDWE6K5(96,480,2,232,2)SuperConvK1BNRELU(480,2048,1,1)
+loop_count=4400/100000, time=0.30008h,
+max_expressivity=-0.55028, min_expressivity=-1.08464
+max_stability=-0.0714108, min_stability=-0.160216
+max_trainability=-0.282497, min_trainability=-0.0921248
+max_capacity=9.34872e+06, min_capacity=2.70422e+06
+max_complexity=4.4049e+08, min_complexity=2.89717e+08
+
+SuperConvK3BNRELU(3,8,2,1)SuperResIDWE1K3(8,16,2,16,1)SuperResIDWE1K3(16,32,2,48,4)SuperResIDWE2K3(32,96,2,72,2)SuperResIDWE6K5(96,480,2,232,2)SuperConvK1BNRELU(480,2048,1,1)
+loop_count=4500/100000, time=0.30641h,
+max_expressivity=-0.55028, min_expressivity=-0.956945
+max_stability=-0.0714108, min_stability=-0.166076
+max_trainability=-0.282497, min_trainability=-0.104553
+max_capacity=9.34872e+06, min_capacity=2.62101e+06
+max_complexity=4.4049e+08, min_complexity=2.18511e+08
+
+SuperConvK3BNRELU(3,8,2,1)SuperResIDWE1K3(8,16,2,16,1)SuperResIDWE1K3(16,32,2,48,4)SuperResIDWE2K3(32,96,2,72,2)SuperResIDWE6K5(96,480,2,232,2)SuperConvK1BNRELU(480,2048,1,1)
+loop_count=4600/100000, time=0.313118h,
+max_expressivity=-0.55028, min_expressivity=-0.984735
+max_stability=-0.0714108, min_stability=-0.133822
+max_trainability=-0.282497, min_trainability=-0.0888681
+max_capacity=9.34872e+06, min_capacity=3.80178e+06
+max_complexity=4.4049e+08, min_complexity=3.3905e+08
+
+SuperConvK3BNRELU(3,8,2,1)SuperResIDWE1K3(8,16,2,16,1)SuperResIDWE1K3(16,32,2,48,4)SuperResIDWE2K3(32,96,2,72,2)SuperResIDWE6K5(96,480,2,232,2)SuperConvK1BNRELU(480,2048,1,1)
+loop_count=4700/100000, time=0.3198h,
+max_expressivity=-0.55028, min_expressivity=-0.0431068
+max_stability=-0.0714108, min_stability=-0.195873
+max_trainability=-0.282497, min_trainability=-0.473862
+max_capacity=9.34872e+06, min_capacity=5.83429e+06
+max_complexity=4.4049e+08, min_complexity=2.66593e+08
+
+SuperConvK3BNRELU(3,8,2,1)SuperResIDWE1K3(8,16,2,16,1)SuperResIDWE1K3(16,32,2,48,4)SuperResIDWE2K3(32,96,2,72,2)SuperResIDWE6K5(96,480,2,232,2)SuperConvK1BNRELU(480,2048,1,1)
+loop_count=4800/100000, time=0.325749h,
+max_expressivity=-0.55028, min_expressivity=0.027355
+max_stability=-0.0714108, min_stability=-0.161692
+max_trainability=-0.282497, min_trainability=-0.450321
+max_capacity=9.34872e+06, min_capacity=4.28949e+06
+max_complexity=4.4049e+08, min_complexity=2.27029e+08
+
+SuperConvK3BNRELU(3,8,2,1)SuperResIDWE1K3(8,16,2,16,1)SuperResIDWE1K3(16,32,2,48,4)SuperResIDWE2K3(32,96,2,72,2)SuperResIDWE6K5(96,480,2,232,2)SuperConvK1BNRELU(480,2048,1,1)
+loop_count=4900/100000, time=0.332081h,
+max_expressivity=-0.55028, min_expressivity=-0.98465
+max_stability=-0.0714108, min_stability=-0.117114
+max_trainability=-0.282497, min_trainability=-0.123197
+max_capacity=9.34872e+06, min_capacity=3.808e+06
+max_complexity=4.4049e+08, min_complexity=3.56662e+08
+
+SuperConvK3BNRELU(3,8,2,1)SuperResIDWE1K3(8,16,2,16,1)SuperResIDWE1K3(16,32,2,48,4)SuperResIDWE2K3(32,96,2,72,2)SuperResIDWE6K5(96,480,2,232,2)SuperConvK1BNRELU(480,2048,1,1)
+loop_count=5000/100000, time=0.337499h,
+max_expressivity=-0.55028, min_expressivity=-0.94513
+max_stability=-0.0714108, min_stability=-0.140417
+max_trainability=-0.282497, min_trainability=-0.0902431
+max_capacity=9.34872e+06, min_capacity=2.70278e+06
+max_complexity=4.4049e+08, min_complexity=2.76169e+08
+
+SuperConvK3BNRELU(3,8,2,1)SuperResIDWE1K3(8,16,2,16,1)SuperResIDWE1K3(16,32,2,48,4)SuperResIDWE2K3(32,96,2,72,2)SuperResIDWE6K5(96,480,2,232,2)SuperConvK1BNRELU(480,2048,1,1)
+loop_count=5100/100000, time=0.345939h,
+max_expressivity=-0.55028, min_expressivity=-0.755255
+max_stability=-0.0714108, min_stability=-0.173205
+max_trainability=-0.282497, min_trainability=-0.258852
+max_capacity=9.34872e+06, min_capacity=2.64394e+06
+max_complexity=4.4049e+08, min_complexity=3.35258e+08
+
+SuperConvK3BNRELU(3,8,2,1)SuperResIDWE1K3(8,16,2,16,1)SuperResIDWE1K3(16,32,2,48,4)SuperResIDWE2K3(32,96,2,72,2)SuperResIDWE6K5(96,480,2,232,2)SuperConvK1BNRELU(480,2048,1,1)
+loop_count=5200/100000, time=0.353733h,
+max_expressivity=-0.55028, min_expressivity=-0.689377
+max_stability=-0.0714108, min_stability=-0.114376
+max_trainability=-0.282497, min_trainability=-0.12793
+max_capacity=9.34872e+06, min_capacity=2.66581e+06
+max_complexity=4.4049e+08, min_complexity=4.27218e+08
+
+SuperConvK3BNRELU(3,8,2,1)SuperResIDWE1K3(8,16,2,16,1)SuperResIDWE1K3(16,32,2,48,4)SuperResIDWE2K3(32,96,2,72,2)SuperResIDWE6K5(96,480,2,232,2)SuperConvK1BNRELU(480,2048,1,1)
+loop_count=5300/100000, time=0.361276h,
+max_expressivity=-0.55028, min_expressivity=-0.626272
+max_stability=-0.0714108, min_stability=-0.0625656
+max_trainability=-0.282497, min_trainability=-0.128114
+max_capacity=9.34872e+06, min_capacity=2.54186e+06
+max_complexity=4.4049e+08, min_complexity=3.29907e+08
+
+SuperConvK3BNRELU(3,8,2,1)SuperResIDWE1K3(8,16,2,16,1)SuperResIDWE1K3(16,32,2,48,4)SuperResIDWE2K3(32,96,2,72,2)SuperResIDWE6K5(96,480,2,232,2)SuperConvK1BNRELU(480,2048,1,1)
+loop_count=5400/100000, time=0.368138h,
+max_expressivity=-0.55028, min_expressivity=-0.616473
+max_stability=-0.0714108, min_stability=-0.0623553
+max_trainability=-0.282497, min_trainability=-0.141869
+max_capacity=9.34872e+06, min_capacity=2.54106e+06
+max_complexity=4.4049e+08, min_complexity=3.22129e+08
+
+SuperConvK3BNRELU(3,8,2,1)SuperResIDWE1K3(8,16,2,16,1)SuperResIDWE1K3(16,32,2,48,4)SuperResIDWE2K3(32,96,2,72,2)SuperResIDWE6K5(96,480,2,232,2)SuperConvK1BNRELU(480,2048,1,1)
+loop_count=5500/100000, time=0.373461h,
+max_expressivity=-0.55028, min_expressivity=-0.614732
+max_stability=-0.0714108, min_stability=-0.0629607
+max_trainability=-0.282497, min_trainability=-0.13251
+max_capacity=9.34872e+06, min_capacity=2.54186e+06
+max_complexity=4.4049e+08, min_complexity=3.29907e+08
+
+SuperConvK3BNRELU(3,8,2,1)SuperResIDWE1K3(8,16,2,16,1)SuperResIDWE4K7(16,32,2,24,2)SuperResIDWE2K3(32,96,2,72,2)SuperResIDWE6K5(96,480,2,232,2)SuperConvK1BNRELU(480,2048,1,1)
+loop_count=5600/100000, time=0.379547h,
+max_expressivity=-0.542224, min_expressivity=-0.611567
+max_stability=-0.102419, min_stability=-0.0728044
+max_trainability=-0.313582, min_trainability=-0.119224
+max_capacity=9.35752e+06, min_capacity=2.54346e+06
+max_complexity=4.49548e+08, min_complexity=3.45461e+08
+
+SuperConvK3BNRELU(3,8,2,1)SuperResIDWE1K3(8,16,2,16,1)SuperResIDWE4K7(16,32,2,24,2)SuperResIDWE2K3(32,96,2,72,2)SuperResIDWE6K5(96,480,2,232,2)SuperConvK1BNRELU(480,2048,1,1)
+loop_count=5700/100000, time=0.38551h,
+max_expressivity=-0.542224, min_expressivity=-0.603744
+max_stability=-0.102419, min_stability=-0.0615158
+max_trainability=-0.313582, min_trainability=-0.119683
+max_capacity=9.35752e+06, min_capacity=2.54186e+06
+max_complexity=4.49548e+08, min_complexity=3.29907e+08
+
+SuperConvK3BNRELU(3,8,2,1)SuperResIDWE1K3(8,16,2,16,1)SuperResIDWE4K7(16,32,2,24,2)SuperResIDWE2K3(32,96,2,72,2)SuperResIDWE6K5(96,480,2,232,2)SuperConvK1BNRELU(480,2048,1,1)
+loop_count=5800/100000, time=0.391306h,
+max_expressivity=-0.542224, min_expressivity=-0.380007
+max_stability=-0.102419, min_stability=-0.132362
+max_trainability=-0.313582, min_trainability=-0.324109
+max_capacity=9.35752e+06, min_capacity=3.59755e+06
+max_complexity=4.49548e+08, min_complexity=1.50933e+08
+
+SuperConvK3BNRELU(3,8,2,1)SuperResIDWE1K3(8,16,2,16,1)SuperResIDWE4K7(16,32,2,24,2)SuperResIDWE2K3(32,96,2,72,2)SuperResIDWE6K5(96,480,2,232,2)SuperConvK1BNRELU(480,2048,1,1)
+loop_count=5900/100000, time=0.399062h,
+max_expressivity=-0.542224, min_expressivity=-0.595864
+max_stability=-0.102419, min_stability=-0.0609552
+max_trainability=-0.313582, min_trainability=-0.125882
+max_capacity=9.35752e+06, min_capacity=2.54186e+06
+max_complexity=4.49548e+08, min_complexity=3.29907e+08
+
+SuperConvK3BNRELU(3,8,2,1)SuperResIDWE1K3(8,16,2,16,1)SuperResIDWE1K3(16,48,2,40,4)SuperResIDWE2K3(48,96,2,72,2)SuperResIDWE6K5(96,480,2,232,2)SuperConvK1BNRELU(480,2048,1,1)
+loop_count=6000/100000, time=0.406206h,
+max_expressivity=-0.539285, min_expressivity=-0.59281
+max_stability=-0.0711002, min_stability=-0.0631256
+max_trainability=-0.27441, min_trainability=-0.129038
+max_capacity=9.36002e+06, min_capacity=2.54186e+06
+max_complexity=4.48259e+08, min_complexity=3.29907e+08
+
+SuperConvK3BNRELU(3,8,2,1)SuperResIDWE1K3(8,16,2,16,1)SuperResIDWE1K3(16,48,2,40,4)SuperResIDWE2K3(48,96,2,72,2)SuperResIDWE6K5(96,480,2,232,2)SuperConvK1BNRELU(480,2048,1,1)
+loop_count=6100/100000, time=0.412648h,
+max_expressivity=-0.539285, min_expressivity=-0.593826
+max_stability=-0.0711002, min_stability=-0.114446
+max_trainability=-0.27441, min_trainability=-0.350995
+max_capacity=9.36002e+06, min_capacity=5.83182e+06
+max_complexity=4.48259e+08, min_complexity=2.75807e+08
+
+SuperConvK3BNRELU(3,8,2,1)SuperResIDWE1K3(8,16,2,16,1)SuperResIDWE1K3(16,48,2,40,4)SuperResIDWE2K3(48,96,2,72,2)SuperResIDWE6K5(96,480,2,232,2)SuperConvK1BNRELU(480,2048,1,1)
+loop_count=6200/100000, time=0.419479h,
+max_expressivity=-0.539285, min_expressivity=-0.256049
+max_stability=-0.0711002, min_stability=-0.105663
+max_trainability=-0.27441, min_trainability=-0.291613
+max_capacity=9.36002e+06, min_capacity=5.44709e+06
+max_complexity=4.48259e+08, min_complexity=2.54001e+08
+
+SuperConvK3BNRELU(3,8,2,1)SuperResIDWE1K3(8,16,2,16,1)SuperResIDWE1K3(16,48,2,40,4)SuperResIDWE2K3(48,96,2,72,2)SuperResIDWE6K5(96,480,2,232,2)SuperConvK1BNRELU(480,2048,1,1)
+loop_count=6300/100000, time=0.425498h,
+max_expressivity=-0.539285, min_expressivity=-0.581753
+max_stability=-0.0711002, min_stability=-0.14367
+max_trainability=-0.27441, min_trainability=-0.0757584
+max_capacity=9.36002e+06, min_capacity=3.65444e+06
+max_complexity=4.48259e+08, min_complexity=2.81629e+08
+
+SuperConvK3BNRELU(3,8,2,1)SuperResIDWE1K3(8,16,2,16,1)SuperResIDWE1K3(16,48,2,40,4)SuperResIDWE2K3(48,96,2,72,2)SuperResIDWE6K5(96,480,2,232,2)SuperConvK1BNRELU(480,2048,1,1)
+loop_count=6400/100000, time=0.432927h,
+max_expressivity=-0.539285, min_expressivity=-0.572073
+max_stability=-0.0711002, min_stability=-0.063619
+max_trainability=-0.27441, min_trainability=-0.132965
+max_capacity=9.36002e+06, min_capacity=2.59117e+06
+max_complexity=4.48259e+08, min_complexity=3.42277e+08
+
+SuperConvK3BNRELU(3,8,2,1)SuperResIDWE1K3(8,16,2,16,1)SuperResIDWE1K3(16,48,2,40,4)SuperResIDWE2K3(48,96,2,72,2)SuperResIDWE6K5(96,480,2,232,2)SuperConvK1BNRELU(480,2048,1,1)
+loop_count=6500/100000, time=0.441025h,
+max_expressivity=-0.539285, min_expressivity=-0.568666
+max_stability=-0.0711002, min_stability=-0.0777952
+max_trainability=-0.27441, min_trainability=-0.125213
+max_capacity=9.36002e+06, min_capacity=2.59357e+06
+max_complexity=4.48259e+08, min_complexity=3.65608e+08
+
+SuperConvK3BNRELU(3,8,2,1)SuperResIDWE1K3(8,16,2,16,1)SuperResIDWE1K3(16,48,2,40,4)SuperResIDWE2K3(48,96,2,72,2)SuperResIDWE6K5(96,480,2,232,2)SuperConvK1BNRELU(480,2048,1,1)
+loop_count=6600/100000, time=0.446766h,
+max_expressivity=-0.539285, min_expressivity=0.0238202
+max_stability=-0.0711002, min_stability=-0.178655
+max_trainability=-0.27441, min_trainability=-0.465975
+max_capacity=9.36002e+06, min_capacity=6.23178e+06
+max_complexity=4.48259e+08, min_complexity=3.44679e+08
+
+SuperConvK3BNRELU(3,8,2,1)SuperResIDWE1K3(8,16,2,16,1)SuperResIDWE1K3(16,48,2,40,4)SuperResIDWE2K3(48,96,2,72,2)SuperResIDWE6K5(96,480,2,232,2)SuperConvK1BNRELU(480,2048,1,1)
+loop_count=6700/100000, time=0.453336h,
+max_expressivity=-0.539285, min_expressivity=-0.583934
+max_stability=-0.0711002, min_stability=-0.111744
+max_trainability=-0.27441, min_trainability=-0.279077
+max_capacity=9.36002e+06, min_capacity=4.99778e+06
+max_complexity=4.48259e+08, min_complexity=3.28407e+08
+
+SuperConvK3BNRELU(3,8,2,1)SuperResIDWE1K3(8,16,2,16,1)SuperResIDWE1K3(16,48,2,40,4)SuperResIDWE2K3(48,96,2,72,2)SuperResIDWE6K5(96,480,2,232,2)SuperConvK1BNRELU(480,2048,1,1)
+loop_count=6800/100000, time=0.46024h,
+max_expressivity=-0.539285, min_expressivity=-0.562811
+max_stability=-0.0711002, min_stability=-0.162575
+max_trainability=-0.27441, min_trainability=-0.412558
+max_capacity=9.36002e+06, min_capacity=9.34046e+06
+max_complexity=4.48259e+08, min_complexity=4.49845e+08
+
+SuperConvK3BNRELU(3,8,2,1)SuperResIDWE1K3(8,16,2,16,1)SuperResIDWE1K3(16,48,2,40,4)SuperResIDWE2K3(48,96,2,72,2)SuperResIDWE6K5(96,480,2,232,2)SuperConvK1BNRELU(480,2048,1,1)
+loop_count=6900/100000, time=0.466948h,
+max_expressivity=-0.539285, min_expressivity=0.0323148
+max_stability=-0.0711002, min_stability=-0.149757
+max_trainability=-0.27441, min_trainability=-0.459279
+max_capacity=9.36002e+06, min_capacity=6.21876e+06
+max_complexity=4.48259e+08, min_complexity=3.0055e+08
+
+SuperConvK3BNRELU(3,8,2,1)SuperResIDWE1K3(8,16,2,16,1)SuperResIDWE1K3(16,48,2,40,4)SuperResIDWE2K3(48,96,2,72,2)SuperResIDWE6K5(96,480,2,232,2)SuperConvK1BNRELU(480,2048,1,1)
+loop_count=7000/100000, time=0.473511h,
+max_expressivity=-0.539285, min_expressivity=-0.557778
+max_stability=-0.0711002, min_stability=-0.158771
+max_trainability=-0.27441, min_trainability=-0.338395
+max_capacity=9.36002e+06, min_capacity=9.2916e+06
+max_complexity=4.48259e+08, min_complexity=4.3439e+08
+
+SuperConvK3BNRELU(3,8,2,1)SuperResIDWE1K3(8,16,2,16,1)SuperResIDWE1K3(16,48,2,40,4)SuperResIDWE2K3(48,96,2,72,2)SuperResIDWE6K5(96,480,2,232,2)SuperConvK1BNRELU(480,2048,1,1)
+loop_count=7100/100000, time=0.47965h,
+max_expressivity=-0.539285, min_expressivity=-0.569618
+max_stability=-0.0711002, min_stability=-0.139969
+max_trainability=-0.27441, min_trainability=-0.359497
+max_capacity=9.36002e+06, min_capacity=9.34466e+06
+max_complexity=4.48259e+08, min_complexity=4.49937e+08
+
+SuperConvK3BNRELU(3,8,2,1)SuperResIDWE1K3(8,16,2,16,1)SuperResIDWE1K3(16,48,2,40,4)SuperResIDWE2K3(48,96,2,72,2)SuperResIDWE6K5(96,480,2,232,2)SuperConvK1BNRELU(480,2048,1,1)
+loop_count=7200/100000, time=0.486171h,
+max_expressivity=-0.539285, min_expressivity=0.00527191
+max_stability=-0.0711002, min_stability=-0.14201
+max_trainability=-0.27441, min_trainability=-0.368172
+max_capacity=9.36002e+06, min_capacity=6.42522e+06
+max_complexity=4.48259e+08, min_complexity=3.40383e+08
+
+SuperConvK3BNRELU(3,8,2,1)SuperResIDWE1K3(8,16,2,16,1)SuperResIDWE1K3(16,48,2,40,4)SuperResIDWE2K3(48,96,2,72,2)SuperResIDWE6K5(96,480,2,232,2)SuperConvK1BNRELU(480,2048,1,1)
+loop_count=7300/100000, time=0.492104h,
+max_expressivity=-0.539285, min_expressivity=-0.327161
+max_stability=-0.0711002, min_stability=-0.136834
+max_trainability=-0.27441, min_trainability=-0.0779773
+max_capacity=9.36002e+06, min_capacity=3.65396e+06
+max_complexity=4.48259e+08, min_complexity=2.77114e+08
+
+SuperConvK3BNRELU(3,8,2,1)SuperResIDWE1K3(8,16,2,16,1)SuperResIDWE1K3(16,48,2,40,4)SuperResIDWE2K3(48,96,2,72,2)SuperResIDWE6K5(96,480,2,232,2)SuperConvK1BNRELU(480,2048,1,1)
+loop_count=7400/100000, time=0.498372h,
+max_expressivity=-0.539285, min_expressivity=-0.31669
+max_stability=-0.0711002, min_stability=-0.135379
+max_trainability=-0.27441, min_trainability=-0.0805311
+max_capacity=9.36002e+06, min_capacity=3.65396e+06
+max_complexity=4.48259e+08, min_complexity=2.77114e+08
+
+SuperConvK3BNRELU(3,8,2,1)SuperResIDWE1K3(8,16,2,16,1)SuperResIDWE1K3(16,48,2,40,4)SuperResIDWE2K3(48,96,2,72,2)SuperResIDWE6K5(96,480,2,232,2)SuperConvK1BNRELU(480,2048,1,1)
+loop_count=7500/100000, time=0.504203h,
+max_expressivity=-0.539285, min_expressivity=-0.348583
+max_stability=-0.0711002, min_stability=-0.13381
+max_trainability=-0.27441, min_trainability=-0.0787626
+max_capacity=9.36002e+06, min_capacity=3.65396e+06
+max_complexity=4.48259e+08, min_complexity=2.77114e+08
+
+SuperConvK3BNRELU(3,8,2,1)SuperResIDWE1K3(8,16,2,16,1)SuperResIDWE1K3(16,48,2,40,4)SuperResIDWE2K3(48,96,2,72,2)SuperResIDWE6K5(96,480,2,232,2)SuperConvK1BNRELU(480,2048,1,1)
+loop_count=7600/100000, time=0.51072h,
+max_expressivity=-0.539285, min_expressivity=-0.241979
+max_stability=-0.0711002, min_stability=-0.066691
+max_trainability=-0.27441, min_trainability=-0.308695
+max_capacity=9.36002e+06, min_capacity=6.1137e+06
+max_complexity=4.48259e+08, min_complexity=2.82031e+08
+
+SuperConvK3BNRELU(3,8,2,1)SuperResIDWE1K3(8,16,2,16,1)SuperResIDWE1K3(16,48,2,40,4)SuperResIDWE2K3(48,96,2,72,2)SuperResIDWE6K5(96,480,2,232,2)SuperConvK1BNRELU(480,2048,1,1)
+loop_count=7700/100000, time=0.517566h,
+max_expressivity=-0.539285, min_expressivity=-0.376915
+max_stability=-0.0711002, min_stability=-0.135704
+max_trainability=-0.27441, min_trainability=-0.232296
+max_capacity=9.36002e+06, min_capacity=3.03189e+06
+max_complexity=4.48259e+08, min_complexity=3.3996e+08
+
+SuperConvK3BNRELU(3,8,2,1)SuperResIDWE1K3(8,16,2,16,1)SuperResIDWE1K3(16,48,2,40,4)SuperResIDWE2K3(48,96,2,72,2)SuperResIDWE6K5(96,480,2,232,2)SuperConvK1BNRELU(480,2048,1,1)
+loop_count=7800/100000, time=0.524838h,
+max_expressivity=-0.539285, min_expressivity=-0.398593
+max_stability=-0.0711002, min_stability=-0.133929
+max_trainability=-0.27441, min_trainability=-0.464455
+max_capacity=9.36002e+06, min_capacity=7.58334e+06
+max_complexity=4.48259e+08, min_complexity=3.53508e+08
+
+SuperConvK3BNRELU(3,8,2,1)SuperResIDWE1K3(8,16,2,16,1)SuperResIDWE1K3(16,48,2,40,4)SuperResIDWE2K3(48,96,2,72,2)SuperResIDWE6K5(96,480,2,232,2)SuperConvK1BNRELU(480,2048,1,1)
+loop_count=7900/100000, time=0.531318h,
+max_expressivity=-0.539285, min_expressivity=-0.098556
+max_stability=-0.0711002, min_stability=-0.061865
+max_trainability=-0.27441, min_trainability=-0.513681
+max_capacity=9.36002e+06, min_capacity=7.5681e+06
+max_complexity=4.48259e+08, min_complexity=3.72446e+08
+
+SuperConvK3BNRELU(3,8,2,1)SuperResIDWE1K3(8,16,2,16,1)SuperResIDWE1K3(16,48,2,40,4)SuperResIDWE2K3(48,96,2,72,2)SuperResIDWE6K5(96,480,2,232,2)SuperConvK1BNRELU(480,2048,1,1)
+loop_count=8000/100000, time=0.536828h,
+max_expressivity=-0.539285, min_expressivity=-0.260447
+max_stability=-0.0711002, min_stability=-0.0224862
+max_trainability=-0.27441, min_trainability=-0.598036
+max_capacity=9.36002e+06, min_capacity=7.56989e+06
+max_complexity=4.48259e+08, min_complexity=3.80436e+08
+
+SuperConvK3BNRELU(3,8,2,1)SuperResIDWE1K3(8,16,2,16,1)SuperResIDWE1K3(16,48,2,40,4)SuperResIDWE2K3(48,96,2,72,2)SuperResIDWE6K5(96,480,2,232,2)SuperConvK1BNRELU(480,2048,1,1)
+loop_count=8100/100000, time=0.542522h,
+max_expressivity=-0.539285, min_expressivity=-0.253015
+max_stability=-0.0711002, min_stability=-0.0235731
+max_trainability=-0.27441, min_trainability=-0.577636
+max_capacity=9.36002e+06, min_capacity=7.56989e+06
+max_complexity=4.48259e+08, min_complexity=3.80436e+08
+
+SuperConvK3BNRELU(3,8,2,1)SuperResIDWE1K3(8,16,2,16,1)SuperResIDWE1K3(16,48,2,40,4)SuperResIDWE2K3(48,96,2,72,2)SuperResIDWE6K5(96,480,2,232,2)SuperConvK1BNRELU(480,2048,1,1)
+loop_count=8200/100000, time=0.54851h,
+max_expressivity=-0.539285, min_expressivity=-0.341811
+max_stability=-0.0711002, min_stability=-0.0236965
+max_trainability=-0.27441, min_trainability=-0.558077
+max_capacity=9.36002e+06, min_capacity=7.57069e+06
+max_complexity=4.48259e+08, min_complexity=3.88213e+08
+
+SuperConvK3BNRELU(3,8,2,1)SuperResIDWE1K3(8,16,2,16,1)SuperResIDWE1K3(16,48,2,40,4)SuperResIDWE2K3(48,96,2,72,2)SuperResIDWE6K5(96,480,2,232,2)SuperConvK1BNRELU(480,2048,1,1)
+loop_count=8300/100000, time=0.554305h,
+max_expressivity=-0.539285, min_expressivity=-0.282885
+max_stability=-0.0711002, min_stability=-0.0958505
+max_trainability=-0.27441, min_trainability=-0.0918182
+max_capacity=9.36002e+06, min_capacity=3.69122e+06
+max_complexity=4.48259e+08, min_complexity=3.95058e+08
+
+SuperConvK3BNRELU(3,8,2,1)SuperResIDWE1K3(8,16,2,16,1)SuperResIDWE1K3(16,48,2,40,4)SuperResIDWE2K3(48,96,2,72,2)SuperResIDWE6K5(96,480,2,232,2)SuperConvK1BNRELU(480,2048,1,1)
+loop_count=8400/100000, time=0.560396h,
+max_expressivity=-0.539285, min_expressivity=0.0299969
+max_stability=-0.0711002, min_stability=-0.119137
+max_trainability=-0.27441, min_trainability=-0.493354
+max_capacity=9.36002e+06, min_capacity=7.31649e+06
+max_complexity=4.48259e+08, min_complexity=4.11353e+08
+
+SuperConvK3BNRELU(3,8,2,1)SuperResIDWE1K3(8,16,2,16,1)SuperResIDWE1K3(16,48,2,40,4)SuperResIDWE2K3(48,96,2,72,2)SuperResIDWE6K5(96,480,2,232,2)SuperConvK1BNRELU(480,2048,1,1)
+loop_count=8500/100000, time=0.565402h,
+max_expressivity=-0.539285, min_expressivity=-0.379595
+max_stability=-0.0711002, min_stability=-0.105278
+max_trainability=-0.27441, min_trainability=-0.0944982
+max_capacity=9.36002e+06, min_capacity=3.69463e+06
+max_complexity=4.48259e+08, min_complexity=4.14069e+08
+
+SuperConvK3BNRELU(3,8,2,1)SuperResIDWE1K3(8,16,2,16,1)SuperResIDWE1K3(16,48,2,40,4)SuperResIDWE2K3(48,96,2,72,2)SuperResIDWE6K5(96,480,2,232,2)SuperConvK1BNRELU(480,2048,1,1)
+loop_count=8600/100000, time=0.570922h,
+max_expressivity=-0.539285, min_expressivity=-0.113218
+max_stability=-0.0711002, min_stability=-0.0356717
+max_trainability=-0.27441, min_trainability=-0.568524
+max_capacity=9.36002e+06, min_capacity=8.64774e+06
+max_complexity=4.48259e+08, min_complexity=4.12277e+08
+
+SuperConvK3BNRELU(3,8,2,1)SuperResIDWE1K3(8,16,2,16,1)SuperResIDWE1K3(16,48,2,40,4)SuperResIDWE2K3(48,96,2,72,2)SuperResIDWE6K5(96,480,2,232,2)SuperConvK1BNRELU(480,2048,1,1)
+loop_count=8700/100000, time=0.57708h,
+max_expressivity=-0.539285, min_expressivity=-0.27451
+max_stability=-0.0711002, min_stability=-0.0287315
+max_trainability=-0.27441, min_trainability=-0.620868
+max_capacity=9.36002e+06, min_capacity=8.89422e+06
+max_complexity=4.48259e+08, min_complexity=4.45329e+08
+
+SuperConvK3BNRELU(3,8,2,1)SuperResIDWE1K3(8,16,2,16,1)SuperResIDWE1K3(16,48,2,40,4)SuperResIDWE2K3(48,96,2,72,2)SuperResIDWE6K5(96,480,2,232,2)SuperConvK1BNRELU(480,2048,1,1)
+loop_count=8800/100000, time=0.582816h,
+max_expressivity=-0.539285, min_expressivity=-0.21418
+max_stability=-0.0711002, min_stability=-0.0173856
+max_trainability=-0.27441, min_trainability=-0.606231
+max_capacity=9.36002e+06, min_capacity=7.68494e+06
+max_complexity=4.48259e+08, min_complexity=4.48237e+08
+
+SuperConvK3BNRELU(3,8,2,1)SuperResIDWE1K3(8,16,2,16,1)SuperResIDWE1K3(16,48,2,40,4)SuperResIDWE2K3(48,96,2,72,2)SuperResIDWE6K5(96,480,2,232,2)SuperConvK1BNRELU(480,2048,1,1)
+loop_count=8900/100000, time=0.587723h,
+max_expressivity=-0.539285, min_expressivity=-0.507067
+max_stability=-0.0711002, min_stability=-0.107231
+max_trainability=-0.27441, min_trainability=-0.330353
+max_capacity=9.36002e+06, min_capacity=9.16078e+06
+max_complexity=4.48259e+08, min_complexity=4.11745e+08
+
+SuperConvK3BNRELU(3,8,2,1)SuperResIDWE1K3(8,16,2,16,1)SuperResIDWE1K3(16,48,2,40,4)SuperResIDWE2K3(48,96,2,72,2)SuperResIDWE6K5(96,480,2,232,2)SuperConvK1BNRELU(480,2048,1,1)
+loop_count=9000/100000, time=0.594451h,
+max_expressivity=-0.539285, min_expressivity=-0.352502
+max_stability=-0.0711002, min_stability=-0.158311
+max_trainability=-0.27441, min_trainability=-0.317266
+max_capacity=9.36002e+06, min_capacity=9.41411e+06
+max_complexity=4.48259e+08, min_complexity=4.20514e+08
+
+SuperConvK3BNRELU(3,8,2,1)SuperResIDWE1K3(8,16,2,16,1)SuperResIDWE1K3(16,48,2,40,4)SuperResIDWE2K3(48,96,2,72,2)SuperResIDWE6K5(96,480,2,232,2)SuperConvK1BNRELU(480,2048,1,1)
+loop_count=9100/100000, time=0.60051h,
+max_expressivity=-0.539285, min_expressivity=-0.3413
+max_stability=-0.0711002, min_stability=-0.0283344
+max_trainability=-0.27441, min_trainability=-0.594669
+max_capacity=9.36002e+06, min_capacity=8.65147e+06
+max_complexity=4.48259e+08, min_complexity=4.31777e+08
+
+SuperConvK3BNRELU(3,8,2,1)SuperResIDWE1K3(8,16,2,16,1)SuperResIDWE1K3(16,48,2,40,4)SuperResIDWE2K3(48,96,2,72,2)SuperResIDWE6K5(96,480,2,232,2)SuperConvK1BNRELU(480,2048,1,1)
+loop_count=9200/100000, time=0.606294h,
+max_expressivity=-0.539285, min_expressivity=0.117086
+max_stability=-0.0711002, min_stability=-0.114136
+max_trainability=-0.27441, min_trainability=-0.597435
+max_capacity=9.36002e+06, min_capacity=8.67273e+06
+max_complexity=4.48259e+08, min_complexity=4.44302e+08
+
+SuperConvK3BNRELU(3,8,2,1)SuperResIDWE1K3(8,16,2,16,1)SuperResIDWE1K3(16,48,2,40,4)SuperResIDWE2K3(48,96,2,72,2)SuperResIDWE6K5(96,480,2,232,2)SuperConvK1BNRELU(480,2048,1,1)
+loop_count=9300/100000, time=0.612481h,
+max_expressivity=-0.539285, min_expressivity=0.0943246
+max_stability=-0.0711002, min_stability=-0.114403
+max_trainability=-0.27441, min_trainability=-0.593644
+max_capacity=9.36002e+06, min_capacity=8.67273e+06
+max_complexity=4.48259e+08, min_complexity=4.44302e+08
+
+SuperConvK3BNRELU(3,8,2,1)SuperResIDWE1K7(8,16,2,8,1)SuperResIDWE4K7(16,32,2,24,2)SuperResIDWE2K3(32,80,2,96,2)SuperResIDWE4K5(80,960,2,232,1)SuperConvK1BNRELU(960,2048,1,1)
+loop_count=9400/100000, time=0.618179h,
+max_expressivity=-0.241625, min_expressivity=0.0613077
+max_stability=-0.0980937, min_stability=-0.0746554
+max_trainability=-0.343024, min_trainability=-0.589808
+max_capacity=9.4561e+06, min_capacity=8.66965e+06
+max_complexity=4.49853e+08, min_complexity=4.34888e+08
+
+SuperConvK3BNRELU(3,8,2,1)SuperResIDWE1K7(8,16,2,8,1)SuperResIDWE4K7(16,32,2,24,2)SuperResIDWE2K3(32,80,2,96,2)SuperResIDWE4K5(80,960,2,232,1)SuperConvK1BNRELU(960,2048,1,1)
+loop_count=9500/100000, time=0.624489h,
+max_expressivity=-0.241625, min_expressivity=0.12666
+max_stability=-0.0980937, min_stability=-0.114352
+max_trainability=-0.343024, min_trainability=-0.587366
+max_capacity=9.4561e+06, min_capacity=8.67273e+06
+max_complexity=4.49853e+08, min_complexity=4.44302e+08
+
+SuperConvK3BNRELU(3,8,2,1)SuperResIDWE1K7(8,16,2,8,1)SuperResIDWE4K7(16,32,2,24,2)SuperResIDWE2K3(32,80,2,96,2)SuperResIDWE4K5(80,960,2,232,1)SuperConvK1BNRELU(960,2048,1,1)
+loop_count=9600/100000, time=0.630257h,
+max_expressivity=-0.223854, min_expressivity=0.112136
+max_stability=-0.100268, min_stability=-0.117005
+max_trainability=-0.348971, min_trainability=-0.586018
+max_capacity=9.4561e+06, min_capacity=8.67273e+06
+max_complexity=4.49853e+08, min_complexity=4.44302e+08
+
+SuperConvK3BNRELU(3,8,2,1)SuperResIDWE1K7(8,16,2,8,1)SuperResIDWE4K7(16,32,2,24,2)SuperResIDWE2K3(32,80,2,96,2)SuperResIDWE4K5(80,960,2,232,1)SuperConvK1BNRELU(960,2048,1,1)
+loop_count=9700/100000, time=0.635963h,
+max_expressivity=-0.219653, min_expressivity=0.157069
+max_stability=-0.0955104, min_stability=-0.11579
+max_trainability=-0.350579, min_trainability=-0.583119
+max_capacity=9.4561e+06, min_capacity=8.67273e+06
+max_complexity=4.49853e+08, min_complexity=4.44302e+08
+
+SuperConvK3BNRELU(3,8,2,1)SuperResIDWE1K7(8,16,2,8,1)SuperResIDWE4K7(16,32,2,24,2)SuperResIDWE2K3(32,80,2,96,2)SuperResIDWE4K5(80,960,2,232,1)SuperConvK1BNRELU(960,2048,1,1)
+loop_count=9800/100000, time=0.641222h,
+max_expressivity=-0.219653, min_expressivity=-0.207048
+max_stability=-0.0955104, min_stability=-0.045179
+max_trainability=-0.350579, min_trainability=-0.57941
+max_capacity=9.4561e+06, min_capacity=8.66184e+06
+max_complexity=4.49853e+08, min_complexity=4.33856e+08
+
+SuperConvK3BNRELU(3,8,2,1)SuperResIDWE1K7(8,16,2,8,1)SuperResIDWE4K7(16,32,2,24,2)SuperResIDWE2K3(32,80,2,96,2)SuperResIDWE4K5(80,960,2,232,1)SuperConvK1BNRELU(960,2048,1,1)
+loop_count=9900/100000, time=0.646923h,
+max_expressivity=-0.219653, min_expressivity=0.20847
+max_stability=-0.0955104, min_stability=-0.0657235
+max_trainability=-0.350579, min_trainability=-0.58881
+max_capacity=9.4561e+06, min_capacity=8.67418e+06
+max_complexity=4.49853e+08, min_complexity=4.4969e+08
+
+SuperConvK3BNRELU(3,8,2,1)SuperResIDWE1K7(8,16,2,8,1)SuperResIDWE4K7(16,32,2,24,2)SuperResIDWE2K3(32,80,2,96,2)SuperResIDWE4K5(80,960,2,232,1)SuperConvK1BNRELU(960,2048,1,1)
+loop_count=10000/100000, time=0.652868h,
+max_expressivity=-0.219653, min_expressivity=0.154734
+max_stability=-0.0955104, min_stability=-0.116893
+max_trainability=-0.350579, min_trainability=-0.575095
+max_capacity=9.4561e+06, min_capacity=8.67273e+06
+max_complexity=4.49853e+08, min_complexity=4.44302e+08
+
+SuperConvK3BNRELU(3,8,2,1)SuperResIDWE1K7(8,16,2,8,1)SuperResIDWE4K7(16,32,2,24,2)SuperResIDWE2K3(32,80,2,96,2)SuperResIDWE4K5(80,960,2,232,1)SuperConvK1BNRELU(960,2048,1,1)
+loop_count=10100/100000, time=0.658825h,
+max_expressivity=-0.219428, min_expressivity=0.000419617
+max_stability=-0.0979956, min_stability=-0.0773021
+max_trainability=-0.345217, min_trainability=-0.572849
+max_capacity=9.4561e+06, min_capacity=8.66965e+06
+max_complexity=4.49853e+08, min_complexity=4.34888e+08
+
+SuperConvK3BNRELU(3,8,2,1)SuperResIDWE1K7(8,16,2,8,1)SuperResIDWE4K7(16,32,2,24,2)SuperResIDWE2K3(32,80,2,96,2)SuperResIDWE4K5(80,960,2,232,1)SuperConvK1BNRELU(960,2048,1,1)
+loop_count=10200/100000, time=0.664435h,
+max_expressivity=-0.219428, min_expressivity=-0.210817
+max_stability=-0.0979956, min_stability=-0.0428858
+max_trainability=-0.345217, min_trainability=-0.569805
+max_capacity=9.4561e+06, min_capacity=8.66184e+06
+max_complexity=4.49853e+08, min_complexity=4.33856e+08
+
+SuperConvK3BNRELU(3,8,2,1)SuperResIDWE1K7(8,16,2,8,1)SuperResIDWE4K7(16,32,2,24,2)SuperResIDWE2K3(32,80,2,96,2)SuperResIDWE4K5(80,960,2,232,1)SuperConvK1BNRELU(960,2048,1,1)
+loop_count=10300/100000, time=0.669917h,
+max_expressivity=-0.219428, min_expressivity=-0.00394011
+max_stability=-0.0979956, min_stability=-0.124487
+max_trainability=-0.345217, min_trainability=-0.560828
+max_capacity=9.4561e+06, min_capacity=8.53298e+06
+max_complexity=4.49853e+08, min_complexity=4.31863e+08
+
+SuperConvK3BNRELU(3,8,2,1)SuperResIDWE1K7(8,16,2,8,1)SuperResIDWE4K7(16,32,2,24,2)SuperResIDWE2K3(32,80,2,96,2)SuperResIDWE4K5(80,960,2,232,1)SuperConvK1BNRELU(960,2048,1,1)
+loop_count=10400/100000, time=0.675362h,
+max_expressivity=-0.219428, min_expressivity=-0.227627
+max_stability=-0.0979956, min_stability=-0.0455958
+max_trainability=-0.345217, min_trainability=-0.561634
+max_capacity=9.4561e+06, min_capacity=8.66184e+06
+max_complexity=4.49853e+08, min_complexity=4.33856e+08
+
+SuperConvK3BNRELU(3,8,2,1)SuperResIDWE1K7(8,16,2,8,1)SuperResIDWE4K7(16,32,2,24,2)SuperResIDWE2K3(32,80,2,96,2)SuperResIDWE4K5(80,960,2,232,1)SuperConvK1BNRELU(960,2048,1,1)
+loop_count=10500/100000, time=0.681529h,
+max_expressivity=-0.219428, min_expressivity=0.0733838
+max_stability=-0.0979956, min_stability=-0.114611
+max_trainability=-0.345217, min_trainability=-0.555414
+max_capacity=9.4561e+06, min_capacity=8.67334e+06
+max_complexity=4.49853e+08, min_complexity=4.49671e+08
+
+SuperConvK3BNRELU(3,8,2,1)SuperResIDWE1K7(8,16,2,8,1)SuperResIDWE4K7(16,32,2,24,2)SuperResIDWE2K3(32,80,2,96,2)SuperResIDWE4K5(80,960,2,232,1)SuperConvK1BNRELU(960,2048,1,1)
+loop_count=10600/100000, time=0.68791h,
+max_expressivity=-0.219428, min_expressivity=-0.23945
+max_stability=-0.0979956, min_stability=-0.0227409
+max_trainability=-0.345217, min_trainability=-0.53664
+max_capacity=9.4561e+06, min_capacity=7.83302e+06
+max_complexity=4.49853e+08, min_complexity=4.42362e+08
+
+SuperConvK3BNRELU(3,8,2,1)SuperResIDWE1K7(8,16,2,8,1)SuperResIDWE4K7(16,32,2,24,2)SuperResIDWE2K3(32,80,2,96,2)SuperResIDWE4K5(80,960,2,232,1)SuperConvK1BNRELU(960,2048,1,1)
+loop_count=10700/100000, time=0.692871h,
+max_expressivity=-0.219428, min_expressivity=-0.356963
+max_stability=-0.0979956, min_stability=-0.0281546
+max_trainability=-0.345217, min_trainability=-0.504646
+max_capacity=9.4561e+06, min_capacity=7.66765e+06
+max_complexity=4.49853e+08, min_complexity=4.36455e+08
+
+SuperConvK3BNRELU(3,8,2,1)SuperResIDWE1K7(8,16,2,8,1)SuperResIDWE4K7(16,32,2,24,2)SuperResIDWE2K3(32,80,2,96,2)SuperResIDWE4K5(80,960,2,232,1)SuperConvK1BNRELU(960,2048,1,1)
+loop_count=10800/100000, time=0.699005h,
+max_expressivity=-0.241231, min_expressivity=-0.0246966
+max_stability=-0.0991505, min_stability=-0.083965
+max_trainability=-0.329786, min_trainability=-0.47609
+max_capacity=9.4561e+06, min_capacity=7.5836e+06
+max_complexity=4.49853e+08, min_complexity=4.34517e+08
+
+SuperConvK3BNRELU(3,8,2,1)SuperResIDWE1K7(8,16,2,8,1)SuperResIDWE4K7(16,32,2,24,2)SuperResIDWE2K3(32,80,2,96,2)SuperResIDWE4K5(80,960,2,232,1)SuperConvK1BNRELU(960,2048,1,1)
+loop_count=10900/100000, time=0.704882h,
+max_expressivity=-0.241231, min_expressivity=-0.603559
+max_stability=-0.0991505, min_stability=-0.110483
+max_trainability=-0.329786, min_trainability=-0.327385
+max_capacity=9.4561e+06, min_capacity=9.45345e+06
+max_complexity=4.49853e+08, min_complexity=4.48095e+08
+
+SuperConvK3BNRELU(3,8,2,1)SuperResIDWE1K7(8,16,2,8,1)SuperResIDWE4K7(16,32,2,24,2)SuperResIDWE2K3(32,80,2,96,2)SuperResIDWE4K5(80,960,2,232,1)SuperConvK1BNRELU(960,2048,1,1)
+loop_count=11000/100000, time=0.711639h,
+max_expressivity=-0.241231, min_expressivity=-0.548942
+max_stability=-0.0991505, min_stability=-0.139365
+max_trainability=-0.329786, min_trainability=-0.356552
+max_capacity=9.4561e+06, min_capacity=9.31608e+06
+max_complexity=4.49853e+08, min_complexity=4.25614e+08
+
+SuperConvK3BNRELU(3,8,2,1)SuperResIDWE1K7(8,16,2,8,1)SuperResIDWE4K7(16,32,2,24,2)SuperResIDWE2K3(32,80,2,96,2)SuperResIDWE4K5(80,960,2,232,1)SuperConvK1BNRELU(960,2048,1,1)
+loop_count=11100/100000, time=0.718607h,
+max_expressivity=-0.241231, min_expressivity=-0.571374
+max_stability=-0.0991505, min_stability=-0.133735
+max_trainability=-0.329786, min_trainability=-0.367415
+max_capacity=9.4561e+06, min_capacity=9.34466e+06
+max_complexity=4.49853e+08, min_complexity=4.49937e+08
+
+SuperConvK3BNRELU(3,8,2,1)SuperResIDWE1K7(8,16,2,8,1)SuperResIDWE4K7(16,32,2,24,2)SuperResIDWE2K3(32,80,2,96,2)SuperResIDWE4K5(80,960,2,232,1)SuperConvK1BNRELU(960,2048,1,1)
+loop_count=11200/100000, time=0.725148h,
+max_expressivity=-0.241231, min_expressivity=-0.244717
+max_stability=-0.0991505, min_stability=-0.150195
+max_trainability=-0.329786, min_trainability=-0.39945
+max_capacity=9.4561e+06, min_capacity=9.44734e+06
+max_complexity=4.49853e+08, min_complexity=4.49548e+08
+
+SuperConvK3BNRELU(3,8,2,1)SuperResIDWE1K7(8,16,2,8,1)SuperResIDWE4K7(16,32,2,24,2)SuperResIDWE2K3(32,80,2,96,2)SuperResIDWE4K5(80,960,2,232,1)SuperConvK1BNRELU(960,2048,1,1)
+loop_count=11300/100000, time=0.731351h,
+max_expressivity=-0.241231, min_expressivity=-0.191962
+max_stability=-0.0991505, min_stability=-0.0746585
+max_trainability=-0.329786, min_trainability=-0.137756
+max_capacity=9.4561e+06, min_capacity=3.69974e+06
+max_complexity=4.49853e+08, min_complexity=4.37672e+08
+
+SuperConvK3BNRELU(3,8,2,1)SuperResIDWE1K7(8,16,2,8,1)SuperResIDWE4K7(16,32,2,24,2)SuperResIDWE2K3(32,80,2,96,2)SuperResIDWE4K5(80,960,2,232,1)SuperConvK1BNRELU(960,2048,1,1)
+loop_count=11400/100000, time=0.738126h,
+max_expressivity=-0.241231, min_expressivity=-0.563994
+max_stability=-0.0991505, min_stability=-0.138558
+max_trainability=-0.329786, min_trainability=-0.371712
+max_capacity=9.4561e+06, min_capacity=9.34466e+06
+max_complexity=4.49853e+08, min_complexity=4.49937e+08
+
+SuperConvK3BNRELU(3,8,2,1)SuperResIDWE1K7(8,16,2,8,1)SuperResIDWE4K7(16,32,2,24,2)SuperResIDWE2K3(32,80,2,96,2)SuperResIDWE4K5(80,960,2,232,1)SuperConvK1BNRELU(960,2048,1,1)
+loop_count=11500/100000, time=0.745407h,
+max_expressivity=-0.241231, min_expressivity=-0.539713
+max_stability=-0.0991505, min_stability=-0.138092
+max_trainability=-0.329786, min_trainability=-0.371955
+max_capacity=9.4561e+06, min_capacity=9.34466e+06
+max_complexity=4.49853e+08, min_complexity=4.49937e+08
+
+SuperConvK3BNRELU(3,8,2,1)SuperResIDWE1K7(8,16,2,8,1)SuperResIDWE4K7(16,32,2,24,2)SuperResIDWE2K3(32,80,2,96,2)SuperResIDWE4K5(80,960,2,232,1)SuperConvK1BNRELU(960,2048,1,1)
+loop_count=11600/100000, time=0.751786h,
+max_expressivity=-0.241231, min_expressivity=-0.560811
+max_stability=-0.0991505, min_stability=-0.137652
+max_trainability=-0.329786, min_trainability=-0.368133
+max_capacity=9.4561e+06, min_capacity=9.34466e+06
+max_complexity=4.49853e+08, min_complexity=4.49937e+08
+
+SuperConvK3BNRELU(3,8,2,1)SuperResIDWE1K7(8,16,2,8,1)SuperResIDWE4K7(16,32,2,24,2)SuperResIDWE2K3(32,80,2,96,2)SuperResIDWE4K5(80,960,2,232,1)SuperConvK1BNRELU(960,2048,1,1)
+loop_count=11700/100000, time=0.760213h,
+max_expressivity=-0.241231, min_expressivity=-0.561261
+max_stability=-0.0991505, min_stability=-0.137167
+max_trainability=-0.329786, min_trainability=-0.360119
+max_capacity=9.4561e+06, min_capacity=9.34466e+06
+max_complexity=4.49853e+08, min_complexity=4.49937e+08
+
+SuperConvK3BNRELU(3,8,2,1)SuperResIDWE1K7(8,16,2,8,1)SuperResIDWE4K7(16,32,2,24,2)SuperResIDWE2K3(32,80,2,96,2)SuperResIDWE4K5(80,960,2,232,1)SuperConvK1BNRELU(960,2048,1,1)
+loop_count=11800/100000, time=0.767173h,
+max_expressivity=-0.241231, min_expressivity=-0.535148
+max_stability=-0.0991505, min_stability=-0.13608
+max_trainability=-0.329786, min_trainability=-0.3517
+max_capacity=9.4561e+06, min_capacity=9.22419e+06
+max_complexity=4.49853e+08, min_complexity=4.25245e+08
+
+SuperConvK3BNRELU(3,8,2,1)SuperResIDWE1K7(8,16,2,8,1)SuperResIDWE4K7(16,32,2,24,2)SuperResIDWE2K3(32,80,2,96,2)SuperResIDWE4K5(80,960,2,232,1)SuperConvK1BNRELU(960,2048,1,1)
+loop_count=11900/100000, time=0.773949h,
+max_expressivity=-0.241176, min_expressivity=-0.56397
+max_stability=-0.0959842, min_stability=-0.1363
+max_trainability=-0.33924, min_trainability=-0.376405
+max_capacity=9.4561e+06, min_capacity=9.34466e+06
+max_complexity=4.49853e+08, min_complexity=4.49937e+08
+
+SuperConvK3BNRELU(3,8,2,1)SuperResIDWE1K7(8,16,2,8,1)SuperResIDWE4K7(16,32,2,24,2)SuperResIDWE2K3(32,80,2,96,2)SuperResIDWE4K5(80,960,2,232,1)SuperConvK1BNRELU(960,2048,1,1)
+loop_count=12000/100000, time=0.781109h,
+max_expressivity=-0.241176, min_expressivity=-0.281952
+max_stability=-0.0959842, min_stability=-0.032035
+max_trainability=-0.33924, min_trainability=-0.364417
+max_capacity=9.4561e+06, min_capacity=7.13644e+06
+max_complexity=4.49853e+08, min_complexity=3.91647e+08
+
+SuperConvK3BNRELU(3,8,2,1)SuperResIDWE1K7(8,16,2,8,1)SuperResIDWE4K7(16,32,2,24,2)SuperResIDWE2K3(32,80,2,96,2)SuperResIDWE4K5(80,960,2,232,1)SuperConvK1BNRELU(960,2048,1,1)
+loop_count=12100/100000, time=0.788619h,
+max_expressivity=-0.241176, min_expressivity=-0.448888
+max_stability=-0.0959842, min_stability=-0.115632
+max_trainability=-0.33924, min_trainability=-0.13311
+max_capacity=9.4561e+06, min_capacity=3.72637e+06
+max_complexity=4.49853e+08, min_complexity=4.255e+08
+
+SuperConvK3BNRELU(3,8,2,1)SuperResIDWE1K7(8,16,2,8,1)SuperResIDWE4K7(16,32,2,24,2)SuperResIDWE2K3(32,80,2,96,2)SuperResIDWE4K5(80,960,2,232,1)SuperConvK1BNRELU(960,2048,1,1)
+loop_count=12200/100000, time=0.796513h,
+max_expressivity=-0.241176, min_expressivity=-0.562944
+max_stability=-0.0959842, min_stability=-0.135646
+max_trainability=-0.33924, min_trainability=-0.35606
+max_capacity=9.4561e+06, min_capacity=9.34466e+06
+max_complexity=4.49853e+08, min_complexity=4.49937e+08
+
+SuperConvK3BNRELU(3,8,2,1)SuperResIDWE1K7(8,16,2,8,1)SuperResIDWE4K7(16,32,2,24,2)SuperResIDWE2K3(32,80,2,96,2)SuperResIDWE4K5(80,960,2,232,1)SuperConvK1BNRELU(960,2048,1,1)
+loop_count=12300/100000, time=0.804529h,
+max_expressivity=-0.241176, min_expressivity=-0.557608
+max_stability=-0.0959842, min_stability=-0.135305
+max_trainability=-0.33924, min_trainability=-0.351908
+max_capacity=9.4561e+06, min_capacity=9.34466e+06
+max_complexity=4.49853e+08, min_complexity=4.49937e+08
+
+SuperConvK3BNRELU(3,8,2,1)SuperResIDWE1K7(8,16,2,8,1)SuperResIDWE4K7(16,32,2,24,2)SuperResIDWE2K3(32,80,2,96,2)SuperResIDWE4K5(80,960,2,232,1)SuperConvK1BNRELU(960,2048,1,1)
+loop_count=12400/100000, time=0.811538h,
+max_expressivity=-0.241176, min_expressivity=-0.557228
+max_stability=-0.0959842, min_stability=-0.135077
+max_trainability=-0.33924, min_trainability=-0.373257
+max_capacity=9.4561e+06, min_capacity=9.34466e+06
+max_complexity=4.49853e+08, min_complexity=4.49937e+08
+
+SuperConvK3BNRELU(3,8,2,1)SuperResIDWE1K7(8,16,2,8,1)SuperResIDWE4K7(16,32,2,24,2)SuperResIDWE2K3(32,80,2,96,2)SuperResIDWE4K5(80,960,2,232,1)SuperConvK1BNRELU(960,2048,1,1)
+loop_count=12500/100000, time=0.818833h,
+max_expressivity=-0.241176, min_expressivity=-0.567887
+max_stability=-0.0959842, min_stability=-0.134715
+max_trainability=-0.33924, min_trainability=-0.368667
+max_capacity=9.4561e+06, min_capacity=9.34466e+06
+max_complexity=4.49853e+08, min_complexity=4.49937e+08
+
+SuperConvK3BNRELU(3,8,2,1)SuperResIDWE1K7(8,16,2,8,1)SuperResIDWE4K7(16,32,2,24,2)SuperResIDWE2K3(32,80,2,96,2)SuperResIDWE4K5(80,960,2,232,1)SuperConvK1BNRELU(960,2048,1,1)
+loop_count=12600/100000, time=0.827484h,
+max_expressivity=-0.241176, min_expressivity=-0.549753
+max_stability=-0.0959842, min_stability=-0.12814
+max_trainability=-0.33924, min_trainability=-0.366258
+max_capacity=9.4561e+06, min_capacity=9.23746e+06
+max_complexity=4.49853e+08, min_complexity=4.25882e+08
+
+SuperConvK3BNRELU(3,8,2,1)SuperResIDWE1K7(8,16,2,8,1)SuperResIDWE4K7(16,32,2,24,2)SuperResIDWE2K3(32,80,2,96,2)SuperResIDWE4K5(80,960,2,232,1)SuperConvK1BNRELU(960,2048,1,1)
+loop_count=12700/100000, time=0.836287h,
+max_expressivity=-0.241176, min_expressivity=-0.549753
+max_stability=-0.0959842, min_stability=-0.12814
+max_trainability=-0.33924, min_trainability=-0.366258
+max_capacity=9.4561e+06, min_capacity=9.23746e+06
+max_complexity=4.49853e+08, min_complexity=4.25882e+08
+
+SuperConvK3BNRELU(3,8,2,1)SuperResIDWE1K7(8,16,2,8,1)SuperResIDWE4K7(16,32,2,24,2)SuperResIDWE2K3(32,80,2,96,2)SuperResIDWE4K5(80,960,2,232,1)SuperConvK1BNRELU(960,2048,1,1)
+loop_count=12800/100000, time=0.844701h,
+max_expressivity=-0.241176, min_expressivity=-0.531054
+max_stability=-0.0959842, min_stability=-0.131279
+max_trainability=-0.33924, min_trainability=-0.217713
+max_capacity=9.4561e+06, min_capacity=9.22739e+06
+max_complexity=4.49853e+08, min_complexity=4.25274e+08
+
+SuperConvK3BNRELU(3,8,2,1)SuperResIDWE1K7(8,16,2,8,1)SuperResIDWE4K7(16,32,2,24,2)SuperResIDWE2K3(32,80,2,96,2)SuperResIDWE4K5(80,960,2,232,1)SuperConvK1BNRELU(960,2048,1,1)
+loop_count=12900/100000, time=0.85239h,
+max_expressivity=-0.241176, min_expressivity=-0.560318
+max_stability=-0.0959842, min_stability=-0.132733
+max_trainability=-0.33924, min_trainability=-0.382287
+max_capacity=9.4561e+06, min_capacity=9.34466e+06
+max_complexity=4.49853e+08, min_complexity=4.49937e+08
+
+SuperConvK3BNRELU(3,8,2,1)SuperResIDWE1K7(8,16,2,8,1)SuperResIDWE4K7(16,32,2,24,2)SuperResIDWE2K3(32,80,2,96,2)SuperResIDWE4K5(80,960,2,232,1)SuperConvK1BNRELU(960,2048,1,1)
+loop_count=13000/100000, time=0.859292h,
+max_expressivity=-0.241176, min_expressivity=-0.165158
+max_stability=-0.0959842, min_stability=-0.0554082
+max_trainability=-0.33924, min_trainability=-0.343031
+max_capacity=9.4561e+06, min_capacity=8.57023e+06
+max_complexity=4.49853e+08, min_complexity=4.11349e+08
+
+SuperConvK3BNRELU(3,8,2,1)SuperResIDWE1K7(8,16,2,8,1)SuperResIDWE4K7(16,32,2,24,2)SuperResIDWE2K3(32,80,2,96,2)SuperResIDWE4K5(80,960,2,232,1)SuperConvK1BNRELU(960,2048,1,1)
+loop_count=13100/100000, time=0.866484h,
+max_expressivity=-0.241176, min_expressivity=-0.657862
+max_stability=-0.0959842, min_stability=-0.112571
+max_trainability=-0.33924, min_trainability=-0.27037
+max_capacity=9.4561e+06, min_capacity=9.45756e+06
+max_complexity=4.49853e+08, min_complexity=4.49579e+08
+
+SuperConvK3BNRELU(3,8,2,1)SuperResIDWE1K7(8,16,2,8,1)SuperResIDWE4K7(16,32,2,24,2)SuperResIDWE2K3(32,80,2,96,2)SuperResIDWE4K5(80,960,2,232,1)SuperConvK1BNRELU(960,2048,1,1)
+loop_count=13200/100000, time=0.873077h,
+max_expressivity=-0.219653, min_expressivity=-0.366529
+max_stability=-0.0955104, min_stability=-0.119453
+max_trainability=-0.350579, min_trainability=-0.360039
+max_capacity=9.4561e+06, min_capacity=9.40997e+06
+max_complexity=4.49853e+08, min_complexity=4.26041e+08
+
+SuperConvK3BNRELU(3,8,2,1)SuperResIDWE1K7(8,16,2,8,1)SuperResIDWE4K7(16,32,2,24,2)SuperResIDWE2K3(32,80,2,96,2)SuperResIDWE4K5(80,960,2,232,1)SuperConvK1BNRELU(960,2048,1,1)
+loop_count=13300/100000, time=0.88056h,
+max_expressivity=-0.219653, min_expressivity=-0.636569
+max_stability=-0.0955104, min_stability=-0.0945973
+max_trainability=-0.350579, min_trainability=-0.433572
+max_capacity=9.4561e+06, min_capacity=8.65351e+06
+max_complexity=4.49853e+08, min_complexity=4.36481e+08
+
+SuperConvK3BNRELU(3,8,2,1)SuperResIDWE1K7(8,16,2,8,1)SuperResIDWE4K7(16,32,2,24,2)SuperResIDWE2K3(32,80,2,96,2)SuperResIDWE4K5(80,960,2,232,1)SuperConvK1BNRELU(960,2048,1,1)
+loop_count=13400/100000, time=0.887482h,
+max_expressivity=-0.219653, min_expressivity=-0.622993
+max_stability=-0.0955104, min_stability=-0.114267
+max_trainability=-0.350579, min_trainability=-0.272367
+max_capacity=9.4561e+06, min_capacity=9.46686e+06
+max_complexity=4.49853e+08, min_complexity=4.46591e+08
+
+SuperConvK3BNRELU(3,8,2,1)SuperResIDWE1K7(8,16,2,8,1)SuperResIDWE4K7(16,32,2,24,2)SuperResIDWE2K3(32,80,2,96,2)SuperResIDWE4K5(80,960,2,232,1)SuperConvK1BNRELU(960,2048,1,1)
+loop_count=13500/100000, time=0.893441h,
+max_expressivity=-0.225771, min_expressivity=-0.588867
+max_stability=-0.0986492, min_stability=-0.117741
+max_trainability=-0.335624, min_trainability=-0.252554
+max_capacity=9.4561e+06, min_capacity=9.46686e+06
+max_complexity=4.49853e+08, min_complexity=4.46591e+08
+
+SuperConvK3BNRELU(3,8,2,1)SuperResIDWE1K7(8,16,2,8,1)SuperResIDWE4K7(16,32,2,24,2)SuperResIDWE2K3(32,80,2,96,2)SuperResIDWE4K5(80,960,2,232,1)SuperConvK1BNRELU(960,2048,1,1)
+loop_count=13600/100000, time=0.900011h,
+max_expressivity=-0.220124, min_expressivity=-0.525022
+max_stability=-0.0969589, min_stability=-0.110678
+max_trainability=-0.333995, min_trainability=-0.320085
+max_capacity=9.4561e+06, min_capacity=9.23058e+06
+max_complexity=4.49853e+08, min_complexity=4.27179e+08
+
+SuperConvK3BNRELU(3,8,2,1)SuperResIDWE1K7(8,16,2,8,1)SuperResIDWE4K7(16,32,2,24,2)SuperResIDWE2K3(32,80,2,96,2)SuperResIDWE4K5(80,960,2,232,1)SuperConvK1BNRELU(960,2048,1,1)
+loop_count=13700/100000, time=0.906659h,
+max_expressivity=-0.220124, min_expressivity=-0.529541
+max_stability=-0.0969589, min_stability=-0.114016
+max_trainability=-0.333995, min_trainability=-0.303581
+max_capacity=9.4561e+06, min_capacity=9.24568e+06
+max_complexity=4.49853e+08, min_complexity=4.3114e+08
+
+SuperConvK3BNRELU(3,8,2,1)SuperResIDWE1K7(8,16,2,8,1)SuperResIDWE4K7(16,32,2,24,2)SuperResIDWE2K3(32,80,2,96,2)SuperResIDWE4K5(80,960,2,232,1)SuperConvK1BNRELU(960,2048,1,1)
+loop_count=13800/100000, time=0.912513h,
+max_expressivity=-0.220124, min_expressivity=-0.530203
+max_stability=-0.0969589, min_stability=-0.112719
+max_trainability=-0.333995, min_trainability=-0.355061
+max_capacity=9.4561e+06, min_capacity=9.25109e+06
+max_complexity=4.49853e+08, min_complexity=4.33869e+08
+
+SuperConvK3BNRELU(3,8,2,1)SuperResIDWE1K7(8,16,2,8,1)SuperResIDWE4K7(16,32,2,24,2)SuperResIDWE2K3(32,80,2,96,2)SuperResIDWE4K5(80,960,2,232,1)SuperConvK1BNRELU(960,2048,1,1)
+loop_count=13900/100000, time=0.919751h,
+max_expressivity=-0.220124, min_expressivity=-0.22978
+max_stability=-0.0969589, min_stability=-0.0206378
+max_trainability=-0.333995, min_trainability=-0.464188
+max_capacity=9.4561e+06, min_capacity=8.66391e+06
+max_complexity=4.49853e+08, min_complexity=4.34605e+08
+
+SuperConvK3BNRELU(3,8,2,1)SuperResIDWE1K7(8,16,2,8,1)SuperResIDWE4K7(16,32,2,24,2)SuperResIDWE2K3(32,80,2,96,2)SuperResIDWE4K5(80,960,2,232,1)SuperConvK1BNRELU(960,2048,1,1)
+loop_count=14000/100000, time=0.925609h,
+max_expressivity=-0.220124, min_expressivity=-0.0388542
+max_stability=-0.0969589, min_stability=-0.0522913
+max_trainability=-0.333995, min_trainability=-0.4554
+max_capacity=9.4561e+06, min_capacity=8.65284e+06
+max_complexity=4.49853e+08, min_complexity=4.28804e+08
+
+SuperConvK3BNRELU(3,8,2,1)SuperResIDWE1K7(8,16,2,8,1)SuperResIDWE4K7(16,32,2,24,2)SuperResIDWE2K3(32,80,2,96,2)SuperResIDWE4K5(80,960,2,232,1)SuperConvK1BNRELU(960,2048,1,1)
+loop_count=14100/100000, time=0.932119h,
+max_expressivity=-0.220124, min_expressivity=-0.306034
+max_stability=-0.0969589, min_stability=-0.11192
+max_trainability=-0.333995, min_trainability=-0.451527
+max_capacity=9.4561e+06, min_capacity=9.43752e+06
+max_complexity=4.49853e+08, min_complexity=4.49839e+08
+
+SuperConvK3BNRELU(3,8,2,1)SuperResIDWE1K7(8,16,2,8,1)SuperResIDWE4K7(16,32,2,24,2)SuperResIDWE2K3(32,80,2,96,2)SuperResIDWE4K5(80,960,2,232,1)SuperConvK1BNRELU(960,2048,1,1)
+loop_count=14200/100000, time=0.939579h,
+max_expressivity=-0.220124, min_expressivity=-0.298559
+max_stability=-0.0969589, min_stability=-0.112872
+max_trainability=-0.333995, min_trainability=-0.445344
+max_capacity=9.4561e+06, min_capacity=9.43752e+06
+max_complexity=4.49853e+08, min_complexity=4.49839e+08
+
+SuperConvK3BNRELU(3,8,2,1)SuperResIDWE1K7(8,16,2,8,1)SuperResIDWE4K7(16,32,2,24,2)SuperResIDWE2K3(32,80,2,96,2)SuperResIDWE4K5(80,960,2,232,1)SuperConvK1BNRELU(960,2048,1,1)
+loop_count=14300/100000, time=0.946091h,
+max_expressivity=-0.220124, min_expressivity=-0.334246
+max_stability=-0.0969589, min_stability=-0.0754828
+max_trainability=-0.333995, min_trainability=-0.217237
+max_capacity=9.4561e+06, min_capacity=3.84898e+06
+max_complexity=4.49853e+08, min_complexity=4.27313e+08
+
+SuperConvK3BNRELU(3,8,2,1)SuperResIDWE1K7(8,16,2,8,1)SuperResIDWE4K7(16,32,2,24,2)SuperResIDWE2K3(32,80,2,96,2)SuperResIDWE4K5(80,960,2,232,1)SuperConvK1BNRELU(960,2048,1,1)
+loop_count=14400/100000, time=0.953704h,
+max_expressivity=-0.220124, min_expressivity=-0.258767
+max_stability=-0.0969589, min_stability=-0.0215687
+max_trainability=-0.333995, min_trainability=-0.45078
+max_capacity=9.4561e+06, min_capacity=8.66391e+06
+max_complexity=4.49853e+08, min_complexity=4.34605e+08
+
+SuperConvK3BNRELU(3,8,2,1)SuperResIDWE1K7(8,16,2,8,1)SuperResIDWE4K7(16,32,2,24,2)SuperResIDWE2K3(32,80,2,96,2)SuperResIDWE4K5(80,960,2,232,1)SuperConvK1BNRELU(960,2048,1,1)
+loop_count=14500/100000, time=0.960296h,
+max_expressivity=-0.220124, min_expressivity=-0.0483527
+max_stability=-0.0969589, min_stability=-0.0539677
+max_trainability=-0.333995, min_trainability=-0.446223
+max_capacity=9.4561e+06, min_capacity=8.65284e+06
+max_complexity=4.49853e+08, min_complexity=4.28804e+08
+
+SuperConvK3BNRELU(3,8,2,1)SuperResIDWE1K7(8,16,2,8,1)SuperResIDWE4K7(16,32,2,24,2)SuperResIDWE2K3(32,80,2,96,2)SuperResIDWE4K5(80,960,2,232,1)SuperConvK1BNRELU(960,2048,1,1)
+loop_count=14600/100000, time=0.967439h,
+max_expressivity=-0.220124, min_expressivity=-0.0178275
+max_stability=-0.0969589, min_stability=-0.0504471
+max_trainability=-0.333995, min_trainability=-0.444366
+max_capacity=9.4561e+06, min_capacity=8.65284e+06
+max_complexity=4.49853e+08, min_complexity=4.28804e+08
+
+SuperConvK3BNRELU(3,8,2,1)SuperResIDWE1K7(8,16,2,8,1)SuperResIDWE4K7(16,32,2,24,2)SuperResIDWE2K3(32,80,2,96,2)SuperResIDWE4K5(80,960,2,232,1)SuperConvK1BNRELU(960,2048,1,1)
+loop_count=14700/100000, time=0.973515h,
+max_expressivity=-0.220124, min_expressivity=-0.309784
+max_stability=-0.0969589, min_stability=-0.0210327
+max_trainability=-0.333995, min_trainability=-0.444491
+max_capacity=9.4561e+06, min_capacity=8.66391e+06
+max_complexity=4.49853e+08, min_complexity=4.34605e+08
+
+SuperConvK3BNRELU(3,8,2,1)SuperResIDWE1K7(8,16,2,8,1)SuperResIDWE4K7(16,32,2,24,2)SuperResIDWE2K3(32,80,2,96,2)SuperResIDWE4K5(80,960,2,232,1)SuperConvK1BNRELU(960,2048,1,1)
+loop_count=14800/100000, time=0.980681h,
+max_expressivity=-0.220124, min_expressivity=-0.312517
+max_stability=-0.0969589, min_stability=-0.109839
+max_trainability=-0.333995, min_trainability=-0.441929
+max_capacity=9.4561e+06, min_capacity=9.43752e+06
+max_complexity=4.49853e+08, min_complexity=4.49839e+08
+
+SuperConvK3BNRELU(3,8,2,1)SuperResIDWE1K7(8,16,2,8,1)SuperResIDWE4K7(16,32,2,24,2)SuperResIDWE2K3(32,80,2,96,2)SuperResIDWE4K5(80,960,2,232,1)SuperConvK1BNRELU(960,2048,1,1)
+loop_count=14900/100000, time=0.987323h,
+max_expressivity=-0.220124, min_expressivity=-0.0776246
+max_stability=-0.0969589, min_stability=-0.0572578
+max_trainability=-0.333995, min_trainability=-0.439531
+max_capacity=9.4561e+06, min_capacity=8.65284e+06
+max_complexity=4.49853e+08, min_complexity=4.28804e+08
+
+SuperConvK3BNRELU(3,8,2,1)SuperResIDWE1K5(8,16,2,24,1)SuperResIDWE1K7(16,32,2,24,3)SuperResIDWE1K7(32,32,1,24,3)SuperResIDWE1K5(32,96,2,80,3)SuperResIDWE4K5(96,960,2,232,1)SuperConvK1BNRELU(960,2048,1,1)
+loop_count=15000/100000, time=0.993478h,
+max_expressivity=-0.258697, min_expressivity=-0.299778
+max_stability=-0.0566502, min_stability=-0.110134
+max_trainability=-0.213762, min_trainability=-0.438776
+max_capacity=9.46642e+06, min_capacity=9.43752e+06
+max_complexity=4.48176e+08, min_complexity=4.49839e+08
+
+SuperConvK3BNRELU(3,8,2,1)SuperResIDWE1K5(8,16,2,24,1)SuperResIDWE1K7(16,32,2,24,3)SuperResIDWE1K7(32,32,1,24,3)SuperResIDWE1K5(32,96,2,80,3)SuperResIDWE4K5(96,960,2,232,1)SuperConvK1BNRELU(960,2048,1,1)
+loop_count=15100/100000, time=0.999732h,
+max_expressivity=-0.258697, min_expressivity=-0.0485301
+max_stability=-0.0566502, min_stability=-0.0541145
+max_trainability=-0.213762, min_trainability=-0.438029
+max_capacity=9.46642e+06, min_capacity=8.65284e+06
+max_complexity=4.48176e+08, min_complexity=4.28804e+08
+
+SuperConvK3BNRELU(3,8,2,1)SuperResIDWE1K5(8,16,2,24,1)SuperResIDWE1K7(16,32,2,24,3)SuperResIDWE1K7(32,32,1,24,3)SuperResIDWE1K5(32,96,2,80,3)SuperResIDWE4K5(96,960,2,232,1)SuperConvK1BNRELU(960,2048,1,1)
+loop_count=15200/100000, time=1.00616h,
+max_expressivity=-0.258697, min_expressivity=-0.285706
+max_stability=-0.0566502, min_stability=-0.0213215
+max_trainability=-0.213762, min_trainability=-0.438381
+max_capacity=9.46642e+06, min_capacity=8.66391e+06
+max_complexity=4.48176e+08, min_complexity=4.34605e+08
+
+SuperConvK3BNRELU(3,8,2,1)SuperResIDWE1K5(8,16,2,24,1)SuperResIDWE1K7(16,32,2,24,3)SuperResIDWE1K7(32,32,1,24,3)SuperResIDWE1K5(32,96,2,80,3)SuperResIDWE4K5(96,960,2,232,1)SuperConvK1BNRELU(960,2048,1,1)
+loop_count=15300/100000, time=1.01414h,
+max_expressivity=-0.258697, min_expressivity=-0.0997612
+max_stability=-0.0566502, min_stability=-0.0592856
+max_trainability=-0.213762, min_trainability=-0.434756
+max_capacity=9.46642e+06, min_capacity=8.65284e+06
+max_complexity=4.48176e+08, min_complexity=4.28804e+08
+
+SuperConvK3BNRELU(3,8,2,1)SuperResIDWE1K5(8,16,2,24,1)SuperResIDWE1K7(16,32,2,24,3)SuperResIDWE1K7(32,32,1,24,3)SuperResIDWE1K5(32,96,2,80,3)SuperResIDWE4K5(96,960,2,232,1)SuperConvK1BNRELU(960,2048,1,1)
+loop_count=15400/100000, time=1.02259h,
+max_expressivity=-0.258697, min_expressivity=-0.202815
+max_stability=-0.0566502, min_stability=-0.0210915
+max_trainability=-0.213762, min_trainability=-0.436735
+max_capacity=9.46642e+06, min_capacity=8.66391e+06
+max_complexity=4.48176e+08, min_complexity=4.34605e+08
+
+SuperConvK3BNRELU(3,8,2,1)SuperResIDWE1K5(8,16,2,24,1)SuperResIDWE1K7(16,32,2,24,3)SuperResIDWE1K7(32,32,1,24,3)SuperResIDWE1K5(32,96,2,80,3)SuperResIDWE4K5(96,960,2,232,1)SuperConvK1BNRELU(960,2048,1,1)
+loop_count=15500/100000, time=1.0284h,
+max_expressivity=-0.258697, min_expressivity=-0.0181663
+max_stability=-0.0566502, min_stability=-0.0552247
+max_trainability=-0.213762, min_trainability=-0.430178
+max_capacity=9.46642e+06, min_capacity=8.65284e+06
+max_complexity=4.48176e+08, min_complexity=4.28804e+08
+
+SuperConvK3BNRELU(3,8,2,1)SuperResIDWE1K5(8,16,2,24,1)SuperResIDWE1K7(16,32,2,24,3)SuperResIDWE1K7(32,32,1,24,3)SuperResIDWE1K5(32,96,2,80,3)SuperResIDWE4K5(96,960,2,232,1)SuperConvK1BNRELU(960,2048,1,1)
+loop_count=15600/100000, time=1.03471h,
+max_expressivity=-0.258697, min_expressivity=-0.617923
+max_stability=-0.0566502, min_stability=-0.0904929
+max_trainability=-0.213762, min_trainability=-0.324669
+max_capacity=9.46642e+06, min_capacity=9.44375e+06
+max_complexity=4.48176e+08, min_complexity=4.32862e+08
+
+SuperConvK3BNRELU(3,8,2,1)SuperResIDWE1K5(8,16,2,24,1)SuperResIDWE1K7(16,32,2,24,3)SuperResIDWE1K7(32,32,1,24,3)SuperResIDWE1K5(32,96,2,80,3)SuperResIDWE4K5(96,960,2,232,1)SuperConvK1BNRELU(960,2048,1,1)
+loop_count=15700/100000, time=1.04128h,
+max_expressivity=-0.258697, min_expressivity=-0.446739
+max_stability=-0.0566502, min_stability=-0.106953
+max_trainability=-0.213762, min_trainability=-0.111414
+max_capacity=9.46642e+06, min_capacity=3.72755e+06
+max_complexity=4.48176e+08, min_complexity=4.36589e+08
+
+SuperConvK3BNRELU(3,8,2,1)SuperResIDWE1K5(8,16,2,24,1)SuperResIDWE1K7(16,32,2,24,3)SuperResIDWE1K7(32,32,1,24,3)SuperResIDWE1K5(32,96,2,80,3)SuperResIDWE4K5(96,960,2,232,1)SuperConvK1BNRELU(960,2048,1,1)
+loop_count=15800/100000, time=1.0474h,
+max_expressivity=-0.258697, min_expressivity=-0.223918
+max_stability=-0.0566502, min_stability=-0.115232
+max_trainability=-0.213762, min_trainability=-0.270357
+max_capacity=9.46642e+06, min_capacity=9.45458e+06
+max_complexity=4.48176e+08, min_complexity=4.45651e+08
+
+SuperConvK3BNRELU(3,8,2,1)SuperResIDWE1K5(8,16,2,24,1)SuperResIDWE1K7(16,32,2,24,3)SuperResIDWE1K7(32,32,1,24,3)SuperResIDWE1K5(32,96,2,80,3)SuperResIDWE4K5(96,960,2,232,1)SuperConvK1BNRELU(960,2048,1,1)
+loop_count=15900/100000, time=1.05362h,
+max_expressivity=-0.258697, min_expressivity=-0.454382
+max_stability=-0.0566502, min_stability=-0.107807
+max_trainability=-0.213762, min_trainability=-0.106438
+max_capacity=9.46642e+06, min_capacity=3.72874e+06
+max_complexity=4.48176e+08, min_complexity=4.47678e+08
+
+SuperConvK3BNRELU(3,8,2,1)SuperResIDWE1K5(8,16,2,24,1)SuperResIDWE1K7(16,32,2,24,3)SuperResIDWE1K7(32,32,1,24,3)SuperResIDWE1K5(32,96,2,80,3)SuperResIDWE4K5(96,960,2,232,1)SuperConvK1BNRELU(960,2048,1,1)
+loop_count=16000/100000, time=1.05999h,
+max_expressivity=-0.258697, min_expressivity=-0.447824
+max_stability=-0.0566502, min_stability=-0.107483
+max_trainability=-0.213762, min_trainability=-0.102076
+max_capacity=9.46642e+06, min_capacity=3.72874e+06
+max_complexity=4.48176e+08, min_complexity=4.47678e+08
+
+SuperConvK3BNRELU(3,8,2,1)SuperResIDWE1K5(8,16,2,24,1)SuperResIDWE1K7(16,32,2,24,3)SuperResIDWE1K7(32,32,1,24,3)SuperResIDWE1K5(32,96,2,80,3)SuperResIDWE4K5(96,960,2,232,1)SuperConvK1BNRELU(960,2048,1,1)
+loop_count=16100/100000, time=1.06832h,
+max_expressivity=-0.258697, min_expressivity=-0.451384
+max_stability=-0.0566502, min_stability=-0.107237
+max_trainability=-0.213762, min_trainability=-0.101309
+max_capacity=9.46642e+06, min_capacity=3.72874e+06
+max_complexity=4.48176e+08, min_complexity=4.47678e+08
+
+SuperConvK3BNRELU(3,8,2,1)SuperResIDWE1K5(8,16,2,24,1)SuperResIDWE1K7(16,32,2,24,3)SuperResIDWE1K7(32,32,1,24,3)SuperResIDWE1K5(32,96,2,80,3)SuperResIDWE4K5(96,960,2,232,1)SuperConvK1BNRELU(960,2048,1,1)
+loop_count=16200/100000, time=1.07481h,
+max_expressivity=-0.258697, min_expressivity=-0.448021
+max_stability=-0.0566502, min_stability=-0.107102
+max_trainability=-0.213762, min_trainability=-0.105581
+max_capacity=9.46642e+06, min_capacity=3.72874e+06
+max_complexity=4.48176e+08, min_complexity=4.47678e+08
+
+SuperConvK3BNRELU(3,8,2,1)SuperResIDWE1K5(8,16,2,24,1)SuperResIDWE1K7(16,32,2,24,3)SuperResIDWE1K7(32,32,1,24,3)SuperResIDWE1K5(32,96,2,80,3)SuperResIDWE4K5(96,960,2,232,1)SuperConvK1BNRELU(960,2048,1,1)
+loop_count=16300/100000, time=1.08257h,
+max_expressivity=-0.258697, min_expressivity=-0.460113
+max_stability=-0.0566502, min_stability=-0.106872
+max_trainability=-0.213762, min_trainability=-0.102069
+max_capacity=9.46642e+06, min_capacity=3.72874e+06
+max_complexity=4.48176e+08, min_complexity=4.47678e+08
+
+SuperConvK3BNRELU(3,8,2,1)SuperResIDWE1K5(8,16,2,24,1)SuperResIDWE1K7(16,32,2,24,3)SuperResIDWE1K7(32,32,1,24,3)SuperResIDWE1K5(32,96,2,80,3)SuperResIDWE4K5(96,960,2,232,1)SuperConvK1BNRELU(960,2048,1,1)
+loop_count=16400/100000, time=1.09033h,
+max_expressivity=-0.258697, min_expressivity=-0.44997
+max_stability=-0.0566502, min_stability=-0.106647
+max_trainability=-0.213762, min_trainability=-0.108386
+max_capacity=9.46642e+06, min_capacity=3.72874e+06
+max_complexity=4.48176e+08, min_complexity=4.47678e+08
+
+SuperConvK3BNRELU(3,8,2,1)SuperResIDWE1K5(8,16,2,24,1)SuperResIDWE1K7(16,32,2,24,3)SuperResIDWE1K7(32,32,1,24,3)SuperResIDWE1K5(32,96,2,80,3)SuperResIDWE4K5(96,960,2,232,1)SuperConvK1BNRELU(960,2048,1,1)
+loop_count=16500/100000, time=1.0957h,
+max_expressivity=-0.258697, min_expressivity=-0.458535
+max_stability=-0.0566502, min_stability=-0.106512
+max_trainability=-0.213762, min_trainability=-0.104122
+max_capacity=9.46642e+06, min_capacity=3.72874e+06
+max_complexity=4.48176e+08, min_complexity=4.47678e+08
+
+SuperConvK3BNRELU(3,8,2,1)SuperResIDWE1K5(8,16,2,24,1)SuperResIDWE1K7(16,32,2,24,3)SuperResIDWE1K7(32,32,1,24,3)SuperResIDWE1K5(32,96,2,80,3)SuperResIDWE4K5(96,960,2,232,1)SuperConvK1BNRELU(960,2048,1,1)
+loop_count=16600/100000, time=1.10288h,
+max_expressivity=-0.258697, min_expressivity=0.0804298
+max_stability=-0.0566502, min_stability=-0.0764675
+max_trainability=-0.213762, min_trainability=-0.559874
+max_capacity=9.46642e+06, min_capacity=8.6709e+06
+max_complexity=4.48176e+08, min_complexity=4.40156e+08
+
+SuperConvK3BNRELU(3,8,2,1)SuperResIDWE1K5(8,16,2,24,1)SuperResIDWE1K7(16,32,2,24,3)SuperResIDWE1K7(32,32,1,24,3)SuperResIDWE1K5(32,96,2,80,3)SuperResIDWE4K5(96,960,2,232,1)SuperConvK1BNRELU(960,2048,1,1)
+loop_count=16700/100000, time=1.10909h,
+max_expressivity=-0.258697, min_expressivity=-0.445877
+max_stability=-0.0566502, min_stability=-0.106423
+max_trainability=-0.213762, min_trainability=-0.103139
+max_capacity=9.46642e+06, min_capacity=3.72874e+06
+max_complexity=4.48176e+08, min_complexity=4.47678e+08
+
+SuperConvK3BNRELU(3,8,2,1)SuperResIDWE1K5(8,16,2,24,1)SuperResIDWE1K7(16,32,2,24,3)SuperResIDWE1K7(32,32,1,24,3)SuperResIDWE1K5(32,96,2,80,3)SuperResIDWE4K5(96,960,2,232,1)SuperConvK1BNRELU(960,2048,1,1)
+loop_count=16800/100000, time=1.11557h,
+max_expressivity=-0.258697, min_expressivity=-0.0373076
+max_stability=-0.0566502, min_stability=-0.0712664
+max_trainability=-0.213762, min_trainability=-0.561648
+max_capacity=9.46642e+06, min_capacity=8.67312e+06
+max_complexity=4.48176e+08, min_complexity=4.48655e+08
+
+SuperConvK3BNRELU(3,8,2,1)SuperResIDWE1K5(8,16,2,24,1)SuperResIDWE1K7(16,32,2,24,3)SuperResIDWE1K7(32,32,1,24,3)SuperResIDWE1K5(32,96,2,80,3)SuperResIDWE4K5(96,960,2,232,1)SuperConvK1BNRELU(960,2048,1,1)
+loop_count=16900/100000, time=1.12255h,
+max_expressivity=-0.258697, min_expressivity=0.0124302
+max_stability=-0.0566502, min_stability=-0.0921331
+max_trainability=-0.213762, min_trainability=-0.529105
+max_capacity=9.46642e+06, min_capacity=8.6715e+06
+max_complexity=4.48176e+08, min_complexity=4.46278e+08
+
+SuperConvK3BNRELU(3,8,2,1)SuperResIDWE2K3(8,16,2,8,1)SuperResIDWE2K5(16,40,2,32,3)SuperResIDWE2K3(40,80,2,96,2)SuperResIDWE4K5(80,960,2,232,1)SuperConvK1BNRELU(960,2048,1,1)
+loop_count=17000/100000, time=1.12952h,
+max_expressivity=-0.189878, min_expressivity=-0.250867
+max_stability=-0.078297, min_stability=-0.0203669
+max_trainability=-0.313483, min_trainability=-0.442359
+max_capacity=9.45749e+06, min_capacity=8.66391e+06
+max_complexity=4.49259e+08, min_complexity=4.34605e+08
+
+SuperConvK3BNRELU(3,8,2,1)SuperResIDWE2K3(8,16,2,8,1)SuperResIDWE2K5(16,40,2,32,3)SuperResIDWE2K3(40,80,2,96,2)SuperResIDWE4K5(80,960,2,232,1)SuperConvK1BNRELU(960,2048,1,1)
+loop_count=17100/100000, time=1.13583h,
+max_expressivity=-0.189878, min_expressivity=-0.269163
+max_stability=-0.078297, min_stability=-0.0195223
+max_trainability=-0.313483, min_trainability=-0.436774
+max_capacity=9.45749e+06, min_capacity=8.66391e+06
+max_complexity=4.49259e+08, min_complexity=4.34605e+08
+
+SuperConvK3BNRELU(3,8,2,1)SuperResIDWE2K3(8,16,2,8,1)SuperResIDWE2K5(16,40,2,32,3)SuperResIDWE2K3(40,80,2,96,2)SuperResIDWE4K5(80,960,2,232,1)SuperConvK1BNRELU(960,2048,1,1)
+loop_count=17200/100000, time=1.14463h,
+max_expressivity=-0.189878, min_expressivity=-0.23077
+max_stability=-0.078297, min_stability=-0.0198116
+max_trainability=-0.313483, min_trainability=-0.434767
+max_capacity=9.45749e+06, min_capacity=8.66391e+06
+max_complexity=4.49259e+08, min_complexity=4.34605e+08
+
+SuperConvK3BNRELU(3,8,2,1)SuperResIDWE2K3(8,16,2,8,1)SuperResIDWE2K5(16,40,2,32,3)SuperResIDWE2K3(40,80,2,96,2)SuperResIDWE4K5(80,960,2,232,1)SuperConvK1BNRELU(960,2048,1,1)
+loop_count=17300/100000, time=1.15195h,
+max_expressivity=-0.189878, min_expressivity=-0.243823
+max_stability=-0.078297, min_stability=-0.0211922
+max_trainability=-0.313483, min_trainability=-0.433218
+max_capacity=9.45749e+06, min_capacity=8.66391e+06
+max_complexity=4.49259e+08, min_complexity=4.34605e+08
+
+SuperConvK3BNRELU(3,8,2,1)SuperResIDWE2K3(8,16,2,8,1)SuperResIDWE2K5(16,40,2,32,3)SuperResIDWE2K3(40,80,2,96,2)SuperResIDWE4K5(80,960,2,232,1)SuperConvK1BNRELU(960,2048,1,1)
+loop_count=17400/100000, time=1.15974h,
+max_expressivity=-0.189878, min_expressivity=-0.0337861
+max_stability=-0.078297, min_stability=-0.0850374
+max_trainability=-0.313483, min_trainability=-0.435148
+max_capacity=9.45749e+06, min_capacity=8.67172e+06
+max_complexity=4.49259e+08, min_complexity=4.45017e+08
+
+SuperConvK3BNRELU(3,8,2,1)SuperResIDWE2K3(8,16,2,8,1)SuperResIDWE2K5(16,40,2,32,3)SuperResIDWE2K3(40,80,2,96,2)SuperResIDWE4K5(80,960,2,232,1)SuperConvK1BNRELU(960,2048,1,1)
+loop_count=17500/100000, time=1.16694h,
+max_expressivity=-0.189878, min_expressivity=-0.304156
+max_stability=-0.078297, min_stability=-0.0212543
+max_trainability=-0.313483, min_trainability=-0.429227
+max_capacity=9.45749e+06, min_capacity=8.66391e+06
+max_complexity=4.49259e+08, min_complexity=4.34605e+08
+
+SuperConvK3BNRELU(3,8,2,1)SuperResIDWE2K3(8,16,2,8,1)SuperResIDWE2K5(16,40,2,32,3)SuperResIDWE2K3(40,80,2,96,2)SuperResIDWE4K5(80,960,2,232,1)SuperConvK1BNRELU(960,2048,1,1)
+loop_count=17600/100000, time=1.17223h,
+max_expressivity=-0.189878, min_expressivity=-0.252439
+max_stability=-0.078297, min_stability=-0.0197977
+max_trainability=-0.313483, min_trainability=-0.42867
+max_capacity=9.45749e+06, min_capacity=8.66391e+06
+max_complexity=4.49259e+08, min_complexity=4.34605e+08
+
+SuperConvK3BNRELU(3,8,2,1)SuperResIDWE2K3(8,16,2,8,1)SuperResIDWE2K5(16,40,2,32,3)SuperResIDWE2K3(40,80,2,96,2)SuperResIDWE4K5(80,960,2,232,1)SuperConvK1BNRELU(960,2048,1,1)
+loop_count=17700/100000, time=1.17835h,
+max_expressivity=-0.189878, min_expressivity=-0.27544
+max_stability=-0.078297, min_stability=-0.0207422
+max_trainability=-0.313483, min_trainability=-0.426114
+max_capacity=9.45749e+06, min_capacity=8.66391e+06
+max_complexity=4.49259e+08, min_complexity=4.34605e+08
+
+SuperConvK3BNRELU(3,8,2,1)SuperResIDWE2K3(8,16,2,8,1)SuperResIDWE2K5(16,40,2,32,3)SuperResIDWE2K3(40,80,2,96,2)SuperResIDWE4K5(80,960,2,232,1)SuperConvK1BNRELU(960,2048,1,1)
+loop_count=17800/100000, time=1.18476h,
+max_expressivity=-0.189878, min_expressivity=-0.242997
+max_stability=-0.078297, min_stability=-0.0201323
+max_trainability=-0.313483, min_trainability=-0.422198
+max_capacity=9.45749e+06, min_capacity=8.66391e+06
+max_complexity=4.49259e+08, min_complexity=4.34605e+08
+
+SuperConvK3BNRELU(3,8,2,1)SuperResIDWE2K3(8,16,2,8,1)SuperResIDWE2K5(16,40,2,32,3)SuperResIDWE2K3(40,80,2,96,2)SuperResIDWE4K5(80,960,2,232,1)SuperConvK1BNRELU(960,2048,1,1)
+loop_count=17900/100000, time=1.19154h,
+max_expressivity=-0.189878, min_expressivity=-0.0522631
+max_stability=-0.078297, min_stability=-0.0793278
+max_trainability=-0.313483, min_trainability=-0.433748
+max_capacity=9.45749e+06, min_capacity=8.67172e+06
+max_complexity=4.49259e+08, min_complexity=4.45017e+08
+
+SuperConvK3BNRELU(3,8,2,1)SuperResIDWE2K3(8,16,2,8,1)SuperResIDWE2K5(16,40,2,32,3)SuperResIDWE2K3(40,80,2,96,2)SuperResIDWE4K5(80,960,2,232,1)SuperConvK1BNRELU(960,2048,1,1)
+loop_count=18000/100000, time=1.19746h,
+max_expressivity=-0.189878, min_expressivity=-0.27383
+max_stability=-0.078297, min_stability=-0.0960371
+max_trainability=-0.313483, min_trainability=-0.115797
+max_capacity=9.45749e+06, min_capacity=3.70271e+06
+max_complexity=4.49259e+08, min_complexity=4.39878e+08
+
+SuperConvK3BNRELU(3,8,2,1)SuperResIDWE2K3(8,16,2,8,1)SuperResIDWE2K5(16,40,2,32,3)SuperResIDWE2K3(40,80,2,96,2)SuperResIDWE4K5(80,960,2,232,1)SuperConvK1BNRELU(960,2048,1,1)
+loop_count=18100/100000, time=1.20432h,
+max_expressivity=-0.189878, min_expressivity=-0.335426
+max_stability=-0.078297, min_stability=-0.0211803
+max_trainability=-0.313483, min_trainability=-0.42506
+max_capacity=9.45749e+06, min_capacity=8.66471e+06
+max_complexity=4.49259e+08, min_complexity=4.42383e+08
+
+SuperConvK3BNRELU(3,8,2,1)SuperResIDWE2K3(8,16,2,8,1)SuperResIDWE2K5(16,40,2,32,3)SuperResIDWE2K3(40,80,2,96,2)SuperResIDWE4K5(80,960,2,232,1)SuperConvK1BNRELU(960,2048,1,1)
+loop_count=18200/100000, time=1.21066h,
+max_expressivity=-0.189878, min_expressivity=-0.307972
+max_stability=-0.078297, min_stability=-0.0207385
+max_trainability=-0.313483, min_trainability=-0.421812
+max_capacity=9.45749e+06, min_capacity=8.66471e+06
+max_complexity=4.49259e+08, min_complexity=4.42383e+08
+
+SuperConvK3BNRELU(3,8,2,1)SuperResIDWE2K3(8,16,2,8,1)SuperResIDWE2K5(16,40,2,32,3)SuperResIDWE2K3(40,80,2,96,2)SuperResIDWE4K5(80,960,2,232,1)SuperConvK1BNRELU(960,2048,1,1)
+loop_count=18300/100000, time=1.21722h,
+max_expressivity=-0.189878, min_expressivity=-0.328619
+max_stability=-0.078297, min_stability=-0.0203388
+max_trainability=-0.313483, min_trainability=-0.419001
+max_capacity=9.45749e+06, min_capacity=8.66471e+06
+max_complexity=4.49259e+08, min_complexity=4.42383e+08
+
+SuperConvK3BNRELU(3,8,2,1)SuperResIDWE2K3(8,16,2,8,1)SuperResIDWE2K5(16,40,2,32,3)SuperResIDWE2K3(40,80,2,96,2)SuperResIDWE4K5(80,960,2,232,1)SuperConvK1BNRELU(960,2048,1,1)
+loop_count=18400/100000, time=1.22413h,
+max_expressivity=-0.189878, min_expressivity=-0.0509467
+max_stability=-0.078297, min_stability=-0.0879015
+max_trainability=-0.313483, min_trainability=-0.425179
+max_capacity=9.45749e+06, min_capacity=8.67172e+06
+max_complexity=4.49259e+08, min_complexity=4.45017e+08
+
+SuperConvK3BNRELU(3,8,2,1)SuperResIDWE2K3(8,16,2,8,1)SuperResIDWE2K5(16,40,2,32,3)SuperResIDWE2K3(40,80,2,96,2)SuperResIDWE4K5(80,960,2,232,1)SuperConvK1BNRELU(960,2048,1,1)
+loop_count=18500/100000, time=1.23018h,
+max_expressivity=-0.189878, min_expressivity=-0.345342
+max_stability=-0.078297, min_stability=-0.0209579
+max_trainability=-0.313483, min_trainability=-0.413163
+max_capacity=9.45749e+06, min_capacity=8.66471e+06
+max_complexity=4.49259e+08, min_complexity=4.42383e+08
+
+SuperConvK3BNRELU(3,8,2,1)SuperResIDWE2K3(8,16,2,8,1)SuperResIDWE2K5(16,40,2,32,3)SuperResIDWE2K3(40,80,2,96,2)SuperResIDWE4K5(80,960,2,232,1)SuperConvK1BNRELU(960,2048,1,1)
+loop_count=18600/100000, time=1.23726h,
+max_expressivity=-0.189878, min_expressivity=-0.368659
+max_stability=-0.078297, min_stability=-0.0207724
+max_trainability=-0.313483, min_trainability=-0.408888
+max_capacity=9.45749e+06, min_capacity=8.66471e+06
+max_complexity=4.49259e+08, min_complexity=4.42383e+08
+
+SuperConvK3BNRELU(3,8,2,1)SuperResIDWE2K3(8,16,2,8,1)SuperResIDWE2K5(16,40,2,32,3)SuperResIDWE2K3(40,80,2,96,2)SuperResIDWE4K5(80,960,2,232,1)SuperConvK1BNRELU(960,2048,1,1)
+loop_count=18700/100000, time=1.24402h,
+max_expressivity=-0.189878, min_expressivity=-0.276405
+max_stability=-0.078297, min_stability=-0.0203316
+max_trainability=-0.313483, min_trainability=-0.404937
+max_capacity=9.45749e+06, min_capacity=8.66471e+06
+max_complexity=4.49259e+08, min_complexity=4.42383e+08
+
+SuperConvK3BNRELU(3,8,2,1)SuperResIDWE2K3(8,16,2,8,1)SuperResIDWE2K5(16,40,2,32,3)SuperResIDWE2K3(40,80,2,96,2)SuperResIDWE4K5(80,960,2,232,1)SuperConvK1BNRELU(960,2048,1,1)
+loop_count=18800/100000, time=1.2509h,
+max_expressivity=-0.189878, min_expressivity=-0.137742
+max_stability=-0.078297, min_stability=-0.0654354
+max_trainability=-0.313483, min_trainability=-0.40992
+max_capacity=9.45749e+06, min_capacity=8.66922e+06
+max_complexity=4.49259e+08, min_complexity=4.46692e+08
+
+SuperConvK3BNRELU(3,8,2,1)SuperResIDWE2K3(8,16,2,8,1)SuperResIDWE2K5(16,40,2,32,3)SuperResIDWE2K3(40,80,2,96,2)SuperResIDWE4K5(80,960,2,232,1)SuperConvK1BNRELU(960,2048,1,1)
+loop_count=18900/100000, time=1.25755h,
+max_expressivity=-0.189878, min_expressivity=-0.262931
+max_stability=-0.078297, min_stability=-0.0188001
+max_trainability=-0.313483, min_trainability=-0.389018
+max_capacity=9.45749e+06, min_capacity=8.67664e+06
+max_complexity=4.49259e+08, min_complexity=4.44584e+08
+
+SuperConvK3BNRELU(3,8,2,1)SuperResIDWE2K3(8,16,2,8,1)SuperResIDWE2K5(16,40,2,32,3)SuperResIDWE2K3(40,80,2,96,2)SuperResIDWE4K5(80,960,2,232,1)SuperConvK1BNRELU(960,2048,1,1)
+loop_count=19000/100000, time=1.2629h,
+max_expressivity=-0.189878, min_expressivity=-0.0515318
+max_stability=-0.078297, min_stability=-0.0648044
+max_trainability=-0.313483, min_trainability=-0.374245
+max_capacity=9.45749e+06, min_capacity=8.65545e+06
+max_complexity=4.49259e+08, min_complexity=4.36983e+08
+
+SuperConvK3BNRELU(3,8,2,1)SuperResIDWE2K3(8,16,2,8,1)SuperResIDWE2K5(16,40,2,32,3)SuperResIDWE2K3(40,80,2,96,2)SuperResIDWE4K5(80,960,2,232,1)SuperConvK1BNRELU(960,2048,1,1)
+loop_count=19100/100000, time=1.26871h,
+max_expressivity=-0.189878, min_expressivity=-0.212752
+max_stability=-0.078297, min_stability=-0.0200301
+max_trainability=-0.313483, min_trainability=-0.382426
+max_capacity=9.45749e+06, min_capacity=8.67664e+06
+max_complexity=4.49259e+08, min_complexity=4.44584e+08
+
+SuperConvK3BNRELU(3,8,2,1)SuperResIDWE2K3(8,16,2,8,1)SuperResIDWE2K5(16,40,2,32,3)SuperResIDWE2K3(40,80,2,96,2)SuperResIDWE4K5(80,960,2,232,1)SuperConvK1BNRELU(960,2048,1,1)
+loop_count=19200/100000, time=1.27407h,
+max_expressivity=-0.189878, min_expressivity=-0.567841
+max_stability=-0.078297, min_stability=-0.0495345
+max_trainability=-0.313483, min_trainability=-0.316919
+max_capacity=9.45749e+06, min_capacity=8.67606e+06
+max_complexity=4.49259e+08, min_complexity=4.40407e+08
+
+SuperConvK3BNRELU(3,8,2,1)SuperResIDWE2K3(8,16,2,8,1)SuperResIDWE2K5(16,40,2,32,3)SuperResIDWE2K3(40,80,2,96,2)SuperResIDWE4K5(80,960,2,232,1)SuperConvK1BNRELU(960,2048,1,1)
+loop_count=19300/100000, time=1.28018h,
+max_expressivity=-0.189878, min_expressivity=-0.461915
+max_stability=-0.078297, min_stability=-0.107938
+max_trainability=-0.313483, min_trainability=-0.100468
+max_capacity=9.45749e+06, min_capacity=3.72874e+06
+max_complexity=4.49259e+08, min_complexity=4.47678e+08
+
+SuperConvK3BNRELU(3,8,2,1)SuperResIDWE2K3(8,16,2,8,1)SuperResIDWE2K5(16,40,2,32,3)SuperResIDWE2K3(40,80,2,96,2)SuperResIDWE4K5(80,960,2,232,1)SuperConvK1BNRELU(960,2048,1,1)
+loop_count=19400/100000, time=1.28582h,
+max_expressivity=-0.189878, min_expressivity=-0.453495
+max_stability=-0.078297, min_stability=-0.108002
+max_trainability=-0.313483, min_trainability=-0.0989259
+max_capacity=9.45749e+06, min_capacity=3.72874e+06
+max_complexity=4.49259e+08, min_complexity=4.47678e+08
+
+SuperConvK3BNRELU(3,8,2,1)SuperResIDWE2K3(8,16,2,8,1)SuperResIDWE2K5(16,40,2,32,3)SuperResIDWE2K3(40,80,2,96,2)SuperResIDWE4K5(80,960,2,232,1)SuperConvK1BNRELU(960,2048,1,1)
+loop_count=19500/100000, time=1.29115h,
+max_expressivity=-0.189878, min_expressivity=-0.459344
+max_stability=-0.078297, min_stability=-0.107321
+max_trainability=-0.313483, min_trainability=-0.104162
+max_capacity=9.45749e+06, min_capacity=3.72874e+06
+max_complexity=4.49259e+08, min_complexity=4.47678e+08
+
+SuperConvK3BNRELU(3,8,2,1)SuperResIDWE2K3(8,16,2,8,1)SuperResIDWE2K5(16,40,2,32,3)SuperResIDWE2K3(40,80,2,96,2)SuperResIDWE4K5(80,960,2,232,1)SuperConvK1BNRELU(960,2048,1,1)
+loop_count=19600/100000, time=1.29718h,
+max_expressivity=-0.189878, min_expressivity=-0.0340859
+max_stability=-0.078297, min_stability=-0.0502515
+max_trainability=-0.313483, min_trainability=-0.387455
+max_capacity=9.45749e+06, min_capacity=8.7918e+06
+max_complexity=4.49259e+08, min_complexity=4.45247e+08
+
+SuperConvK3BNRELU(3,8,2,1)SuperResIDWE2K3(8,16,2,8,1)SuperResIDWE2K5(16,40,2,32,3)SuperResIDWE2K3(40,80,2,96,2)SuperResIDWE4K5(80,960,2,232,1)SuperConvK1BNRELU(960,2048,1,1)
+loop_count=19700/100000, time=1.30512h,
+max_expressivity=-0.189878, min_expressivity=-0.473472
+max_stability=-0.078297, min_stability=-0.107107
+max_trainability=-0.313483, min_trainability=-0.10439
+max_capacity=9.45749e+06, min_capacity=3.72874e+06
+max_complexity=4.49259e+08, min_complexity=4.47678e+08
+
+SuperConvK3BNRELU(3,8,2,1)SuperResIDWE2K3(8,16,2,8,1)SuperResIDWE2K5(16,40,2,32,3)SuperResIDWE2K3(40,80,2,96,2)SuperResIDWE4K5(80,960,2,232,1)SuperConvK1BNRELU(960,2048,1,1)
+loop_count=19800/100000, time=1.31178h,
+max_expressivity=-0.189878, min_expressivity=-0.446419
+max_stability=-0.078297, min_stability=-0.107163
+max_trainability=-0.313483, min_trainability=-0.103722
+max_capacity=9.45749e+06, min_capacity=3.72874e+06
+max_complexity=4.49259e+08, min_complexity=4.47678e+08
+
+SuperConvK3BNRELU(3,8,2,1)SuperResIDWE2K3(8,16,2,8,1)SuperResIDWE2K5(16,40,2,32,3)SuperResIDWE2K3(40,80,2,96,2)SuperResIDWE4K5(80,960,2,232,1)SuperConvK1BNRELU(960,2048,1,1)
+loop_count=19900/100000, time=1.31894h,
+max_expressivity=-0.189878, min_expressivity=-0.462428
+max_stability=-0.078297, min_stability=-0.106789
+max_trainability=-0.313483, min_trainability=-0.103964
+max_capacity=9.45749e+06, min_capacity=3.72874e+06
+max_complexity=4.49259e+08, min_complexity=4.47678e+08
+
+SuperConvK3BNRELU(3,8,2,1)SuperResIDWE2K3(8,16,2,8,1)SuperResIDWE2K5(16,40,2,32,3)SuperResIDWE2K3(40,80,2,96,2)SuperResIDWE4K5(80,960,2,232,1)SuperConvK1BNRELU(960,2048,1,1)
+loop_count=20000/100000, time=1.32545h,
+max_expressivity=-0.189878, min_expressivity=-0.444416
+max_stability=-0.078297, min_stability=-0.106841
+max_trainability=-0.313483, min_trainability=-0.103537
+max_capacity=9.45749e+06, min_capacity=3.72874e+06
+max_complexity=4.49259e+08, min_complexity=4.47678e+08
+
+SuperConvK3BNRELU(3,8,2,1)SuperResIDWE2K3(8,16,2,8,1)SuperResIDWE2K5(16,40,2,32,3)SuperResIDWE2K3(40,80,2,96,2)SuperResIDWE4K5(80,960,2,232,1)SuperConvK1BNRELU(960,2048,1,1)
+loop_count=20100/100000, time=1.33295h,
+max_expressivity=-0.189878, min_expressivity=-0.525122
+max_stability=-0.078297, min_stability=-0.105887
+max_trainability=-0.313483, min_trainability=-0.340762
+max_capacity=9.45749e+06, min_capacity=9.29445e+06
+max_complexity=4.49259e+08, min_complexity=4.42026e+08
+
+SuperConvK3BNRELU(3,8,2,1)SuperResIDWE2K3(8,16,2,8,1)SuperResIDWE2K5(16,40,2,32,3)SuperResIDWE2K3(40,80,2,96,2)SuperResIDWE4K5(80,960,2,232,1)SuperConvK1BNRELU(960,2048,1,1)
+loop_count=20200/100000, time=1.3396h,
+max_expressivity=-0.189878, min_expressivity=-0.261537
+max_stability=-0.078297, min_stability=-0.017712
+max_trainability=-0.313483, min_trainability=-0.383337
+max_capacity=9.45749e+06, min_capacity=8.67664e+06
+max_complexity=4.49259e+08, min_complexity=4.44584e+08
+
+SuperConvK3BNRELU(3,8,2,1)SuperResIDWE2K3(8,16,2,8,1)SuperResIDWE2K5(16,40,2,32,3)SuperResIDWE2K3(40,80,2,96,2)SuperResIDWE4K5(80,960,2,232,1)SuperConvK1BNRELU(960,2048,1,1)
+loop_count=20300/100000, time=1.34824h,
+max_expressivity=-0.189878, min_expressivity=-0.44278
+max_stability=-0.078297, min_stability=-0.106293
+max_trainability=-0.313483, min_trainability=-0.105537
+max_capacity=9.45749e+06, min_capacity=3.72874e+06
+max_complexity=4.49259e+08, min_complexity=4.47678e+08
+
+SuperConvK3BNRELU(3,8,2,1)SuperResIDWE2K3(8,16,2,8,1)SuperResIDWE2K5(16,40,2,32,3)SuperResIDWE2K3(40,80,2,96,2)SuperResIDWE4K5(80,960,2,232,1)SuperConvK1BNRELU(960,2048,1,1)
+loop_count=20400/100000, time=1.35506h,
+max_expressivity=-0.189878, min_expressivity=-0.454779
+max_stability=-0.078297, min_stability=-0.105851
+max_trainability=-0.313483, min_trainability=-0.104165
+max_capacity=9.45749e+06, min_capacity=3.72874e+06
+max_complexity=4.49259e+08, min_complexity=4.47678e+08
+
+SuperConvK3BNRELU(3,8,2,1)SuperResIDWE2K3(8,16,2,8,1)SuperResIDWE2K5(16,40,2,32,3)SuperResIDWE2K3(40,80,2,96,2)SuperResIDWE4K5(80,960,2,232,1)SuperConvK1BNRELU(960,2048,1,1)
+loop_count=20500/100000, time=1.36149h,
+max_expressivity=-0.189878, min_expressivity=-0.448857
+max_stability=-0.078297, min_stability=-0.105794
+max_trainability=-0.313483, min_trainability=-0.104759
+max_capacity=9.45749e+06, min_capacity=3.72874e+06
+max_complexity=4.49259e+08, min_complexity=4.47678e+08
+
+SuperConvK3BNRELU(3,8,2,1)SuperResIDWE2K3(8,16,2,8,1)SuperResIDWE2K5(16,40,2,32,3)SuperResIDWE2K3(40,80,2,96,2)SuperResIDWE4K5(80,960,2,232,1)SuperConvK1BNRELU(960,2048,1,1)
+loop_count=20600/100000, time=1.36841h,
+max_expressivity=-0.189878, min_expressivity=-0.443722
+max_stability=-0.078297, min_stability=-0.105689
+max_trainability=-0.313483, min_trainability=-0.101769
+max_capacity=9.45749e+06, min_capacity=3.72874e+06
+max_complexity=4.49259e+08, min_complexity=4.47678e+08
+
+SuperConvK3BNRELU(3,8,2,1)SuperResIDWE2K3(8,16,2,8,1)SuperResIDWE2K5(16,40,2,32,3)SuperResIDWE2K3(40,80,2,96,2)SuperResIDWE4K5(80,960,2,232,1)SuperConvK1BNRELU(960,2048,1,1)
+loop_count=20700/100000, time=1.37632h,
+max_expressivity=-0.189878, min_expressivity=-0.445337
+max_stability=-0.078297, min_stability=-0.104672
+max_trainability=-0.313483, min_trainability=-0.101153
+max_capacity=9.45749e+06, min_capacity=3.72874e+06
+max_complexity=4.49259e+08, min_complexity=4.47678e+08
+
+SuperConvK3BNRELU(3,8,2,1)SuperResIDWE2K3(8,16,2,8,1)SuperResIDWE2K5(16,40,2,32,3)SuperResIDWE2K3(40,80,2,96,2)SuperResIDWE4K5(80,960,2,232,1)SuperConvK1BNRELU(960,2048,1,1)
+loop_count=20800/100000, time=1.38302h,
+max_expressivity=-0.189878, min_expressivity=-0.172186
+max_stability=-0.078297, min_stability=-0.0858672
+max_trainability=-0.313483, min_trainability=-0.36786
+max_capacity=9.45749e+06, min_capacity=8.66746e+06
+max_complexity=4.49259e+08, min_complexity=4.42558e+08
+
+SuperConvK3BNRELU(3,8,2,1)SuperResIDWE2K3(8,16,2,8,1)SuperResIDWE2K5(16,40,2,32,3)SuperResIDWE2K3(40,80,2,96,2)SuperResIDWE4K5(80,960,2,232,1)SuperConvK1BNRELU(960,2048,1,1)
+loop_count=20900/100000, time=1.38957h,
+max_expressivity=-0.189878, min_expressivity=-0.252943
+max_stability=-0.078297, min_stability=-0.0190647
+max_trainability=-0.313483, min_trainability=-0.380987
+max_capacity=9.45749e+06, min_capacity=8.67664e+06
+max_complexity=4.49259e+08, min_complexity=4.44584e+08
+
+SuperConvK3BNRELU(3,8,2,1)SuperResIDWE2K3(8,16,2,8,1)SuperResIDWE2K5(16,40,2,32,3)SuperResIDWE2K3(40,80,2,96,2)SuperResIDWE4K5(80,960,2,232,1)SuperConvK1BNRELU(960,2048,1,1)
+loop_count=21000/100000, time=1.39546h,
+max_expressivity=-0.189878, min_expressivity=-0.212752
+max_stability=-0.078297, min_stability=-0.0200301
+max_trainability=-0.313483, min_trainability=-0.382426
+max_capacity=9.45749e+06, min_capacity=8.67664e+06
+max_complexity=4.49259e+08, min_complexity=4.44584e+08
+
+SuperConvK3BNRELU(3,8,2,1)SuperResIDWE2K3(8,16,2,8,1)SuperResIDWE2K5(16,40,2,32,3)SuperResIDWE2K3(40,80,2,96,2)SuperResIDWE4K5(80,960,2,232,1)SuperConvK1BNRELU(960,2048,1,1)
+loop_count=21100/100000, time=1.4015h,
+max_expressivity=-0.189878, min_expressivity=-0.156386
+max_stability=-0.078297, min_stability=-0.0397151
+max_trainability=-0.313483, min_trainability=-0.392371
+max_capacity=9.45749e+06, min_capacity=8.67946e+06
+max_complexity=4.49259e+08, min_complexity=4.49972e+08
+
+SuperConvK3BNRELU(3,8,2,1)SuperResIDWE2K3(8,16,2,8,1)SuperResIDWE2K5(16,40,2,32,3)SuperResIDWE2K3(40,80,2,96,2)SuperResIDWE4K5(80,960,2,232,1)SuperConvK1BNRELU(960,2048,1,1)
+loop_count=21200/100000, time=1.40683h,
+max_expressivity=-0.189878, min_expressivity=-0.214005
+max_stability=-0.078297, min_stability=-0.0196592
+max_trainability=-0.313483, min_trainability=-0.380906
+max_capacity=9.45749e+06, min_capacity=8.67664e+06
+max_complexity=4.49259e+08, min_complexity=4.44584e+08
+
+SuperConvK3BNRELU(3,8,2,1)SuperResIDWE2K3(8,16,2,8,1)SuperResIDWE2K5(16,40,2,32,3)SuperResIDWE2K3(40,80,2,96,2)SuperResIDWE4K5(80,960,2,232,1)SuperConvK1BNRELU(960,2048,1,1)
+loop_count=21300/100000, time=1.41276h,
+max_expressivity=-0.189878, min_expressivity=-0.32109
+max_stability=-0.078297, min_stability=-0.0191623
+max_trainability=-0.313483, min_trainability=-0.375362
+max_capacity=9.45749e+06, min_capacity=8.67664e+06
+max_complexity=4.49259e+08, min_complexity=4.44584e+08
+
+SuperConvK3BNRELU(3,8,2,1)SuperResIDWE2K3(8,16,2,8,1)SuperResIDWE2K5(16,40,2,32,3)SuperResIDWE2K3(40,80,2,96,2)SuperResIDWE4K5(80,960,2,232,1)SuperConvK1BNRELU(960,2048,1,1)
+loop_count=21400/100000, time=1.4183h,
+max_expressivity=-0.189878, min_expressivity=-0.306186
+max_stability=-0.078297, min_stability=-0.020117
+max_trainability=-0.313483, min_trainability=-0.374645
+max_capacity=9.45749e+06, min_capacity=8.67664e+06
+max_complexity=4.49259e+08, min_complexity=4.44584e+08
+
+SuperConvK3BNRELU(3,8,2,1)SuperResIDWE2K3(8,16,2,8,1)SuperResIDWE2K5(16,40,2,32,3)SuperResIDWE2K3(40,80,2,96,2)SuperResIDWE4K5(80,960,2,232,1)SuperConvK1BNRELU(960,2048,1,1)
+loop_count=21500/100000, time=1.42345h,
+max_expressivity=-0.189878, min_expressivity=-0.724904
+max_stability=-0.078297, min_stability=-0.0823823
+max_trainability=-0.313483, min_trainability=-0.230359
+max_capacity=9.45749e+06, min_capacity=9.4665e+06
+max_complexity=4.49259e+08, min_complexity=4.48451e+08
+
+SuperConvK3BNRELU(3,8,2,1)SuperResIDWE2K3(8,16,2,8,1)SuperResIDWE2K5(16,40,2,32,3)SuperResIDWE2K3(40,80,2,96,2)SuperResIDWE4K5(80,960,2,232,1)SuperConvK1BNRELU(960,2048,1,1)
+loop_count=21600/100000, time=1.43003h,
+max_expressivity=-0.189878, min_expressivity=-0.636051
+max_stability=-0.078297, min_stability=-0.0835726
+max_trainability=-0.313483, min_trainability=-0.248786
+max_capacity=9.45749e+06, min_capacity=9.4665e+06
+max_complexity=4.49259e+08, min_complexity=4.48451e+08
+
+SuperConvK3BNRELU(3,8,2,1)SuperResIDWE1K7(8,16,2,8,1)SuperResIDWE4K7(16,32,2,24,2)SuperResIDWE2K3(32,80,2,96,2)SuperResIDWE4K5(80,960,2,232,1)SuperConvK1BNRELU(960,2048,1,1)
+loop_count=21700/100000, time=1.43684h,
+max_expressivity=-0.214528, min_expressivity=-0.575201
+max_stability=-0.0925952, min_stability=-0.0786195
+max_trainability=-0.341261, min_trainability=-0.238632
+max_capacity=9.4561e+06, min_capacity=9.4665e+06
+max_complexity=4.49853e+08, min_complexity=4.48451e+08
+
+SuperConvK3BNRELU(3,8,2,1)SuperResIDWE1K7(8,16,2,8,1)SuperResIDWE4K7(16,32,2,24,2)SuperResIDWE2K3(32,80,2,96,2)SuperResIDWE4K5(80,960,2,232,1)SuperConvK1BNRELU(960,2048,1,1)
+loop_count=21800/100000, time=1.44224h,
+max_expressivity=-0.214528, min_expressivity=-0.562495
+max_stability=-0.0925952, min_stability=-0.10104
+max_trainability=-0.341261, min_trainability=-0.333444
+max_capacity=9.4561e+06, min_capacity=9.35752e+06
+max_complexity=4.49853e+08, min_complexity=4.49548e+08
+
+SuperConvK3BNRELU(3,8,2,1)SuperResIDWE1K7(8,16,2,8,1)SuperResIDWE4K7(16,32,2,24,2)SuperResIDWE2K3(32,80,2,96,2)SuperResIDWE4K5(80,960,2,232,1)SuperConvK1BNRELU(960,2048,1,1)
+loop_count=21900/100000, time=1.44833h,
+max_expressivity=-0.214528, min_expressivity=-0.559153
+max_stability=-0.0925952, min_stability=-0.104116
+max_trainability=-0.341261, min_trainability=-0.317276
+max_capacity=9.4561e+06, min_capacity=9.35752e+06
+max_complexity=4.49853e+08, min_complexity=4.49548e+08
+
