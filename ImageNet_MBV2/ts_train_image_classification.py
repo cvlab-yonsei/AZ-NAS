@@ -562,6 +562,9 @@ def train_one_epoch(train_loader, model, criterion, optimizer, epoch, opt, num_t
     info = {}
 
     losses = AverageMeter('Loss ', ':6.4g')
+    logit_losses = AverageMeter('logit_loss ', ':6.4g')
+    ts_feature_losses = AverageMeter('ts_feature_loss', ':6.4g')
+    ts_logit_losses = AverageMeter('ts_logit_loss', ':6.4g')
     top1 = AverageMeter('Acc@1 ', ':6.2f')
     top5 = AverageMeter('Acc@5 ', ':6.2f')
     # switch to train mode
@@ -638,6 +641,9 @@ def train_one_epoch(train_loader, model, criterion, optimizer, epoch, opt, num_t
             acc5 = [0]
 
         losses.update(float(loss), input_size)
+        logit_losses.update(float(logit_loss), input_size)
+        ts_feature_losses.update(float(ts_feature_loss), input_size)
+        ts_logit_losses.update(float(ts_logit_loss), input_size)
 
         if opt.apex:
             if opt.dist_mode == 'horovod':
@@ -695,8 +701,11 @@ def train_one_epoch(train_loader, model, criterion, optimizer, epoch, opt, num_t
             writer.add_scalar('train/lr', current_lr, len(train_loader)*epoch + i)
             writer.add_scalar('ts_train/loss(current)', float(loss), len(train_loader)*epoch + i)
             writer.add_scalar('ts_train/logit_loss(current)', float(logit_loss), len(train_loader)*epoch + i)
+            writer.add_scalar('ts_train/logit_loss(average)', logit_losses.avg, len(train_loader)*epoch + i)
             writer.add_scalar('ts_train/ts_feature_loss(current)', float(ts_feature_loss), len(train_loader)*epoch + i)
+            writer.add_scalar('ts_train/ts_feature_loss(average)', ts_feature_losses.avg, len(train_loader)*epoch + i)
             writer.add_scalar('ts_train/ts_logit_loss(current)', float(ts_logit_loss), len(train_loader)*epoch + i)
+            writer.add_scalar('ts_train/ts_logit_loss(average)', ts_logit_losses.avg, len(train_loader)*epoch + i)
             writer.add_scalar('train/loss(average)', losses.avg, len(train_loader)*epoch + i)
             writer.add_scalar('train/top1(average)', top1.avg, len(train_loader)*epoch + i)
             writer.add_scalar('train/top5(average)', top5.avg, len(train_loader)*epoch + i)
