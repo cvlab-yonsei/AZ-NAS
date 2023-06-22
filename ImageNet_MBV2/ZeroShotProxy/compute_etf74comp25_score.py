@@ -73,29 +73,27 @@ def compute_nas_score(model, gpu, trainloader, resolution, batch_size, fp16=Fals
     else:
         layer_features, output = model.extract_layer_features_and_logit(input_)
 
-    # ################ fwrd pca score ################
-    # """
-    # pca score across residual block features / normalize each score by upper bound
-    # """
-    # progressivity_scores = []
-    # expressivity_scores = []
-    # for i in range(len(layer_features)):
-    #     feat = layer_features[i].detach().clone()
-    #     b,c,h,w = feat.size()
-    #     feat = feat.permute(0,2,3,1).contiguous().view(b*h*w,c)
-    #     m = feat.mean(dim=0, keepdim=True)
-    #     feat = feat - m
-    #     sigma = torch.mm(feat.transpose(1,0),feat) / (feat.size(0))
-    #     s = torch.linalg.eigvalsh(sigma) # faster version for computing eignevalues, can be adopted since sigma is symmetric
-    #     prob_s = s / s.sum()
-    #     score = (-prob_s)*torch.log(prob_s+1e-8)
-    #     score = score.sum().item()
-    #     progressivity_scores.append(score) 
-    #     expressivity_scores.append(score / np.log(c)) # normalize by an upper bound (= np.log(c))
-    # progressivity_scores = np.array(progressivity_scores)
-    # progressivity = np.min(progressivity_scores[1:] - progressivity_scores[:-1])
-    # expressivity = np.mean(expressivity_scores)
-    # #################################################
+    ################ fwrd pca score ################
+    """
+    pca score across residual block features / normalize each score by upper bound
+    """
+    expressivity_scores = []
+    for i in range(len(layer_features)):
+        feat = layer_features[i].detach().clone()
+        b,c,h,w = feat.size()
+        feat = feat.permute(0,2,3,1).contiguous().view(b*h*w,c)
+        m = feat.mean(dim=0, keepdim=True)
+        feat = feat - m
+        sigma = torch.mm(feat.transpose(1,0),feat) / (feat.size(0))
+        s = torch.linalg.eigvalsh(sigma) # faster version for computing eignevalues, can be adopted since sigma is symmetric
+        prob_s = s / s.sum()
+        score = (-prob_s)*torch.log(prob_s+1e-8)
+        score = score.sum().item()
+        expressivity_scores.append(score)
+    expressivity_scores = np.array(expressivity_scores)
+    progressivity = np.min(expressivity_scores[1:] - expressivity_scores[:-1])
+    expressivity = np.sum(expressivity_scores)
+    #################################################
 
     ################ spec norm score ##############
     """
@@ -138,11 +136,11 @@ def compute_nas_score(model, gpu, trainloader, resolution, batch_size, fp16=Fals
             ###
             s = torch.linalg.svdvals(mat)
             scores.append(-s.max().item() - 1/(s.max().item()+1e-6)+2)
-    bkwd_norm_score = -np.abs(np.mean(scores) + 0.3)
+    bkwd_norm_score = -np.abs(np.mean(scores) + 0.25)
     #################################################
 
-    # info['expressivity'] = float(expressivity) if not np.isnan(expressivity) else -np.inf
-    # info['progressivity'] = float(progressivity) if not np.isnan(progressivity) else -np.inf
+    info['expressivity'] = float(expressivity) if not np.isnan(expressivity) else -np.inf
+    info['progressivity'] = float(progressivity) if not np.isnan(progressivity) else -np.inf
     info['trainability'] = float(bkwd_norm_score) if not np.isnan(bkwd_norm_score) else -np.inf
     info['complexity'] = float(model.get_FLOPs(resolution))
     return info
