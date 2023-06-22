@@ -136,7 +136,7 @@ def compute_nas_score(model, gpu, trainloader, resolution, batch_size, fp16=Fals
             ###
             s = torch.linalg.svdvals(mat)
             scores.append(-s.max().item() - 1/(s.max().item()+1e-6)+2)
-    bkwd_norm_score = -np.abs(np.mean(scores) + 0.30)
+    bkwd_norm_score = -np.abs(np.mean(scores) + 0.10)
     #################################################
 
     info['expressivity'] = float(expressivity) if not np.isnan(expressivity) else -np.inf
