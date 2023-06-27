@@ -50,11 +50,11 @@
 #  --param-limits 23 --min-param-limits 21 --change_qkv --relative_position --dist-eval --cfg './experiments/search_space/space-S.yaml' --output_dir './OUTPUT/ETF-space-S-pop50000-seed0-rev-xavier'
 
 #### 8000 archs
-CUDA_VISIBLE_DEVICES=0, python3 search_autoformer_etf.py --data-path '/dataset/ILSVRC2012' --gp --population-num 25000 \
- --param-limits 54 --min-param-limits 52 --change_qkv --relative_position --dist-eval --cfg './experiments/search_space/space-B.yaml' --output_dir './OUTPUT/Search-ETF-cap-trunc-seed0-iter25000/Base'
+# CUDA_VISIBLE_DEVICES=0, python3 search_autoformer_etf.py --data-path '/dataset/ILSVRC2012' --gp --population-num 10000 --seed 123 \
+#  --param-limits 54 --min-param-limits 52 --change_qkv --relative_position --dist-eval --cfg './experiments/search_space/space-B.yaml' --output_dir './OUTPUT/Search-ETF-cap-trunc-seed123-iter10000/Base'
 
-CUDA_VISIBLE_DEVICES=1, python3 search_autoformer_etf.py --data-path '/dataset/ILSVRC2012' --gp --population-num 25000 \
-  --param-limits 6 --min-param-limits 4 --change_qkv --relative_position --dist-eval --cfg './experiments/search_space/space-T.yaml' --output_dir './OUTPUT/Search-ETF-cap-trunc-seed0-iter25000/Tiny'
+CUDA_VISIBLE_DEVICES=1, python3 search_autoformer_etf.py --data-path '/dataset/ILSVRC2012' --gp --population-num 10000 --seed 123 \
+  --param-limits 6 --min-param-limits 4 --change_qkv --relative_position --dist-eval --cfg './experiments/search_space/space-T.yaml' --output_dir './OUTPUT/Search-ETF-cap-trunc-seed123-iter10000/Tiny'
 
-CUDA_VISIBLE_DEVICES=2, python3 search_autoformer_etf.py --data-path '/dataset/ILSVRC2012' --gp --population-num 25000 \
- --param-limits 23 --min-param-limits 21 --change_qkv --relative_position --dist-eval --cfg './experiments/search_space/space-S.yaml' --output_dir './OUTPUT/Search-ETF-cap-trunc-seed0-iter25000/Small'
+CUDA_VISIBLE_DEVICES=1, python3 search_autoformer_etf.py --data-path '/dataset/ILSVRC2012' --gp --population-num 10000 --seed 123 \
+ --param-limits 23 --min-param-limits 21 --change_qkv --relative_position --dist-eval --cfg './experiments/search_space/space-S.yaml' --output_dir './OUTPUT/Search-ETF-cap-trunc-seed123-iter10000/Small'
