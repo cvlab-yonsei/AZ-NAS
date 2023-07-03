@@ -66,3 +66,7 @@ python3 -m torch.distributed.launch --master_port 7777 --nproc_per_node=4 --use_
  CUDA_VISIBLE_DEVICES=1,3,5,7, \
 python3 -m torch.distributed.launch --master_port 7777 --nproc_per_node=4 --use_env train.py --data-path '/dataset/ILSVRC2012' --gp --change_qkv --relative_position \
  --batch-size 128 --mode retrain --model_type 'AUTOFORMER' --dist-eval --cfg './experiments/ETF-pop8000-seed0-cap-trunc/Base.yaml' --init 'trunc_normal' --output_dir './OUTPUT/ETF-pop8000-seed0-bs128x4-cap-trunc/Base'
+
+ ####
+ python3 -m torch.distributed.launch --nproc_per_node=8 --use_env train.py --data-path '/dataset/ILSVRC2012' --gp --change_qkv --relative_position \
+ --batch-size 128 --mode retrain --model_type 'AUTOFORMER' --dist-eval --cfg './experiments/ETF-pop10000-seed123-cap-trunc/Base.yaml' --init 'trunc_normal' --output_dir './OUTPUT/ETF-pop10000-seed123-cap-trunc/Base-bs128x8'
