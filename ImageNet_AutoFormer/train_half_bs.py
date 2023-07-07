@@ -33,9 +33,9 @@ import torch.nn as nn
 
 from torch.distributed.elastic.multiprocessing.errors import record
 
-from model.module.Linear_super import LinearSuper
-from model.module.embedding_super import PatchembedSuper
-from model.module.qkv_super import qkv_super
+from typing import Iterable, Optional
+from timm.data import Mixup
+from timm.utils import ModelEma
 
 def mkfilepath(filename):
     distutils.dir_util.mkpath(os.path.dirname(filename))
