@@ -225,6 +225,35 @@ def get_args_parser():
 
     return parser
 
+class AverageMeter(object):
+    """Computes and stores the average and current value"""
+
+    def __init__(self, name, fmt=':4g', disp_avg=True):
+        self.name = name
+        self.fmt = fmt
+        self.disp_avg = disp_avg
+        self.reset()
+
+    def reset(self):
+        self.val = 0
+        self.avg = 0
+        self.sum = 0
+        self.count = 0
+
+    def update(self, val, n=1):
+        self.val = val
+        self.sum += val * n
+        self.count += n
+        self.avg = self.sum / self.count
+
+    def __str__(self):
+        fmtstr = '{name}{val' + self.fmt + '}'
+        fmtstr = fmtstr.format(name=self.name, val=self.val)
+        if self.disp_avg:
+            fmtstr += '({avg' + self.fmt + '})'
+            fmtstr = fmtstr.format(avg=self.avg)
+        return fmtstr.format(**self.__dict__)
+
 def train_one_epoch_half_bs(writer, model: torch.nn.Module, criterion: torch.nn.Module,
                     data_loader: Iterable, optimizer: torch.optim.Optimizer,
                     device: torch.device, epoch: int, model_type, loss_scaler, max_norm: float = 0,
