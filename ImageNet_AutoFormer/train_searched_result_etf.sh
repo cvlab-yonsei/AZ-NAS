@@ -95,7 +95,7 @@ torchrun --nproc_per_node=8 train.py --data-path '/dataset/ILSVRC2012' --gp --ch
 
 ### 4way bs 256*4
  python3 -m torch.distributed.launch --nproc_per_node=4 --use_env train_half_bs.py --data-path '/dataset/ILSVRC2012' --gp --change_qkv --relative_position \
- --batch-size 256 --mode retrain --model_type 'AUTOFORMER' --dist-eval --cfg './experiments/ETF-pop10000-seed123-cap-trunc/Tiny.yaml' --output_dir './OUTPUT/ETF-pop10000-seed123-cap-trunc/Tiny-bs256x4'
+ --batch-size 256 --mode retrain --model_type 'AUTOFORMER' --dist-eval --cfg './experiments/ETF-pop10000-seed123-cap-trunc/Tiny.yaml' --output_dir './OUTPUT/ETF-pop10000-seed123-cap-trunc/Tiny-bs256x4' --no-amp
 
  python3 -m torch.distributed.launch --nproc_per_node=4 --use_env train_half_bs.py --data-path '/dataset/ILSVRC2012' --gp --change_qkv --relative_position \
- --batch-size 256 --mode retrain --model_type 'AUTOFORMER' --dist-eval --cfg './experiments/ETF-pop10000-seed123-cap-trunc/Small.yaml' --output_dir './OUTPUT/ETF-pop10000-seed123-cap-trunc/Small-bs256x4'
+ --batch-size 256 --mode retrain --model_type 'AUTOFORMER' --dist-eval --cfg './experiments/ETF-pop10000-seed123-cap-trunc/Small.yaml' --output_dir './OUTPUT/ETF-pop10000-seed123-cap-trunc/Small-bs256x4' --no-amp
