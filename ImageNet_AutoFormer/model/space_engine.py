@@ -295,7 +295,6 @@ def train_one_epoch_half_bs(writer, model: torch.nn.Module, criterion: torch.nn.
             else:
                 loss = criterion(outputs, targets_)
 
-        loss = loss * 1/2
         loss_value1 = loss.item()
 
         optimizer.zero_grad()
@@ -303,7 +302,7 @@ def train_one_epoch_half_bs(writer, model: torch.nn.Module, criterion: torch.nn.
         if amp:
             is_second_order = hasattr(optimizer, 'is_second_order') and optimizer.is_second_order
             loss_scaler(loss, optimizer, clip_grad=max_norm,
-                    parameters=model.parameters(), create_graph=is_second_order)
+                    parameters=model.parameters(), create_graph=is_second_order, need_update=False)
         else:
             loss.backward()
             # optimizer.step()
@@ -336,7 +335,6 @@ def train_one_epoch_half_bs(writer, model: torch.nn.Module, criterion: torch.nn.
             else:
                 loss = criterion(outputs, targets_)
 
-        loss = loss * 1/2
         loss_value2 = loss.item()
 
         # optimizer.zero_grad()
@@ -355,7 +353,7 @@ def train_one_epoch_half_bs(writer, model: torch.nn.Module, criterion: torch.nn.
 
 
         ### logging        
-        loss_value = loss_value1 + loss_value2
+        loss_value = (loss_value1 + loss_value2) / 2
         losses.update(loss_value, input_size*2)
         if (i % print_freq == 0) and (i>0) and (writer is not None):
             writer.add_scalar('train/lr', optimizer.param_groups[0]["lr"], len(data_loader)*epoch + i)
