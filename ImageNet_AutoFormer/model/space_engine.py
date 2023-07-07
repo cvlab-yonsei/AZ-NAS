@@ -353,7 +353,7 @@ def train_one_epoch_half_bs(writer, model: torch.nn.Module, criterion: torch.nn.
 
 
         ### logging        
-        loss_value = loss_value1 + loss_value2
+        loss_value = (loss_value1 + loss_value2) / 2
         losses.update(loss_value, input_size*2)
         if (i % print_freq == 0) and (i>0) and (writer is not None):
             writer.add_scalar('train/lr', optimizer.param_groups[0]["lr"], len(data_loader)*epoch + i)
