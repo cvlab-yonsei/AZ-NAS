@@ -225,6 +225,150 @@ def get_args_parser():
 
     return parser
 
+def train_one_epoch_half_bs(writer, model: torch.nn.Module, criterion: torch.nn.Module,
+                    data_loader: Iterable, optimizer: torch.optim.Optimizer,
+                    device: torch.device, epoch: int, model_type, loss_scaler, max_norm: float = 0,
+                    model_ema: Optional[ModelEma] = None, mixup_fn: Optional[Mixup] = None,
+                    amp: bool = True, teacher_model: torch.nn.Module = None,
+                    teach_loss: torch.nn.Module = None, choices=None, mode='super', retrain_config=None):
+    losses = AverageMeter('Loss ', ':6.4g')
+    top1 = AverageMeter('Acc@1 ', ':6.2f')
+    top5 = AverageMeter('Acc@5 ', ':6.2f')
+    
+    model.train()
+    criterion.train()
+
+    # set random seed
+    random.seed(epoch)
+
+    metric_logger = utils.MetricLogger(delimiter="  ")
+    metric_logger.add_meter('lr', utils.SmoothedValue(window_size=1, fmt='{value:.6f}'))
+    header = 'Epoch: [{}]'.format(epoch)
+    print_freq = 100
+    if mode == 'retrain' and model_type == 'AUTOFORMER':
+        config = retrain_config
+        model_module = unwrap_model(model)
+        logging.info(config)
+        model_module.set_sample_config(config=config)
+        logging.info(model_module.get_sampled_params_numel(config))
+        logging.info("FLOPS is {}".format(count_flops(model_module)))
+
+    for i, (samples, targets) in enumerate(metric_logger.log_every(data_loader, print_freq, header)):
+        samples = samples.to(device, non_blocking=True)
+        targets = targets.to(device, non_blocking=True)
+        if mixup_fn is not None:
+            samples, targets = mixup_fn(samples, targets)
+
+        b = samples.size(0) // 2
+        
+        ############ first batch
+        samples_ = samples[:b,...]
+        targets_ = targets[:b,...]
+        if amp:
+            with torch.cuda.amp.autocast():
+                if teacher_model:
+                    with torch.no_grad():
+                        teach_output = teacher_model(samples_)
+                    _, teacher_label = teach_output.topk(1, 1, True, True)
+                    outputs = model(samples_)
+                    loss = 1/2 * criterion(outputs, targets_) + 1/2 * teach_loss(outputs, teacher_label.squeeze())
+                else:
+                    outputs = model(samples_)
+                    loss = criterion(outputs, targets_)
+        else:
+            outputs = model(samples_)
+            if teacher_model:
+                with torch.no_grad():
+                    teach_output = teacher_model(samples_)
+                _, teacher_label = teach_output.topk(1, 1, True, True)
+                loss = 1 / 2 * criterion(outputs, targets_) + 1 / 2 * teach_loss(outputs, teacher_label.squeeze())
+            else:
+                loss = criterion(outputs, targets_)
+
+        loss_value1 = loss.item()
+
+        optimizer.zero_grad()
+        # this attribute is added by timm on one optimizer (adahessian)
+        if amp:
+            is_second_order = hasattr(optimizer, 'is_second_order') and optimizer.is_second_order
+            loss_scaler(loss, optimizer, clip_grad=max_norm,
+                    parameters=model.parameters(), create_graph=is_second_order)
+        else:
+            loss.backward()
+            # optimizer.step()
+        input_size = int(samples_.size(0))
+        acc1, acc5 = accuracy(outputs, targets_, topk=(1, 5))
+        top1.update(float(acc1[0]), input_size)
+        top5.update(float(acc5[0]), input_size)
+
+        ################ second batch
+        samples_ = samples[b:,...]
+        targets_ = targets[b:,...]
+        if amp:
+            with torch.cuda.amp.autocast():
+                if teacher_model:
+                    with torch.no_grad():
+                        teach_output = teacher_model(samples_)
+                    _, teacher_label = teach_output.topk(1, 1, True, True)
+                    outputs = model(samples_)
+                    loss = 1/2 * criterion(outputs, targets_) + 1/2 * teach_loss(outputs, teacher_label.squeeze())
+                else:
+                    outputs = model(samples_)
+                    loss = criterion(outputs, targets_)
+        else:
+            outputs = model(samples_)
+            if teacher_model:
+                with torch.no_grad():
+                    teach_output = teacher_model(samples_)
+                _, teacher_label = teach_output.topk(1, 1, True, True)
+                loss = 1 / 2 * criterion(outputs, targets_) + 1 / 2 * teach_loss(outputs, teacher_label.squeeze())
+            else:
+                loss = criterion(outputs, targets_)
+
+        loss_value2 = loss.item()
+
+        # optimizer.zero_grad()
+        # this attribute is added by timm on one optimizer (adahessian)
+        if amp:
+            is_second_order = hasattr(optimizer, 'is_second_order') and optimizer.is_second_order
+            loss_scaler(loss, optimizer, clip_grad=max_norm,
+                    parameters=model.parameters(), create_graph=is_second_order)
+        else:
+            loss.backward()
+            optimizer.step()
+        input_size = int(samples_.size(0))
+        acc1, acc5 = accuracy(outputs, targets_, topk=(1, 5))
+        top1.update(float(acc1[0]), input_size)
+        top5.update(float(acc5[0]), input_size)
+
+
+        ### logging        
+        loss_value = loss_value1 + loss_value2
+        losses.update(loss_value, input_size*2)
+        if (i % print_freq == 0) and (i>0) and (writer is not None):
+            writer.add_scalar('train/lr', optimizer.param_groups[0]["lr"], len(data_loader)*epoch + i)
+            writer.add_scalar('train/loss(current)', float(loss_value), len(data_loader)*epoch + i)
+            writer.add_scalar('train/loss(average)', losses.avg, len(data_loader)*epoch + i)
+            writer.add_scalar('train/top1(average)', top1.avg, len(data_loader)*epoch + i)
+            writer.add_scalar('train/top5(average)', top5.avg, len(data_loader)*epoch + i)
+        ###
+
+        if not math.isfinite(loss_value):
+            logging.info("Loss is {}, stopping training".format(loss_value))
+            sys.exit(1)
+
+        torch.cuda.synchronize()
+        if model_ema is not None:
+            model_ema.update(model)
+
+        metric_logger.update(loss=loss_value)
+        metric_logger.update(lr=optimizer.param_groups[0]["lr"])
+
+    # gather the stats from all processes
+    metric_logger.synchronize_between_processes()
+    logging.info("Averaged stats:{}".format(metric_logger))
+    return {k: meter.global_avg for k, meter in metric_logger.meters.items()}
+
 @record
 def main(args):
 
@@ -414,7 +558,7 @@ def main(args):
         if args.distributed:
             data_loader_train.sampler.set_epoch(epoch)
 
-        train_stats = train_one_epoch(
+        train_stats = train_one_epoch_half_bs(
             writer, model, criterion, data_loader_train,
             optimizer, device, epoch, model_type, loss_scaler,
             args.clip_grad, model_ema, mixup_fn,
