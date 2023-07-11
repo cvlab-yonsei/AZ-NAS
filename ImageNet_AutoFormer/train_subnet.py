@@ -17,7 +17,7 @@ from timm.scheduler import create_scheduler
 from timm.optim import create_optimizer
 from timm.utils import NativeScaler
 from lib.datasets import build_dataset
-from model.space_engine import train_one_epoch_half_bs, evaluate
+from model.space_engine import train_one_epoch, evaluate
 from lib.samplers import RASampler
 from lib import utils
 from lib.config import cfg, update_config_from_file
@@ -33,6 +33,10 @@ import distutils.dir_util
 import torch.nn as nn
 
 from torch.distributed.elastic.multiprocessing.errors import record
+
+from model.module.Linear_super import LinearSuper
+from model.module.embedding_super import PatchembedSuper
+from model.module.qkv_super import qkv_super
 
 def mkfilepath(filename):
     distutils.dir_util.mkpath(os.path.dirname(filename))
@@ -425,7 +429,7 @@ def main(args):
         if args.distributed:
             data_loader_train.sampler.set_epoch(epoch)
 
-        train_stats = train_one_epoch_half_bs(
+        train_stats = train_one_epoch(
             writer, model, criterion, data_loader_train,
             optimizer, device, epoch, model_type, loss_scaler,
             args.clip_grad, model_ema, mixup_fn,

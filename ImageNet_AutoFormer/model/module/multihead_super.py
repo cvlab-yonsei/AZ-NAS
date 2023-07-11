@@ -78,14 +78,18 @@ class AttentionSuper(nn.Module):
         self.fc_scale = scale
         self.change_qkv = change_qkv
         if change_qkv:
-            self.qkv = qkv_super(super_embed_dim, 3 * super_embed_dim, bias=qkv_bias)
+            qk_embed_dim = num_heads*64
+            self.qkv = qkv_super(super_embed_dim, 3 * qk_embed_dim, bias=qkv_bias)
+            # self.qkv = qkv_super(super_embed_dim, 3 * super_embed_dim, bias=qkv_bias)
         else:
-            self.qkv = LinearSuper(super_embed_dim, 3 * super_embed_dim, bias=qkv_bias)
+            qk_embed_dim = num_heads*64
+            self.qkv = LinearSuper(super_embed_dim, 3 * qk_embed_dim, bias=qkv_bias)
+            # self.qkv = LinearSuper(super_embed_dim, 3 * super_embed_dim, bias=qkv_bias)
 
         self.relative_position = relative_position
         if self.relative_position:
-            self.rel_pos_embed_k = RelativePosition2D_super(super_embed_dim //num_heads, max_relative_position)
-            self.rel_pos_embed_v = RelativePosition2D_super(super_embed_dim //num_heads, max_relative_position)
+            self.rel_pos_embed_k = RelativePosition2D_super(qk_embed_dim //num_heads, max_relative_position)
+            self.rel_pos_embed_v = RelativePosition2D_super(qk_embed_dim //num_heads, max_relative_position)
         self.max_relative_position = max_relative_position
         self.sample_qk_embed_dim = None
         self.sample_v_embed_dim = None
@@ -93,7 +97,8 @@ class AttentionSuper(nn.Module):
         self.sample_scale = None
         self.sample_in_embed_dim = None
 
-        self.proj = LinearSuper(super_embed_dim, super_embed_dim)
+        # self.proj = LinearSuper(super_embed_dim, super_embed_dim)
+        self.proj = LinearSuper(qk_embed_dim, super_embed_dim)
 
         self.attn_drop = nn.Dropout(attn_drop)
         self.proj_drop = nn.Dropout(proj_drop)

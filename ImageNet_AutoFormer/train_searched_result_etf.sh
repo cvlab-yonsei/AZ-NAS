@@ -99,3 +99,7 @@ torchrun --nproc_per_node=8 train.py --data-path '/dataset/ILSVRC2012' --gp --ch
 
  python3 -m torch.distributed.launch --nproc_per_node=4 --use_env train_half_bs.py --data-path '/dataset/ILSVRC2012' --gp --change_qkv --relative_position \
  --batch-size 256 --mode retrain --model_type 'AUTOFORMER' --dist-eval --cfg './experiments/ETF-pop10000-seed123-cap-trunc/Small.yaml' --output_dir './OUTPUT/ETF-pop10000-seed123-cap-trunc/Small-bs256x4' --no-amp
+
+### using subnet / 4way base bs 64*4 
+python3 -m torch.distributed.launch --nproc_per_node=4 --use_env train_subnet.py --data-path '/dataset/ILSVRC2012' --gp --change_qkv --relative_position \
+ --batch-size 64 --mode retrain --model_type 'AUTOFORMER' --dist-eval --cfg './experiments/ETF-pop10000-seed123-cap-trunc/Base.yaml' --output_dir './OUTPUT/ETF-pop10000-seed123-cap-trunc/Base-bs64x4'
