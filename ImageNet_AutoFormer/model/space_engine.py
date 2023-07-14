@@ -94,6 +94,7 @@ def train_one_epoch(writer, model: torch.nn.Module, criterion: torch.nn.Module,
     metric_logger = utils.MetricLogger(delimiter="  ")
     metric_logger.add_meter('lr', utils.SmoothedValue(window_size=1, fmt='{value:.6f}'))
     header = 'Epoch: [{}]'.format(epoch)
+    print(header)
     print_freq = 100
     if mode == 'retrain' and model_type == 'AUTOFORMER':
         config = retrain_config
