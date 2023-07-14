@@ -155,6 +155,7 @@ def train_one_epoch(writer, model: torch.nn.Module, criterion: torch.nn.Module,
         ###
 
         if not math.isfinite(loss_value):
+            print("Loss is {}, stopping training".format(loss_value))
             logging.info("Loss is {}, stopping training".format(loss_value))
             sys.exit(1)
 
