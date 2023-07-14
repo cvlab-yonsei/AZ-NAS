@@ -49,7 +49,7 @@ def compute_nas_score(model, gpu, trainloader, resolution, batch_size, fp16=Fals
     model.train()
     model.cuda()
     info = {}
-    nas_score_list = []
+    
     if gpu is not None:
         device = torch.device('cuda:{}'.format(gpu))
     else:

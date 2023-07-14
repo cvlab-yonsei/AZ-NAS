@@ -62,7 +62,6 @@ def compute_nas_score(model, gpu, trainloader, resolution, batch_size, fp16=Fals
     """
     pca score across residual block features / normalize each score by upper bound
     """
-    info_flow_scores = []
     expressivity_scores = []
     for i in range(len(layer_features)):
         feat = layer_features[i].detach().clone()
@@ -75,35 +74,11 @@ def compute_nas_score(model, gpu, trainloader, resolution, batch_size, fp16=Fals
         prob_s = s / s.sum()
         score = (-prob_s)*torch.log(prob_s+1e-8)
         score = score.sum().item()
-        info_flow_scores.append(score) 
-        expressivity_scores.append(score) # normalize by an upper bound (= np.log(c))
-    info_flow_scores = np.array(info_flow_scores)
-    info_flow = np.min(info_flow_scores[1:] - info_flow_scores[:-1])
-    expressivity = np.mean(expressivity_scores)
+        expressivity_scores.append(score)
+    expressivity_scores = np.array(expressivity_scores)
+    progressivity = np.min(expressivity_scores[1:] - expressivity_scores[:-1])
+    expressivity = np.sum(expressivity_scores)
     #################################################
-
-    # ################ fwrd norm score ################
-    # """
-    # L2 norm preserving after matching the resolution / residual block features
-    # """
-    # scores = []
-    # for i in range(1, len(layer_features)):
-    #     f_out = layer_features[i]
-    #     f_in = layer_features[i-1]
-
-    #     if (f_out.size() == f_in.size()) and (torch.all(f_in == f_out)):
-    #         scores.append(-np.inf)
-    #     else:
-    #         # if f_out.size(2) != f_in.size(2) or f_out.size(3) != f_in.size(3):
-    #         #     bo,co,ho,wo = f_out.size()
-    #         #     bi,ci,hi,wi = f_in.size()
-    #         #     stride = int(hi/ho)
-    #         #     pixel_unshuffle = nn.PixelUnshuffle(stride)
-    #         #     f_in = pixel_unshuffle(f_in)
-    #         s = f_out.norm(p=2, dim=(1)).mean() / (f_in.norm(p=2, dim=(1)).mean()+1e-6)
-    #         scores.append(-s.item() - 1/(s.item()+1e-6) + 2)
-    # fwrd_norm_score = np.mean(scores)
-    # #################################################
 
     ################ spec norm score ##############
     """
@@ -150,9 +125,7 @@ def compute_nas_score(model, gpu, trainloader, resolution, batch_size, fp16=Fals
     #################################################
 
     info['expressivity'] = float(expressivity) if not np.isnan(expressivity) else -np.inf
-    info['info_flow'] = float(info_flow) if not np.isnan(info_flow) else -np.inf
-    # info['stability'] = float(fwrd_norm_score) if not np.isnan(fwrd_norm_score) else -np.inf
+    info['progressivity'] = float(progressivity) if not np.isnan(progressivity) else -np.inf
     info['trainability'] = float(bkwd_norm_score) if not np.isnan(bkwd_norm_score) else -np.inf
-    # info['capacity'] = float(model.get_model_size())
-    # info['complexity'] = float(model.get_FLOPs(resolution))
+    # info['complexity'] = float(model.get_FLOPs(resolution)) # take info from api
     return info

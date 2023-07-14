@@ -99,3 +99,11 @@ class TinyNetwork(nn.Module):
         logits = self.classifier(out)
 
         return out, logits
+
+    def forward_pre_GAP(self, inputs):
+        feature = self.stem(inputs)
+        for i, cell in enumerate(self.cells):
+            feature = cell(feature)
+
+        out = self.lastact(feature)
+        return out

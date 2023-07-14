@@ -103,3 +103,19 @@ torchrun --nproc_per_node=8 train.py --data-path '/dataset/ILSVRC2012' --gp --ch
 ### using subnet / 4way base bs 64*4 
 python3 -m torch.distributed.launch --nproc_per_node=4 --use_env train_subnet.py --data-path '/dataset/ILSVRC2012' --gp --change_qkv --relative_position \
  --batch-size 64 --mode retrain --model_type 'AUTOFORMER' --dist-eval --cfg './experiments/ETF-pop10000-seed123-cap-trunc/Base.yaml' --output_dir './OUTPUT/ETF-pop10000-seed123-cap-trunc/Base-bs64x4'
+
+### using subnet / 4way base bs 128*4 
+CUDA_VISIBLE_DEVICES=0,1,2,3, \
+python3 -m torch.distributed.launch --nproc_per_node=4 --use_env train_subnet.py --data-path '/dataset/ILSVRC2012' --gp --change_qkv --relative_position \
+ --batch-size 128 --mode retrain --model_type 'AUTOFORMER' --dist-eval --cfg './experiments/ETF-pop10000-seed123-cap-trunc/Base.yaml' --output_dir './OUTPUT/ETF-pop10000-seed123-cap-trunc/Base-bs128x4-subnet'
+
+### using subnet / 4way small bs 256*4 
+CUDA_VISIBLE_DEVICES=4,5,6,7, \
+python3 -m torch.distributed.launch --master_port 7777 --nproc_per_node=4 --use_env train_subnet.py --data-path '/dataset/ILSVRC2012' --gp --change_qkv --relative_position \
+ --batch-size 256 --mode retrain --model_type 'AUTOFORMER' --dist-eval --cfg './experiments/ETF-pop10000-seed123-cap-trunc/Small.yaml' --output_dir './OUTPUT/ETF-pop10000-seed123-cap-trunc/Small-bs256x4-subnet'
+
+### using subnet / 4way tiny bs 256*4 
+python3 -m torch.distributed.launch --nproc_per_node=4 --use_env train_subnet.py --data-path '/dataset/ILSVRC2012' --gp --change_qkv --relative_position \
+ --batch-size 256 --mode retrain --model_type 'AUTOFORMER' --dist-eval --cfg './experiments/ETF-pop10000-seed123-cap-trunc/Tiny.yaml' --output_dir './OUTPUT/ETF-pop10000-seed123-cap-trunc/Tiny-bs256x4-subnet'
+
+ CUDA_LAUNCH_BLOCKING=1 NCCL_DEBUG=INFO CUDA_VISIBLE_DEVICES=4,5,6,7, \
