@@ -82,7 +82,7 @@ class AttentionSuper(nn.Module):
             self.qkv = qkv_super(super_embed_dim, 3 * qk_embed_dim, bias=qkv_bias)
             # self.qkv = qkv_super(super_embed_dim, 3 * super_embed_dim, bias=qkv_bias)
         else:
-            qk_embed_dim = num_heads*64
+            qk_embed_dim = super_embed_dim
             self.qkv = LinearSuper(super_embed_dim, 3 * qk_embed_dim, bias=qkv_bias)
             # self.qkv = LinearSuper(super_embed_dim, 3 * super_embed_dim, bias=qkv_bias)
 

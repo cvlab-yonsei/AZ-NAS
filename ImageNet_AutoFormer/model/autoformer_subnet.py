@@ -20,13 +20,15 @@ def gelu(x: torch.Tensor) -> torch.Tensor:
 
 class Vision_TransformerSuper(nn.Module):
 
-    def __init__(self, img_size=224, patch_size=16, in_chans=3, num_classes=1000, embed_dim=768, config=None, # depth=12, num_heads=12, mlp_ratio=4., 
+    def __init__(self, img_size=224, patch_size=16, in_chans=3, num_classes=1000, config=None, embed_dim=768, depth=12, num_heads=12, mlp_ratio=4., 
                  qkv_bias=False, qk_scale=None, drop_rate=0., attn_drop_rate=0.,
                  drop_path_rate=0., pre_norm=True, scale=False, gp=False, relative_position=False, change_qkv=False, abs_pos = True, max_relative_position=14):
         super(Vision_TransformerSuper, self).__init__()       
         
+        self.super_embed_dim = embed_dim
+        super_depth = depth
+        
         embed_dim = config['embed_dim']
-        self.super_embed_dim = embed_dim[0]
         mlp_ratio = config['mlp_ratio']
         num_heads = config['num_heads']
         depth = config['layer_num']
@@ -57,7 +59,7 @@ class Vision_TransformerSuper(nn.Module):
         self.sample_output_dim = None
 
         self.blocks = nn.ModuleList()
-        dpr = [x.item() for x in torch.linspace(0, drop_path_rate, depth)]  # stochastic depth decay rule
+        dpr = [x.item() for x in torch.linspace(0, drop_path_rate, super_depth)]  # stochastic depth decay rule
 
         for i in range(depth):
             self.blocks.append(TransformerEncoderLayer(dim=embed_dim[i], num_heads=num_heads[i], mlp_ratio=mlp_ratio[i],
