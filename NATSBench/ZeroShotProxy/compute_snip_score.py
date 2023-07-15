@@ -1,10 +1,3 @@
-'''
-Copyright (C) 2010-2021 Alibaba Group Holding Limited.
-This file is modified from
-https://github.com/SamsungLabs/zero-cost-nas
-'''
-
-
 # Copyright 2021 Samsung Electronics Co., Ltd.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
@@ -27,7 +20,8 @@ import torch
 from torch import nn
 import numpy as np
 
-
+import types
+import torch.nn.functional as F
 
 import torch
 
@@ -61,49 +55,54 @@ def get_layer_metric_array(net, metric, mode):
 
     return metric_array
 
+def snip_forward_conv2d(self, x):
+    return F.conv2d(
+        x,
+        self.weight * self.weight_mask,
+        self.bias,
+        self.stride,
+        self.padding,
+        self.dilation,
+        self.groups,
+    )
 
 
-def compute_synflow_per_weight(net, inputs, mode):
-    device = inputs.device
+def snip_forward_linear(self, x):
+    return F.linear(x, self.weight * self.weight_mask, self.bias)
 
-    # convert params to their abs. Keep sign for converting it back.
-    @torch.no_grad()
-    def linearize(net):
-        signs = {}
-        for name, param in net.state_dict().items():
-            signs[name] = torch.sign(param)
-            param.abs_()
-        return signs
 
-    # convert to orig values
-    @torch.no_grad()
-    def nonlinearize(net, signs):
-        for name, param in net.state_dict().items():
-            if 'weight_mask' not in name:
-                param.mul_(signs[name])
+def compute_snip_per_weight(net, inputs, targets, mode, loss_fn, split_data=1):
+    for layer in net.modules():
+        if isinstance(layer, nn.Conv2d) or isinstance(layer, nn.Linear):
+            layer.weight_mask = nn.Parameter(torch.ones_like(layer.weight))
+            layer.weight.requires_grad = False
 
-    # keep signs of all params
-    signs = linearize(net)
+        # Override the forward methods:
+        if isinstance(layer, nn.Conv2d):
+            layer.forward = types.MethodType(snip_forward_conv2d, layer)
 
-    # Compute gradients with input of 1s
+        if isinstance(layer, nn.Linear):
+            layer.forward = types.MethodType(snip_forward_linear, layer)
+
+    # Compute gradients (but don't apply them)
     net.zero_grad()
-    net.double()
-    input_dim = list(inputs[0, :].shape)
-    inputs = torch.ones([1] + input_dim).double().to(device)
-    _, output = net.forward(inputs)
-    torch.sum(output).backward()
+    N = inputs.shape[0]
+    for sp in range(split_data):
+        st = sp * N // split_data
+        en = (sp + 1) * N // split_data
+
+        _, outputs = net.forward(inputs[st:en])
+        loss = loss_fn(outputs, targets[st:en])
+        loss.backward()
 
     # select the gradients that we want to use for search/prune
-    def synflow(layer):
-        if layer.weight.grad is not None:
-            return torch.abs(layer.weight * layer.weight.grad)
+    def snip(layer):
+        if layer.weight_mask.grad is not None:
+            return torch.abs(layer.weight_mask.grad)
         else:
             return torch.zeros_like(layer.weight)
 
-    grads_abs = get_layer_metric_array(net, synflow, mode)
-
-    # apply signs of all params
-    nonlinearize(net, signs)
+    grads_abs = get_layer_metric_array(net, snip, mode)
 
     return grads_abs
 
@@ -118,23 +117,19 @@ def compute_nas_score(model, gpu, trainloader, resolution, batch_size):
         model = model.cuda(gpu)
 
     network_weight_gaussian_init(model)
-    input = torch.randn(size=[batch_size, 3, resolution, resolution])
+    input, target = next(iter(trainloader))
+
     if gpu is not None:
         input = input.cuda(gpu)
+        target = target.cuda(gpu)
 
-    grads_abs_list = compute_synflow_per_weight(net=model, inputs=input, mode='')
+    grads_abs_list = compute_snip_per_weight(net=model, inputs=input, targets=target, mode='', loss_fn=torch.nn.CrossEntropyLoss())
     score = 0
     for grad_abs in grads_abs_list:
         score = score + grad_abs.sum().item()
-        # if len(grad_abs.shape) == 4:
-        #     score += float(torch.mean(torch.sum(grad_abs, dim=[1,2,3])))
-        # elif len(grad_abs.shape) == 2:
-        #     score += float(torch.mean(torch.sum(grad_abs, dim=[1])))
-        # else:
-        #     raise RuntimeError('!!!')
 
     info = {}
-    info['synflow'] = score
+    info['snip'] = score
 
     return info
 

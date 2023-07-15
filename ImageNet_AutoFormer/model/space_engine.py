@@ -94,7 +94,6 @@ def train_one_epoch(writer, model: torch.nn.Module, criterion: torch.nn.Module,
     metric_logger = utils.MetricLogger(delimiter="  ")
     metric_logger.add_meter('lr', utils.SmoothedValue(window_size=1, fmt='{value:.6f}'))
     header = 'Epoch: [{}]'.format(epoch)
-    print(header)
     print_freq = 100
     if mode == 'retrain' and model_type == 'AUTOFORMER':
         config = retrain_config
@@ -113,10 +112,10 @@ def train_one_epoch(writer, model: torch.nn.Module, criterion: torch.nn.Module,
             config = sample_configs(choices=choices)
             model_module = unwrap_model(model)
             model_module.set_sample_config(config=config)
-        # elif mode == 'retrain' and model_type == 'AUTOFORMER':
-        #     config = retrain_config
-        #     model_module = unwrap_model(model)
-        #     model_module.set_sample_config(config=config)
+        elif mode == 'retrain' and model_type == 'AUTOFORMER':
+            config = retrain_config
+            model_module = unwrap_model(model)
+            model_module.set_sample_config(config=config)
         if mixup_fn is not None:
             samples, targets = mixup_fn(samples, targets)
         if amp:

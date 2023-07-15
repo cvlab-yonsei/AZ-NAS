@@ -256,8 +256,8 @@ def compute_nas_score(model, gpu, trainloader, resolution, batch_size):
     RN = compute_RN_score(model=model, batch_size=batch_size, image_size=resolution, num_batch=1, gpu=gpu)
 
     info = {}
-    info['ntk'] = ntk
+    # info['ntk'] = ntk
     # info['linear_region'] = RN
-    # info['ntk+RN'] = ntk+RN
+    info['ntk+RN'] = ntk+RN
 
     return info
