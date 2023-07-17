@@ -141,19 +141,19 @@ def compute_nas_score(model, device, trainloader, resolution, batch_size):
     bkwd_norm_score = np.mean(scores)
     #################################################
 
-    ####
-    numels = []
-    for name, module in model.named_modules():
-        if hasattr(module, 'calc_sampled_param_num'):
-            if name.split('.')[0] == 'blocks' and int(name.split('.')[1]) >= model.sample_layer_num:
-                continue
-            numels.append(module.calc_sampled_param_num())
+    # ####
+    # numels = []
+    # for name, module in model.named_modules():
+    #     if hasattr(module, 'calc_sampled_param_num'):
+    #         if name.split('.')[0] == 'blocks' and int(name.split('.')[1]) >= model.sample_layer_num:
+    #             continue
+    #         numels.append(module.calc_sampled_param_num())
 
-    n_params = sum(numels) + model.sample_embed_dim[0] * (2 + model.patch_embed_super.num_patches)
-    ####
+    # n_params = sum(numels) + model.sample_embed_dim[0] * (2 + model.patch_embed_super.num_patches)
+    # ####
 
     info['trainability'] = float(bkwd_norm_score) if not np.isnan(bkwd_norm_score) else -np.inf
-    info['capacity'] = float(n_params)
-    info['complexity'] = float(model.get_complexity(model.patch_embed_super.num_patches+1))
+    # info['capacity'] = float(n_params)
+    info['complexity'] = float(model.get_complexity(model.patch_embed_super.num_patches))
 
     return info
