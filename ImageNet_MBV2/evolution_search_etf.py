@@ -1,7 +1,8 @@
 '''
-Copyright (C) 2010-2021 Alibaba Group Holding Limited.
+Code modified from 
+ZenNAS: 'https://github.com/idstcv/ZenNAS/blob/d1d617e0352733d39890fb64ea758f9c85b28c1a/evolution_search.py'
+ZiCo: 'https://github.com/SLDGroup/ZiCo/blob/3eeb517d51cd447685099c8a4351edee8e31e999/evolution_search.py'
 '''
-
 
 import os, sys
 sys.path.append(os.path.dirname(os.path.abspath(__file__)))
@@ -17,7 +18,6 @@ import PlainNet
 from xautodl import datasets
 import time
 
-# from ZeroShotProxy import compute_etf4_score, compute_zen_score, compute_te_nas_score, compute_syncflow_score, compute_gradnorm_score, compute_NASWOT_score, compute_zico
 from ZeroShotProxy import *
 import benchmark_network_latency
 
@@ -43,8 +43,7 @@ def none_or_int(value):
 def parse_cmd_options(argv):
     parser = argparse.ArgumentParser()
     parser.add_argument('--gpu', type=int, default=None)
-    parser.add_argument('--zero_shot_score', type=str, default=None,
-                        help='could be: ETF; ZiCo (form ZiCo); params, (for \#Params); Zen (for Zen-NAS); TE (for TE-NAS)')
+    parser.add_argument('--zero_shot_score', type=str, default='etf')
     parser.add_argument('--search_space', type=str, default=None,
                         help='.py file to specify the search space.')
     parser.add_argument('--evolution_max_iter', type=int, default=int(100000),
@@ -91,7 +90,7 @@ def get_new_random_structure_str(AnyPlainNet, structure_str, num_classes, get_se
         to_search_student_blocks_list_list = get_search_space_func(the_net.block_list, random_id)
 
         to_search_student_blocks_list = [x for sublist in to_search_student_blocks_list_list for x in sublist]
-        to_search_student_blocks_list = sorted(to_search_student_blocks_list) # for reproducibility, due to the randomness of importlib in global_utils.py
+        to_search_student_blocks_list = sorted(to_search_student_blocks_list) # we add the sort function for reproducibility, due to the randomness of importlib in global_utils.py
         new_student_block_str = random.choice(to_search_student_blocks_list)
         
         if len(new_student_block_str) > 0:
@@ -141,60 +140,20 @@ def get_latency(AnyPlainNet, random_structure_str, gpu, args):
 def compute_nas_score(AnyPlainNet, random_structure_str, gpu, args, trainloader=None, lossfunc=None):
     # compute network zero-shot proxy score
     the_model = AnyPlainNet(num_classes=args.num_classes, plainnet_struct=random_structure_str,
-                            no_create=False, no_reslink=args.search_no_res) # in ZiCo and ZenNas, why no_reslink = True??????????????????
+                            no_create=False, no_reslink=args.search_no_res)
     the_model = the_model.cuda(gpu)
     
-    if 'etf' in args.zero_shot_score.lower():
-        score_fn_name = "compute_{}_score".format(args.zero_shot_score.lower())
-        score_fn = globals().get(score_fn_name)
-        the_nas_core_info = score_fn.compute_nas_score(model=the_model, gpu=gpu, trainloader=trainloader,
-                                                       resolution=args.input_image_size,
-                                                       batch_size=args.batch_size)
-        del the_model
-        torch.cuda.empty_cache()
-        return the_nas_core_info
+    if args.zero_shot_score.lower() != 'etf':
+        raise NotImplementedError("Use 'evolutionary_search_others.py' for other metrics")
 
-    elif args.zero_shot_score.lower() == 'zico':
-        the_nas_core = compute_zico.getzico(the_model, trainloader,lossfunc)
-
-    elif args.zero_shot_score == 'Zen':
-        the_nas_core_info = compute_zen_score.compute_nas_score(model=the_model, gpu=gpu,
-                                                                resolution=args.input_image_size,
-                                                                mixup_gamma=args.gamma, batch_size=args.batch_size,
-                                                                repeat=1)
-        the_nas_core = the_nas_core_info['avg_nas_score']
-    elif args.zero_shot_score == 'TE-NAS':
-        the_nas_core = compute_te_nas_score.compute_NTK_score(model=the_model, gpu=gpu,
-                                                                resolution=args.input_image_size,
-                                                                batch_size=args.batch_size)
-
-    elif args.zero_shot_score == 'Syncflow':
-        the_nas_core = compute_syncflow_score.do_compute_nas_score(model=the_model, gpu=gpu,
-                                                                    resolution=args.input_image_size,
-                                                                    batch_size=args.batch_size)
-
-    elif args.zero_shot_score == 'GradNorm':
-        the_nas_core = compute_gradnorm_score.compute_nas_score(model=the_model, gpu=gpu,
-                                                                resolution=args.input_image_size,
-                                                                batch_size=args.batch_size)
-
-    elif args.zero_shot_score == 'Flops':
-        the_nas_core = the_model.get_FLOPs(args.input_image_size)
-
-    elif args.zero_shot_score.lower() == 'params':
-        the_nas_core = the_model.get_model_size()
-
-    elif args.zero_shot_score == 'Random':
-        the_nas_core = np.random.randn()
-
-    elif args.zero_shot_score == 'NASWOT':
-        the_nas_core = compute_NASWOT_score.compute_nas_score(gpu=gpu, model=the_model,
-                                                                resolution=args.input_image_size,
-                                                                batch_size=args.batch_size)
-
+    score_fn_name = "compute_{}_score".format(args.zero_shot_score.lower())
+    score_fn = globals().get(score_fn_name)
+    info = score_fn.compute_nas_score(model=the_model, gpu=gpu, trainloader=trainloader,
+                                                    resolution=args.input_image_size,
+                                                    batch_size=args.batch_size)
     del the_model
     torch.cuda.empty_cache()
-    return the_nas_core
+    return info
 
 
 def getmisc(args):
@@ -232,11 +191,6 @@ def main(args, argv):
     
     if args.rand_input:
         print("Use random input")
-        # trainbatches = []
-        # device = torch.device('cuda:{}'.format(gpu))
-        # datax = torch.randn(size=[args.batch_size, 3, args.input_image_size, args.input_image_size], 
-        #                     device=device)
-        # trainbatches.append([datax])
         trainbatches = None
     else:
         print("Use real input")
@@ -262,6 +216,7 @@ def main(args, argv):
     initial_structure_str = str(masternet)
 
     popu_structure_list = []
+    search_time_list = []
     if 'etf' in args.zero_shot_score.lower():
         popu_zero_shot_score_dict = None
     else:
@@ -270,48 +225,26 @@ def main(args, argv):
 
     start_timer = time.time()
     lossfunc = nn.CrossEntropyLoss().cuda()
-    for loop_count in range(args.evolution_max_iter):
-        # too many networks in the population pool, remove one with the smallest score
-        while len(popu_structure_list) > args.population_size:
-            tmp_idx = np.argmin(popu_zero_shot_score_list)
-            if 'etf' in args.zero_shot_score.lower():
-                for k in popu_zero_shot_score_dict.keys():
-                    popu_zero_shot_score_dict[k].pop(tmp_idx)
-            popu_zero_shot_score_list.pop(tmp_idx)
-            popu_structure_list.pop(tmp_idx)
-            popu_latency_list.pop(tmp_idx)
-        pass
-
-        if loop_count >= 1 and loop_count % 100 == 0:
-            if 'etf' in args.zero_shot_score.lower():
-                max_idx = np.argmax(popu_zero_shot_score_list)
-                min_idx = np.argmin(popu_zero_shot_score_list)
-                elasp_time = time.time() - start_timer
-                log_string = f'loop_count={loop_count}/{args.evolution_max_iter}, time={elasp_time/3600:4g}h,\n'
-                for key in popu_zero_shot_score_dict.keys():
-                    _max = popu_zero_shot_score_dict[key][max_idx]
-                    _min = popu_zero_shot_score_dict[key][min_idx]
-                    log_string += f'max_{key}={_max:4g}, min_{key}={_min:4g}\n'
-                best_structure = popu_structure_list[max_idx]
-                logging.info('{}'.format(best_structure))
-                logging.info(log_string)
-            else:
-                max_score = max(popu_zero_shot_score_list)
-                min_score = min(popu_zero_shot_score_list)
-                elasp_time = time.time() - start_timer
-                logging.info(f'loop_count={loop_count}/{args.evolution_max_iter}, max_score={max_score:4g}, min_score={min_score:4g}, time={elasp_time/3600:4g}h')
-
+    loop_count = 0
+    while loop_count < args.evolution_max_iter:
         # ----- generate a random structure ----- #
         if len(popu_structure_list) <= 10:
             random_structure_str = get_new_random_structure_str(
                 AnyPlainNet=AnyPlainNet, structure_str=initial_structure_str, num_classes=args.num_classes,
                 get_search_space_func=select_search_space.gen_search_space, num_replaces=1)
-        else:
+        elif len(popu_structure_list) < args.population_size-1:
             tmp_idx = random.randint(0, len(popu_structure_list) - 1)
             tmp_random_structure_str = popu_structure_list[tmp_idx]
             random_structure_str = get_new_random_structure_str(
                 AnyPlainNet=AnyPlainNet, structure_str=tmp_random_structure_str, num_classes=args.num_classes,
                 get_search_space_func=select_search_space.gen_search_space, num_replaces=2)
+        else:
+            tmp_idx = np.random.choice(np.argsort(popu_zero_shot_score_list, axis=0)[-args.population_size+1:])
+            tmp_random_structure_str = popu_structure_list[tmp_idx]
+            random_structure_str = get_new_random_structure_str(
+                AnyPlainNet=AnyPlainNet, structure_str=tmp_random_structure_str, num_classes=args.num_classes,
+                get_search_space_func=select_search_space.gen_search_space, num_replaces=2)
+
 
         random_structure_str = get_splitted_structure_str(AnyPlainNet, random_structure_str,
                                                           num_classes=args.num_classes)
@@ -347,32 +280,52 @@ def main(args, argv):
             the_latency = get_latency(AnyPlainNet, random_structure_str, gpu, args)
             if args.budget_latency < the_latency:
                 continue
-                
-        if 'etf' in args.zero_shot_score.lower():
-            the_nas_core = compute_nas_score(AnyPlainNet, random_structure_str, gpu, args, trainbatches, lossfunc)
-            if popu_zero_shot_score_dict is None: # initialize dict
-                popu_zero_shot_score_dict = dict()
-                for k in the_nas_core.keys():
-                    popu_zero_shot_score_dict[k] = []
-            for k, v in the_nas_core.items():
-                popu_zero_shot_score_dict[k].append(v)
 
-            popu_zero_shot_score_list = None
+        if loop_count >= 1 and loop_count % 100 == 0:
+            max_idx = np.argmax(popu_zero_shot_score_list)
+            min_idx = np.argmin(popu_zero_shot_score_list)
+            elasp_time = time.time() - start_timer
+            search_time = np.sum(search_time_list)
+            log_string = f'loop_count={loop_count}/{args.evolution_max_iter}, running_time={elasp_time/3600:4g}h, search_time={search_time/3600:4g}h,\n'
             for key in popu_zero_shot_score_dict.keys():
-                l = len(popu_zero_shot_score_dict[key])
-                _rank = stats.rankdata(popu_zero_shot_score_dict[key])
-                if popu_zero_shot_score_list is not None:
-                    popu_zero_shot_score_list = popu_zero_shot_score_list + np.log(_rank/l)
-                else:
-                    popu_zero_shot_score_list = np.log(_rank/l)
-            popu_zero_shot_score_list = popu_zero_shot_score_list.tolist()
-            popu_structure_list.append(random_structure_str)
-            popu_latency_list.append(the_latency)
-        else:
-            the_nas_core = compute_nas_score(AnyPlainNet, random_structure_str, gpu, args, trainbatches, lossfunc)
-            popu_structure_list.append(random_structure_str)
-            popu_zero_shot_score_list.append(the_nas_core)
-            popu_latency_list.append(the_latency)
+                _max = popu_zero_shot_score_dict[key][max_idx]
+                _min = popu_zero_shot_score_dict[key][min_idx]
+                log_string += f'max_{key}={_max:4g}, min_{key}={_min:4g}\n'
+            best_structure = popu_structure_list[max_idx]
+            logging.info('{}'.format(best_structure))
+            logging.info(log_string)
+
+            #### tmp
+            import pickle
+            arch_dir = os.path.join(args.save_dir, 'arch_list.pth')
+            with open(arch_dir, "wb") as fp:
+                pickle.dump(popu_structure_list, fp)
+            ####
+        
+        search_time_start = time.time()
+        the_nas_core = compute_nas_score(AnyPlainNet, random_structure_str, gpu, args, trainbatches, lossfunc)
+        search_time_list.append(time.time() - search_time_start)
+
+        if popu_zero_shot_score_dict is None: # initialize dict
+            popu_zero_shot_score_dict = dict()
+            for k in the_nas_core.keys():
+                popu_zero_shot_score_dict[k] = []
+        for k, v in the_nas_core.items():
+            popu_zero_shot_score_dict[k].append(v)
+
+        popu_zero_shot_score_list = None
+        for key in popu_zero_shot_score_dict.keys():
+            l = len(popu_zero_shot_score_dict[key])
+            _rank = stats.rankdata(popu_zero_shot_score_dict[key])
+            if popu_zero_shot_score_list is not None:
+                popu_zero_shot_score_list = popu_zero_shot_score_list + np.log(_rank/l)
+            else:
+                popu_zero_shot_score_list = np.log(_rank/l)
+        popu_zero_shot_score_list = popu_zero_shot_score_list.tolist()
+        popu_structure_list.append(random_structure_str)
+        popu_latency_list.append(the_latency)
+
+        loop_count += 1
 
     return popu_structure_list, popu_zero_shot_score_list, popu_latency_list
 
