@@ -43,8 +43,6 @@ python evolution_search_others.py --gpu ${gpu} \
   --save_dir ${save_dir} \
   --dataset imagenet-1k \
   --num_worker 16 \
-  --rand_input False \
-  --search_no_res True \
   --seed ${seed} \
   --datapath /dataset/ILSVRC2012/
 
