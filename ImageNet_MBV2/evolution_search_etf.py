@@ -295,12 +295,6 @@ def main(args, argv):
             best_structure = popu_structure_list[max_idx]
             logging.info('{}'.format(best_structure))
             logging.info(log_string)
-
-            #### tmp
-            arch_dir = os.path.join(args.save_dir, 'arch_list.pth')
-            with open(arch_dir, "wb") as fp:
-                pickle.dump(popu_structure_list, fp)
-            ####
         
         search_time_start = time.time()
         the_nas_core = compute_nas_score(AnyPlainNet, random_structure_str, gpu, args, trainbatches, lossfunc)
@@ -327,11 +321,11 @@ def main(args, argv):
 
         loop_count += 1
 
-    #### tmp
-    arch_dir = os.path.join(args.save_dir, 'arch_list.pth')
-    with open(arch_dir, "wb") as fp:
-        pickle.dump(popu_structure_list, fp)
-    ####
+    # #### tmp
+    # arch_dir = os.path.join(args.save_dir, 'arch_list.pth')
+    # with open(arch_dir, "wb") as fp:
+    #     pickle.dump(popu_structure_list, fp)
+    # ####
 
     return popu_structure_list, popu_zero_shot_score_list, popu_latency_list
 

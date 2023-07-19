@@ -286,7 +286,7 @@ def main(args, argv):
             if args.budget_latency < the_latency:
                 continue
 
-        if loop_count >= 1 and loop_count % 10 == 0:
+        if loop_count >= 1 and loop_count % 100 == 0:
             max_score = max(popu_zero_shot_score_list)
             min_score = min(popu_zero_shot_score_list)
             elasp_time = time.time() - start_timer
