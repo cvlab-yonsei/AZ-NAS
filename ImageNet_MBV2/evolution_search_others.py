@@ -224,10 +224,12 @@ def main(args, argv):
     popu_structure_list = []
     popu_zero_shot_score_list = []
     popu_latency_list = []
+    search_time_list = []
 
     start_timer = time.time()
     lossfunc = nn.CrossEntropyLoss().cuda()
-    for loop_count in range(args.evolution_max_iter):
+    loop_count = 0
+    while loop_count < args.evolution_max_iter:
         # too many networks in the population pool, remove one with the smallest score
         while len(popu_structure_list) > args.population_size:
             min_zero_shot_score = min(popu_zero_shot_score_list)
@@ -236,12 +238,6 @@ def main(args, argv):
             popu_structure_list.pop(tmp_idx)
             popu_latency_list.pop(tmp_idx)
         pass
-
-        if loop_count >= 1 and loop_count % 10 == 0:
-            max_score = max(popu_zero_shot_score_list)
-            min_score = min(popu_zero_shot_score_list)
-            elasp_time = time.time() - start_timer
-            logging.info(f'loop_count={loop_count}/{args.evolution_max_iter}, max_score={max_score:4g}, min_score={min_score:4g}, time={elasp_time/3600:4g}h')
 
         # ----- generate a random structure ----- #
         if len(popu_structure_list) <= 10:
@@ -290,11 +286,22 @@ def main(args, argv):
             if args.budget_latency < the_latency:
                 continue
 
+        if loop_count >= 1 and loop_count % 10 == 0:
+            max_score = max(popu_zero_shot_score_list)
+            min_score = min(popu_zero_shot_score_list)
+            elasp_time = time.time() - start_timer
+            search_time = np.sum(search_time_list)
+            logging.info(f'loop_count={loop_count}/{args.evolution_max_iter}, max_score={max_score:4g}, min_score={min_score:4g}, running_time={elasp_time/3600:4g}h, search_time={search_time/3600:4g}h')
+        
+        search_time_start = time.time()
         the_nas_core = compute_nas_score(AnyPlainNet, random_structure_str, gpu, args, trainbatches, lossfunc)
+        search_time_list.append(time.time() - search_time_start)
 
         popu_structure_list.append(random_structure_str)
         popu_zero_shot_score_list.append(the_nas_core)
         popu_latency_list.append(the_latency)
+
+        loop_count += 1
 
     return popu_structure_list, popu_zero_shot_score_list, popu_latency_list
 

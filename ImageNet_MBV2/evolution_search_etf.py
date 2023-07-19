@@ -22,6 +22,7 @@ from ZeroShotProxy import *
 import benchmark_network_latency
 
 import scipy.stats as stats
+import pickle
 
 working_dir = os.path.dirname(os.path.abspath(__file__))
 
@@ -296,7 +297,6 @@ def main(args, argv):
             logging.info(log_string)
 
             #### tmp
-            import pickle
             arch_dir = os.path.join(args.save_dir, 'arch_list.pth')
             with open(arch_dir, "wb") as fp:
                 pickle.dump(popu_structure_list, fp)
@@ -326,6 +326,12 @@ def main(args, argv):
         popu_latency_list.append(the_latency)
 
         loop_count += 1
+
+    #### tmp
+    arch_dir = os.path.join(args.save_dir, 'arch_list.pth')
+    with open(arch_dir, "wb") as fp:
+        pickle.dump(popu_structure_list, fp)
+    ####
 
     return popu_structure_list, popu_zero_shot_score_list, popu_latency_list
 

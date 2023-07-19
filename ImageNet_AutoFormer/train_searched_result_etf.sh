@@ -129,3 +129,16 @@ python3 -m torch.distributed.launch --nproc_per_node=4 --use_env train_subnet.py
 CUDA_VISIBLE_DEVICES=4,5,6,7, \
 python3 -m torch.distributed.launch --master_port 7777 --nproc_per_node=4 --use_env train_subnet.py --data-path '/dataset/ILSVRC2012' --gp --change_qkv --relative_position \
  --batch-size 256 --mode retrain --model_type 'AUTOFORMER' --dist-eval --cfg './experiments/ETF-pop10000-seed0-nocap-trunc/Small.yaml' --output_dir './OUTPUT/ETF-pop10000-seed0-nocap-trunc/Small-bs256x4-subnet'
+
+###### 8000 cap
+ CUDA_VISIBLE_DEVICES=6,7, \
+python3 -m torch.distributed.launch --nproc_per_node=2 --use_env train_subnet.py --data-path '/dataset/ILSVRC2012' --gp --change_qkv --relative_position \
+ --batch-size 512 --mode retrain --model_type 'AUTOFORMER' --dist-eval --cfg './experiments/ETF-pop8000-seed0-cap-trunc/Small.yaml' --output_dir './OUTPUT/ETF-pop8000-seed0-bs512x2-cap-trunc/Small'
+
+ CUDA_VISIBLE_DEVICES=4,5, \
+python3 -m torch.distributed.launch --master_port 8888 --nproc_per_node=2 --use_env train_subnet.py --data-path '/dataset/ILSVRC2012' --gp --change_qkv --relative_position \
+ --batch-size 512 --mode retrain --model_type 'AUTOFORMER' --dist-eval --cfg './experiments/ETF-pop8000-seed0-cap-trunc/Tiny.yaml' --output_dir './OUTPUT/ETF-pop8000-seed0-bs512x2-cap-trunc/Tiny'
+
+ CUDA_VISIBLE_DEVICES=0,1,2,3, \
+python3 -m torch.distributed.launch --master_port 7777 --nproc_per_node=4 --use_env train_subnet.py --data-path '/dataset/ILSVRC2012' --gp --change_qkv --relative_position \
+ --batch-size 128 --mode retrain --model_type 'AUTOFORMER' --dist-eval --cfg './experiments/ETF-pop8000-seed0-cap-trunc/Base.yaml' --output_dir './OUTPUT/ETF-pop8000-seed0-bs128x4-cap-trunc/Base'
