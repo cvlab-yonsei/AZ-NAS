@@ -23,24 +23,41 @@ import torch.autograd as autograd
 
 import torch
 
-def network_weight_gaussian_init(net: nn.Module):
-    with torch.no_grad():
-        for m in net.modules():
-            if isinstance(m, nn.Conv2d):
-                nn.init.normal_(m.weight)
-                if hasattr(m, 'bias') and m.bias is not None:
-                    nn.init.zeros_(m.bias)
-            elif isinstance(m, (nn.BatchNorm2d, nn.GroupNorm)):
-                nn.init.ones_(m.weight)
-                nn.init.zeros_(m.bias)
-            elif isinstance(m, nn.Linear):
-                nn.init.normal_(m.weight)
-                if hasattr(m, 'bias') and m.bias is not None:
-                    nn.init.zeros_(m.bias)
-            else:
-                continue
+# def network_weight_gaussian_init(net: nn.Module):
+#     with torch.no_grad():
+#         for m in net.modules():
+#             if isinstance(m, nn.Conv2d):
+#                 nn.init.normal_(m.weight)
+#                 if hasattr(m, 'bias') and m.bias is not None:
+#                     nn.init.zeros_(m.bias)
+#             elif isinstance(m, (nn.BatchNorm2d, nn.GroupNorm)):
+#                 nn.init.ones_(m.weight)
+#                 nn.init.zeros_(m.bias)
+#             elif isinstance(m, nn.Linear):
+#                 nn.init.normal_(m.weight)
+#                 if hasattr(m, 'bias') and m.bias is not None:
+#                     nn.init.zeros_(m.bias)
+#             else:
+#                 continue
 
-    return net
+#     return net
+
+def kaiming_normal_fanin_init(m):
+    if isinstance(m, nn.Conv2d) or isinstance(m, nn.Linear):
+        nn.init.kaiming_normal_(m.weight, mode='fan_in', nonlinearity='relu')
+        if hasattr(m, 'bias') and m.bias is not None:
+            nn.init.zeros_(m.bias)
+    elif isinstance(m, (nn.BatchNorm2d, nn.GroupNorm)):
+        if m.affine:
+            nn.init.ones_(m.weight)
+            nn.init.zeros_(m.bias)
+
+def init_model(model, method='kaiming_norm_fanin'):
+    if method == 'kaiming_norm_fanin':
+        model.apply(kaiming_normal_fanin_init)
+    else:
+        raise NotImplementedError
+    return model
 
 def get_layer_metric_array(net, metric, mode):
     metric_array = []
@@ -136,7 +153,8 @@ def compute_nas_score(model, gpu, trainloader, resolution, batch_size):
         torch.cuda.set_device(gpu)
         model = model.cuda(gpu)
 
-    network_weight_gaussian_init(model)
+    # network_weight_gaussian_init(model)
+    init_model(model, 'kaiming_norm_fanin')
     input, target = next(iter(trainloader))
 
     if gpu is not None:

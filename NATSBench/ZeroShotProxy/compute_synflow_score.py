@@ -27,28 +27,53 @@ import torch
 from torch import nn
 import numpy as np
 
+import copy
 
+# def network_weight_gaussian_init(net: nn.Module):
+#     with torch.no_grad():
+#         for m in net.modules():
+#             if isinstance(m, nn.Conv2d):
+#                 nn.init.normal_(m.weight)
+#                 if hasattr(m, 'bias') and m.bias is not None:
+#                     nn.init.zeros_(m.bias)
+#             elif isinstance(m, (nn.BatchNorm2d, nn.GroupNorm)):
+#                 nn.init.ones_(m.weight)
+#                 nn.init.zeros_(m.bias)
+#             elif isinstance(m, nn.Linear):
+#                 nn.init.normal_(m.weight)
+#                 if hasattr(m, 'bias') and m.bias is not None:
+#                     nn.init.zeros_(m.bias)
+#             else:
+#                 continue
 
-import torch
+#     return net
 
-def network_weight_gaussian_init(net: nn.Module):
-    with torch.no_grad():
-        for m in net.modules():
-            if isinstance(m, nn.Conv2d):
-                nn.init.normal_(m.weight)
-                if hasattr(m, 'bias') and m.bias is not None:
-                    nn.init.zeros_(m.bias)
-            elif isinstance(m, (nn.BatchNorm2d, nn.GroupNorm)):
-                nn.init.ones_(m.weight)
-                nn.init.zeros_(m.bias)
-            elif isinstance(m, nn.Linear):
-                nn.init.normal_(m.weight)
-                if hasattr(m, 'bias') and m.bias is not None:
-                    nn.init.zeros_(m.bias)
-            else:
-                continue
+def bypass_bn(self, x):
+    # print("bypass bn")
+    return x
 
-    return net
+def remove_bn(model):
+    bypass_bn_fn = bypass_bn.__get__(model, model.__class__)
+    for m in model.modules():
+        if isinstance(m, nn.BatchNorm2d):
+            setattr(m, 'forward', bypass_bn_fn)
+
+def kaiming_normal_fanin_init(m):
+    if isinstance(m, nn.Conv2d) or isinstance(m, nn.Linear):
+        nn.init.kaiming_normal_(m.weight, mode='fan_in', nonlinearity='relu')
+        if hasattr(m, 'bias') and m.bias is not None:
+            nn.init.zeros_(m.bias)
+    elif isinstance(m, (nn.BatchNorm2d, nn.GroupNorm)):
+        if m.affine:
+            nn.init.ones_(m.weight)
+            nn.init.zeros_(m.bias)
+
+def init_model(model, method='kaiming_norm_fanin'):
+    if method == 'kaiming_norm_fanin':
+        model.apply(kaiming_normal_fanin_init)
+    else:
+        raise NotImplementedError
+    return model
 
 def get_layer_metric_array(net, metric, mode):
     metric_array = []
@@ -107,7 +132,9 @@ def compute_synflow_per_weight(net, inputs, mode):
 
     return grads_abs
 
-def compute_nas_score(model, gpu, trainloader, resolution, batch_size):
+def compute_nas_score(orig_model, gpu, trainloader, resolution, batch_size):
+    model = copy.deepcopy(orig_model)
+    remove_bn(model) # make a model without BN
     model.train()
     model.requires_grad_(True)
 
@@ -117,7 +144,8 @@ def compute_nas_score(model, gpu, trainloader, resolution, batch_size):
         torch.cuda.set_device(gpu)
         model = model.cuda(gpu)
 
-    network_weight_gaussian_init(model)
+    # network_weight_gaussian_init(model)
+    init_model(model, 'kaiming_norm_fanin')
     input = torch.randn(size=[batch_size, 3, resolution, resolution])
     if gpu is not None:
         input = input.cuda(gpu)

@@ -25,6 +25,16 @@ def compute_dss_per_weight(net, inputs, targets, mode, split_data=1, loss_fn=Non
 
     signs = linearize(net)
 
+    ####### Modified to solve the 'None' grad problem & linearize sampled weights #######
+    for layer in net.modules():
+        if isinstance(layer, nn.Linear) and 'qkv' in layer._get_name() and layer.samples or isinstance(layer, nn.Linear) and layer.out_features == layer.in_features and layer.samples:
+            layer.samples['weight'] = torch.abs(layer.samples['weight'])
+            layer.samples['weight'].retain_grad() # linearize
+        if isinstance(layer, nn.Linear) and 'qkv' not in layer._get_name() and layer.out_features != layer.in_features and layer.out_features != 1000 and layer.samples:
+            layer.samples['weight'] = torch.abs(layer.samples['weight'])
+            layer.samples['weight'].retain_grad() # linearize
+    #####################################################################################
+
     net.zero_grad()
     input_dim = list(inputs[0,:].shape)
     inputs = torch.ones([1] + input_dim).float().to(device)
