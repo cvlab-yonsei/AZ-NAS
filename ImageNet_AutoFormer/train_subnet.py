@@ -24,7 +24,7 @@ from lib.config import cfg, update_config_from_file
 import timm
 from model.pit_space import pit
 # from model.autoformer_space import Vision_TransformerSuper
-from model.autoformer_subnet import Vision_TransformerSuper
+from model.autoformer_subnet import Vision_TransformerSub
 from collections import OrderedDict
 
 from torch.utils.tensorboard import SummaryWriter
@@ -309,7 +309,7 @@ def main(args):
         #                                 change_qkv=args.change_qkv, abs_pos=not args.no_abs_pos)
         retrain_config = {'layer_num': cfg.RETRAIN.DEPTH, 'embed_dim': [cfg.RETRAIN.EMBED_DIM]*cfg.RETRAIN.DEPTH,
                           'num_heads': cfg.RETRAIN.NUM_HEADS,'mlp_ratio': cfg.RETRAIN.MLP_RATIO}
-        model = Vision_TransformerSuper(img_size=args.input_size,
+        model = Vision_TransformerSub(img_size=args.input_size,
                                         patch_size=args.patch_size,
                                         config=retrain_config,
                                         embed_dim=cfg.SUPERNET.EMBED_DIM, depth=cfg.SUPERNET.DEPTH,

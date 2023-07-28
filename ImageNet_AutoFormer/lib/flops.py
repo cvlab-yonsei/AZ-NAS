@@ -14,8 +14,8 @@ def count_flops(model, subnet_m=None, subnet_c=None, input_shape=[3, 224, 224], 
         elif isinstance(m, nn.Linear) and 'qkv' not in m._get_name() and m.out_features != m.in_features and m.out_features != 1000 and m.samples:
             flops.append(m.get_complexity(h*w))
             c_in = m.sample_out_dim
-        elif 'AttentionSuper' in m._get_name() and m.qkv.samples:
-            flops.append(m.get_complexity(h*w))
+        elif 'Attention' in m._get_name() and m.qkv.samples:
+            flops.append(m.get_complexity(h*w)) # "Linear" in "Attention" is duplicated
             c_in = m.proj.sample_out_dim
         elif isinstance(m, nn.Linear) and m.out_features == 1000:
             flops.append(m.get_complexity(h*w))

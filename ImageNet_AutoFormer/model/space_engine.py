@@ -101,7 +101,9 @@ def train_one_epoch(writer, model: torch.nn.Module, criterion: torch.nn.Module,
         logging.info(config)
         model_module.set_sample_config(config=config)
         logging.info(model_module.get_sampled_params_numel(config))
-        logging.info("FLOPS is {}".format(count_flops(model_module)))
+        # logging.info("FLOPS is {}".format(count_flops(model_module)))
+        tmp = float(model_module.get_complexity(model_module.patch_embed_super.num_patches))
+        logging.info("FLOPS is {}".format(tmp))
 
     for i, (samples, targets) in enumerate(metric_logger.log_every(data_loader, print_freq, header)):
         samples = samples.to(device, non_blocking=True)

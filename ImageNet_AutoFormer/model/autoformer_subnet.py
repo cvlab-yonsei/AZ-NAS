@@ -3,10 +3,10 @@ import math
 import torch
 import torch.nn as nn
 import torch.nn.functional as F
-from model.module.Linear_super import LinearSuper
-from model.module.layernorm_super import LayerNormSuper
-from model.module.multihead_super import AttentionSuper
-from model.module.embedding_super import PatchembedSuper
+from model.module_sub.Linear import LinearSub
+from model.module_sub.layernorm import LayerNormSub
+from model.module_sub.multihead import AttentionSub
+from model.module_sub.embedding import PatchembedSub
 from model.utils import trunc_normal_
 from model.utils import DropPath
 import numpy as np
@@ -18,53 +18,37 @@ def gelu(x: torch.Tensor) -> torch.Tensor:
         return x * 0.5 * (1.0 + torch.erf(x / math.sqrt(2.0)))
 
 
-class Vision_TransformerSuper(nn.Module):
+class Vision_TransformerSub(nn.Module):
 
     def __init__(self, img_size=224, patch_size=16, in_chans=3, num_classes=1000, config=None, embed_dim=768, depth=12, num_heads=12, mlp_ratio=4., 
                  qkv_bias=False, qk_scale=None, drop_rate=0., attn_drop_rate=0.,
                  drop_path_rate=0., pre_norm=True, scale=False, gp=False, relative_position=False, change_qkv=False, abs_pos = True, max_relative_position=14):
-        super(Vision_TransformerSuper, self).__init__()       
+        super(Vision_TransformerSub, self).__init__()       
         
         self.super_embed_dim = embed_dim
-        super_depth = depth
+        self.super_depth = depth
         
-        embed_dim = config['embed_dim']
-        mlp_ratio = config['mlp_ratio']
-        num_heads = config['num_heads']
-        depth = config['layer_num']
+        self.sample_embed_dim = config['embed_dim']
+        self.sample_mlp_ratio = config['mlp_ratio']
+        self.sample_num_heads = config['num_heads']
+        self.sample_layer_num = config['layer_num']
+        self.sample_dropout = calc_dropout(drop_rate, self.sample_embed_dim[0], self.super_embed_dim)
+        self.sample_attn_dropout = calc_dropout(attn_drop_rate, self.sample_embed_dim[0], self.super_embed_dim)
 
-
-        # # the configs of super arch
-        # self.super_embed_dim = embed_dim
-        # # self.super_embed_dim = args.embed_dim
-        # self.super_mlp_ratio = mlp_ratio
-        # self.super_layer_num = depth
-        # self.super_num_heads = num_heads
-
-        self.super_dropout = drop_rate
-        self.super_attn_dropout = attn_drop_rate
         self.num_classes = num_classes
         self.pre_norm=pre_norm
         self.scale=scale
-        self.patch_embed_super = PatchembedSuper(img_size=img_size, patch_size=patch_size,
-                                                 in_chans=in_chans, embed_dim=embed_dim[0])
+        self.patch_embed_super = PatchembedSub(img_size=img_size, patch_size=patch_size,
+                                               in_chans=in_chans, embed_dim=self.sample_embed_dim[0], super_embed_dim=self.super_embed_dim)
         self.gp = gp
 
-        # configs for the sampled subTransformer
-        self.sample_embed_dim = None
-        self.sample_mlp_ratio = None
-        self.sample_layer_num = None
-        self.sample_num_heads = None
-        self.sample_dropout = None
-        self.sample_output_dim = None
-
         self.blocks = nn.ModuleList()
-        dpr = [x.item() for x in torch.linspace(0, drop_path_rate, super_depth)]  # stochastic depth decay rule
+        dpr = [x.item() for x in torch.linspace(0, drop_path_rate, self.super_depth)]  # stochastic depth decay rule
 
-        for i in range(depth):
-            self.blocks.append(TransformerEncoderLayer(dim=embed_dim[i], num_heads=num_heads[i], mlp_ratio=mlp_ratio[i],
-                                                       qkv_bias=qkv_bias, qk_scale=qk_scale, dropout=drop_rate,
-                                                       attn_drop=attn_drop_rate, drop_path=dpr[i],
+        for i in range(self.sample_layer_num):
+            self.blocks.append(TransformerEncoderLayer(dim=self.sample_embed_dim[i], num_heads=self.sample_num_heads[i], mlp_ratio=self.sample_mlp_ratio[i],
+                                                       qkv_bias=qkv_bias, qk_scale=qk_scale, dropout=self.sample_dropout,
+                                                       attn_drop=self.sample_attn_dropout, drop_path=dpr[i],
                                                        pre_norm=pre_norm, scale=self.scale,
                                                        change_qkv=change_qkv, relative_position=relative_position,
                                                        max_relative_position=max_relative_position))
@@ -74,19 +58,19 @@ class Vision_TransformerSuper(nn.Module):
 
         self.abs_pos = abs_pos
         if self.abs_pos:
-            self.pos_embed = nn.Parameter(torch.zeros(1, num_patches + 1, embed_dim[0]))
+            self.pos_embed = nn.Parameter(torch.zeros(1, num_patches + 1, self.sample_embed_dim[0]))
             trunc_normal_(self.pos_embed, std=.02)
 
-        self.cls_token = nn.Parameter(torch.zeros(1, 1, embed_dim[0]))
+        self.cls_token = nn.Parameter(torch.zeros(1, 1, self.sample_embed_dim[0]))
         trunc_normal_(self.cls_token, std=.02)
 
         # self.pos_drop = nn.Dropout(p=drop_rate)
         if self.pre_norm:
-            self.norm = LayerNormSuper(super_embed_dim=embed_dim[0])
+            self.norm = LayerNormSub(embed_dim=self.sample_embed_dim[0])
 
 
         # classifier head
-        self.head = LinearSuper(embed_dim[-1], num_classes) if num_classes > 0 else nn.Identity()
+        self.head = LinearSub(self.sample_embed_dim[-1], num_classes, super_out_dim=num_classes) if num_classes > 0 else nn.Identity()
 
         self.apply(self._init_weights)
 
@@ -112,31 +96,7 @@ class Vision_TransformerSuper(nn.Module):
         self.head = nn.Linear(self.embed_dim, num_classes) if num_classes > 0 else nn.Identity()
 
     def set_sample_config(self, config: dict):
-        self.sample_embed_dim = config['embed_dim']
-        self.sample_mlp_ratio = config['mlp_ratio']
-        self.sample_layer_num = config['layer_num']
-        self.sample_num_heads = config['num_heads']
-        self.sample_dropout = calc_dropout(self.super_dropout, self.sample_embed_dim[0], self.super_embed_dim)
-        self.patch_embed_super.set_sample_config(self.sample_embed_dim[0])
-        self.sample_output_dim = [out_dim for out_dim in self.sample_embed_dim[1:]] + [self.sample_embed_dim[-1]]
-        for i, blocks in enumerate(self.blocks):
-            # not exceed sample layer number
-            if i < self.sample_layer_num:
-                sample_dropout = calc_dropout(self.super_dropout, self.sample_embed_dim[i], self.super_embed_dim)
-                sample_attn_dropout = calc_dropout(self.super_attn_dropout, self.sample_embed_dim[i], self.super_embed_dim)
-                blocks.set_sample_config(is_identity_layer=False,
-                                        sample_embed_dim=self.sample_embed_dim[i],
-                                        sample_mlp_ratio=self.sample_mlp_ratio[i],
-                                        sample_num_heads=self.sample_num_heads[i],
-                                        sample_dropout=sample_dropout,
-                                        sample_out_dim=self.sample_output_dim[i],
-                                        sample_attn_dropout=sample_attn_dropout)
-            # exceeds sample layer number
-            else:
-                blocks.set_sample_config(is_identity_layer=True)
-        if self.pre_norm:
-            self.norm.set_sample_config(self.sample_embed_dim[-1])
-        self.head.set_sample_config(self.sample_embed_dim[-1], self.num_classes)
+        return
 
     def get_sampled_params_numel(self, config):
         self.set_sample_config(config)
@@ -151,7 +111,7 @@ class Vision_TransformerSuper(nn.Module):
     def get_complexity(self, sequence_length):
         total_flops = 0
         total_flops += self.patch_embed_super.get_complexity(sequence_length)
-        total_flops += np.prod(self.pos_embed[..., :self.sample_embed_dim[0]].size()) / 2.0
+        total_flops += np.prod(self.pos_embed.size()) / 2.0
         for blk in self.blocks:
             total_flops +=  blk.get_complexity(sequence_length+1)
         total_flops += self.head.get_complexity(sequence_length+1)
@@ -162,10 +122,10 @@ class Vision_TransformerSuper(nn.Module):
         
         B = x.shape[0]
         x = self.patch_embed_super(x)
-        cls_tokens = self.cls_token[..., :self.sample_embed_dim[0]].expand(B, -1, -1)
+        cls_tokens = self.cls_token.expand(B, -1, -1)
         x = torch.cat((cls_tokens, x), dim=1)
         if self.abs_pos:
-            x = x + self.pos_embed[..., :self.sample_embed_dim[0]]
+            x = x + self.pos_embed
 
         x = F.dropout(x, p=self.sample_dropout, training=self.training)
 
@@ -186,10 +146,10 @@ class Vision_TransformerSuper(nn.Module):
     def forward_features(self, x):
         B = x.shape[0]
         x = self.patch_embed_super(x)
-        cls_tokens = self.cls_token[..., :self.sample_embed_dim[0]].expand(B, -1, -1)
+        cls_tokens = self.cls_token.expand(B, -1, -1)
         x = torch.cat((cls_tokens, x), dim=1)
         if self.abs_pos:
-            x = x + self.pos_embed[..., :self.sample_embed_dim[0]]
+            x = x + self.pos_embed
 
         x = F.dropout(x, p=self.sample_dropout, training=self.training)
 
@@ -212,10 +172,10 @@ class Vision_TransformerSuper(nn.Module):
     def forward_features_pre_GAP(self, x):
         B = x.shape[0]
         x = self.patch_embed_super(x)
-        cls_tokens = self.cls_token[..., :self.sample_embed_dim[0]].expand(B, -1, -1)
+        cls_tokens = self.cls_token.expand(B, -1, -1)
         x = torch.cat((cls_tokens, x), dim=1)
         if self.abs_pos:
-            x = x + self.pos_embed[..., :self.sample_embed_dim[0]]
+            x = x + self.pos_embed
 
         x = F.dropout(x, p=self.sample_dropout, training=self.training)
 
@@ -246,68 +206,39 @@ class TransformerEncoderLayer(nn.Module):
                  relative_position=False, change_qkv=False, max_relative_position=14):
         super().__init__()
 
-        # the configs of super arch of the encoder, three dimension [embed_dim, mlp_ratio, and num_heads]
-        self.super_embed_dim = dim
-        self.super_mlp_ratio = mlp_ratio
-        self.super_ffn_embed_dim_this_layer = int(mlp_ratio * dim)
-        self.super_num_heads = num_heads
-        self.normalize_before = pre_norm
-        self.super_dropout = attn_drop
+        # the configs of current sampled arch
+        self.sample_embed_dim = dim
+        self.sample_out_dim = dim
+        self.sample_mlp_ratio = mlp_ratio
+        self.sample_ffn_embed_dim_this_layer = int(mlp_ratio * dim)
+        self.sample_num_heads_this_layer = num_heads
+        self.sample_dropout = dropout
+        self.sample_attn_dropout = attn_drop
+
         self.drop_path = DropPath(drop_path) if drop_path > 0. else nn.Identity()
         self.scale = scale
         self.relative_position = relative_position
-        # self.super_activation_dropout = getattr(args, 'activation_dropout', 0)
+        self.normalize_before = pre_norm
 
-        # the configs of current sampled arch
-        self.sample_embed_dim = None
-        self.sample_mlp_ratio = None
-        self.sample_ffn_embed_dim_this_layer = None
-        self.sample_num_heads_this_layer = None
-        self.sample_scale = None
-        self.sample_dropout = None
-        self.sample_attn_dropout = None
-
-        self.is_identity_layer = None
-        self.attn = AttentionSuper(
-            dim, num_heads=num_heads, qkv_bias=qkv_bias, qk_scale=qk_scale, attn_drop=attn_drop,
-            proj_drop=dropout, scale=self.scale, relative_position=self.relative_position, change_qkv=change_qkv,
+        self.is_identity_layer = False
+        self.attn = AttentionSub(
+            dim, num_heads=self.sample_num_heads_this_layer, qkv_bias=qkv_bias, qk_scale=qk_scale, attn_drop=self.sample_attn_dropout,
+            proj_drop=self.sample_dropout, scale=self.scale, relative_position=self.relative_position, change_qkv=change_qkv,
             max_relative_position=max_relative_position
         )
 
-        self.attn_layer_norm = LayerNormSuper(self.super_embed_dim)
-        self.ffn_layer_norm = LayerNormSuper(self.super_embed_dim)
+        self.attn_layer_norm = LayerNormSub(self.sample_embed_dim)
+        self.ffn_layer_norm = LayerNormSub(self.sample_embed_dim)
         # self.dropout = dropout
         self.activation_fn = torch.nn.GELU()
         # self.normalize_before = args.encoder_normalize_before
 
-        self.fc1 = LinearSuper(super_in_dim=self.super_embed_dim, super_out_dim=self.super_ffn_embed_dim_this_layer)
-        self.fc2 = LinearSuper(super_in_dim=self.super_ffn_embed_dim_this_layer, super_out_dim=self.super_embed_dim)
+        self.fc1 = LinearSub(in_dim=self.sample_embed_dim, out_dim=self.sample_ffn_embed_dim_this_layer)
+        self.fc2 = LinearSub(in_dim=self.sample_ffn_embed_dim_this_layer, out_dim=self.sample_embed_dim)
 
 
     def set_sample_config(self, is_identity_layer, sample_embed_dim=None, sample_mlp_ratio=None, sample_num_heads=None, sample_dropout=None, sample_attn_dropout=None, sample_out_dim=None):
-
-        if is_identity_layer:
-            self.is_identity_layer = True
-            return
-
-        self.is_identity_layer = False
-
-        self.sample_embed_dim = sample_embed_dim
-        self.sample_out_dim = sample_out_dim
-        self.sample_mlp_ratio = sample_mlp_ratio
-        self.sample_ffn_embed_dim_this_layer = int(sample_embed_dim*sample_mlp_ratio)
-        self.sample_num_heads_this_layer = sample_num_heads
-
-        self.sample_dropout = sample_dropout
-        self.sample_attn_dropout = sample_attn_dropout
-        self.attn_layer_norm.set_sample_config(sample_embed_dim=self.sample_embed_dim)
-
-        self.attn.set_sample_config(sample_q_embed_dim=self.sample_num_heads_this_layer*64, sample_num_heads=self.sample_num_heads_this_layer, sample_in_embed_dim=self.sample_embed_dim)
-
-        self.fc1.set_sample_config(sample_in_dim=self.sample_embed_dim, sample_out_dim=self.sample_ffn_embed_dim_this_layer)
-        self.fc2.set_sample_config(sample_in_dim=self.sample_ffn_embed_dim_this_layer, sample_out_dim=self.sample_out_dim)
-
-        self.ffn_layer_norm.set_sample_config(sample_embed_dim=self.sample_embed_dim)
+        return
 
     def extract_res_features(self, x):
         """
