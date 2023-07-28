@@ -26,7 +26,7 @@ echo "Run this script with metric=$metric, population_size=$population_size, evo
 
 cd ../
 
-save_dir=./save_dir/${metric}_flops450M-searchbs64-pop${population_size}-iter${evolution_max_iter}-topkmut-${seed}
+save_dir=./save_dir/${metric}_flops450M-searchbs64-pop${population_size}-iter${evolution_max_iter}-${seed}
 mkdir -p ${save_dir}
 evolution_max_iter=$(printf "%.0f" $evolution_max_iter)
 
@@ -39,7 +39,7 @@ python analyze_model.py \
   --arch Masternet.py:MasterNet \
   --plainnet_struct_txt ${save_dir}/best_structure.txt
 
-horovodrun -np 4 python train_image_classification.py --dataset imagenet --num_classes 1000 \
+horovodrun -np 2 python train_image_classification.py --dataset imagenet --num_classes 1000 \
   --dist_mode single --workers_per_gpu ${num_workers} \
   --input_image_size ${resolution} --epochs ${epochs} --warmup 5 \
   --optimizer sgd --bn_momentum 0.01 --wd 4e-5 --nesterov --weight_init ${init} \
@@ -49,6 +49,6 @@ horovodrun -np 4 python train_image_classification.py --dataset imagenet --num_c
   --plainnet_struct_txt ${save_dir}/best_structure.txt \
   --use_se \
   --target_downsample_ratio 16 \
-  --batch_size_per_gpu 128 --save_dir ${save_dir}/plain_training_epochs${epochs}_init-${init} \
-  --world-size 4 \
+  --batch_size_per_gpu 256 --save_dir ${save_dir}/plain_training_epochs${epochs}_init-${init} \
+  --world-size 2 \
   --dist_mode horovod\

@@ -26,7 +26,7 @@ echo "Run this script with metric=$metric, population_size=$population_size, evo
 
 cd ../
 
-save_dir=./save_dir/${metric}_flops600M-searchbs64-pop${population_size}-iter${evolution_max_iter}-topkmut-${seed}
+save_dir=./save_dir/${metric}_flops450M-searchbs64-pop${population_size}-iter${evolution_max_iter}-${seed}
 mkdir -p ${save_dir}
 evolution_max_iter=$(printf "%.0f" $evolution_max_iter)
 
@@ -39,7 +39,7 @@ python analyze_model.py \
   --arch Masternet.py:MasterNet \
   --plainnet_struct_txt ${save_dir}/best_structure.txt
 
-CUDA_VISIBLE_DEVICES=1,3,5,7, \
+CUDA_VISIBLE_DEVICES=0,2,4,6, \
 horovodrun -np 4 python ts_train_image_classification.py --dataset imagenet --num_classes 1000 \
   --dist_mode single --workers_per_gpu ${num_workers} \
   --input_image_size ${resolution} --epochs ${epochs} --warmup 5 \
