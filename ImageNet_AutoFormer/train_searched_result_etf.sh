@@ -150,3 +150,16 @@ python3 -m torch.distributed.launch --master_port 7777 --nproc_per_node=4 --use_
 CUDA_VISIBLE_DEVICES=6,7, CUDA_LAUNCH_BLOCKING=1 \
 python3 -m torch.distributed.launch --master_port 6666 --nproc_per_node=2 --use_env train_subnet.py --data-path '/dataset/ILSVRC2012' --gp --change_qkv --relative_position \
  --batch-size 512 --mode retrain --model_type 'AUTOFORMER' --dist-eval --cfg './experiments/ETF-pop8000-seed0-cap-trunc/Small.yaml' --output_dir './OUTPUT/ETF-pop8000-seed0-cap-trunc/Small-bs512x2-subnet_no_sample' --resume './OUTPUT/ETF-pop8000-seed0-cap-trunc/Small-bs512x2-subnet_no_sample/checkpoint.pth'
+
+ ###### Expressivity + Trainability + Complexity / seed 123 / iter 10000
+CUDA_VISIBLE_DEVICES=0,1,4,5, CUDA_LAUNCH_BLOCKING=1 \
+python3 -m torch.distributed.launch --master_port 7777 --nproc_per_node=4 --use_env train_subnet.py --data-path '/dataset/ILSVRC2012' --gp --change_qkv --relative_position \
+ --epochs 500 --warmup-epochs 20 --batch-size 256 --mode retrain --model_type 'AUTOFORMER' --dist-eval --cfg './experiments/ETF-ETC-seed123-iter10000/Base.yaml' --output_dir './OUTPUT/ETF-ETC-seed123-iter10000/Base-bs256x4-use_subnet-500ep'
+
+ CUDA_VISIBLE_DEVICES=6,7, CUDA_LAUNCH_BLOCKING=1 \
+python3 -m torch.distributed.launch --master_port 6666 --nproc_per_node=2 --use_env train_subnet.py --data-path '/dataset/ILSVRC2012' --gp --change_qkv --relative_position \
+ --epochs 500 --warmup-epochs 20 --batch-size 512 --mode retrain --model_type 'AUTOFORMER' --dist-eval --cfg './experiments/ETF-ETC-seed123-iter10000/Small.yaml' --output_dir './OUTPUT/ETF-ETC-seed123-iter10000/Small-bs512x2-use_subnet-500ep'
+
+CUDA_VISIBLE_DEVICES=0,2,4,6, CUDA_LAUNCH_BLOCKING=1 \
+python3 -m torch.distributed.launch --master_port 8888 --nproc_per_node=4 --use_env train_subnet.py --data-path '/dataset/ILSVRC2012' --gp --change_qkv --relative_position \
+ --epochs 500 --warmup-epochs 20 --batch-size 256 --mode retrain --model_type 'AUTOFORMER' --dist-eval --cfg './experiments/ETF-ETC-seed123-iter10000/Tiny.yaml' --output_dir './OUTPUT/ETF-ETC-seed123-iter10000/Tiny-bs256x4-use_subnet-500ep'
