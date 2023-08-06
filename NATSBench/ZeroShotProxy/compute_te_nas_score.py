@@ -3,6 +3,20 @@ Copyright (C) 2010-2021 Alibaba Group Holding Limited.
 
 This file is modified from:
 https://github.com/VITA-Group/TENAS
+
+-----------
+Note from authors of
+
+The code is further modified from the implementation of ZenNAS [https://github.com/idstcv/ZenNAS/blob/d1d617e0352733d39890fb64ea758f9c85b28c1a/ZeroShotProxy/compute_te_nas_score.py]
+
+Based on the original repository [https://github.com/VITA-Group/TENAS], we revise the code as follows:
+1. Make it compatible with NAS-Bench-201
+2. Revise the argument in the 'np.nan_to_num' function (Ln255)
+   ref. [https://github.com/VITA-Group/TENAS/blob/9df78ffd98573035375b12e19b9007578cc4155d/lib/procedures/ntk.py#L59]
+3. Compute the final score after ranking (refer to the jupyter file)
+   ref. [https://github.com/VITA-Group/TENAS/blob/9df78ffd98573035375b12e19b9007578cc4155d/prune_tenas.py#L172]
+4. Use real image inputs for calculating ntk (Ln226)
+   ref. [https://github.com/VITA-Group/TENAS/blob/9df78ffd98573035375b12e19b9007578cc4155d/lib/procedures/ntk.py#L37]
 '''
 
 import os, sys
@@ -44,8 +58,8 @@ class LinearRegionCount(object):
         self.n_LR = res.sum().item()
         del self.activations, res
         self.activations = None
-        if self.gpu is not None:
-            torch.cuda.empty_cache()
+        # if self.gpu is not None:
+        #     torch.cuda.empty_cache()
 
     @torch.no_grad()
     def update1D(self, activationList):
@@ -108,15 +122,15 @@ class Linear_Region_Collector:
                 torch.cuda.manual_seed(seed)
         del self.interFeature
         self.interFeature = []
-        if self.gpu is not None:
-            torch.cuda.empty_cache()
+        # if self.gpu is not None:
+        #     torch.cuda.empty_cache()
 
     def clear(self):
         self.LRCounts = [LinearRegionCount(self.input_size[0]*self.sample_batch) for _ in range(len(self.models))]
         del self.interFeature
         self.interFeature = []
-        if self.gpu is not None:
-            torch.cuda.empty_cache()
+        # if self.gpu is not None:
+        #     torch.cuda.empty_cache()
 
     def register_hook(self, model):
         for m in model.modules():
@@ -163,7 +177,7 @@ def compute_RN_score(model: nn.Module,  batch_size=None, image_size=None, num_ba
                                         gpu=gpu, sample_batch=num_batch)
     num_linear_regions = float(lrc_model.forward_batch_sample()[0])
     del lrc_model
-    torch.cuda.empty_cache()
+    # torch.cuda.empty_cache()
     return num_linear_regions
 
 
@@ -189,7 +203,7 @@ def recal_bn(network, xloader, recalbn, device):
 
 
 def get_ntk_n(networks, recalbn=0, train_mode=False, num_batch=None,
-              batch_size=None, image_size=None, gpu=None):
+              batch_size=None, image_size=None, gpu=None, trainloader=None):
     if gpu is not None:
         device = torch.device('cuda:{}'.format(gpu))
     else:
@@ -211,8 +225,9 @@ def get_ntk_n(networks, recalbn=0, train_mode=False, num_batch=None,
     # for i, (inputs, targets) in enumerate(xloader):
     #     if num_batch > 0 and i >= num_batch: break
     for i in range(num_batch):
-        inputs = torch.randn((batch_size, 3, image_size, image_size), device=device)
-        # inputs = inputs.cuda(device=device, non_blocking=True)
+        # inputs = torch.randn((batch_size, 3, image_size, image_size), device=device)
+        inputs = next(iter(trainloader))[0]
+        inputs = inputs.cuda(device=device, non_blocking=True)
         for net_idx, network in enumerate(networks):
             network.zero_grad()
             if gpu is not None:
@@ -231,8 +246,8 @@ def get_ntk_n(networks, recalbn=0, train_mode=False, num_batch=None,
                         grad.append(W.grad.view(-1).detach())
                 grads[net_idx].append(torch.cat(grad, -1))
                 network.zero_grad()
-                if gpu is not None:
-                    torch.cuda.empty_cache()
+                # if gpu is not None:
+                #     torch.cuda.empty_cache()
 
     ######
     grads = [torch.stack(_grads, 0) for _grads in grads]
@@ -240,24 +255,24 @@ def get_ntk_n(networks, recalbn=0, train_mode=False, num_batch=None,
     conds = []
     for ntk in ntks:
         eigenvalues, _ = torch.linalg.eigh(ntk)  # ascending
-        # conds.append(np.nan_to_num((eigenvalues[-1] / eigenvalues[0]).item(), copy=True, nan=100000.0))
-        conds.append(np.nan_to_num((eigenvalues[-1] / eigenvalues[0]).item(), copy=True))
+        conds.append(np.nan_to_num((eigenvalues[-1] / eigenvalues[0]).item(), copy=True, nan=100000.0))
+        # conds.append(np.nan_to_num((eigenvalues[-1] / eigenvalues[0]).item(), copy=True))
     return conds
 
 
 
-def compute_NTK_score(gpu, model, resolution, batch_size):
+def compute_NTK_score(gpu, model, trainloader, resolution, batch_size):
     ntk_score = get_ntk_n([model], recalbn=0, train_mode=True, num_batch=1,
-                           batch_size=batch_size, image_size=resolution, gpu=gpu)[0]
+                           batch_size=batch_size, image_size=resolution, gpu=gpu, trainloader=trainloader)[0]
     return -1 * ntk_score
 
 def compute_nas_score(model, gpu, trainloader, resolution, batch_size):
-    ntk = compute_NTK_score(gpu=gpu, model=model, resolution=resolution, batch_size=batch_size)
+    ntk = compute_NTK_score(gpu=gpu, model=model, trainloader=trainloader, resolution=resolution, batch_size=batch_size)
     RN = compute_RN_score(model=model, batch_size=batch_size, image_size=resolution, num_batch=1, gpu=gpu)
 
     info = {}
-    # info['ntk'] = ntk
-    # info['linear_region'] = RN
-    info['ntk+RN'] = ntk+RN
+    info['ntk'] = ntk
+    info['linear_region'] = RN
+    # info['ntk+RN'] = ntk+RN
 
     return info

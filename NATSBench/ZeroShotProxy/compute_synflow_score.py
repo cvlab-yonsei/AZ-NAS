@@ -2,6 +2,17 @@
 Copyright (C) 2010-2021 Alibaba Group Holding Limited.
 This file is modified from
 https://github.com/SamsungLabs/zero-cost-nas
+
+-----------
+Note from authors of
+
+The code is further modified from the implementation of ZenNAS [https://github.com/idstcv/ZenNAS/blob/d1d617e0352733d39890fb64ea758f9c85b28c1a/ZeroShotProxy/compute_syncflow_score.py]
+
+Based on the original repository [https://github.com/SamsungLabs/zero-cost-nas], we revise the code as follows:
+1. Make it compatible with NAS-Bench-201
+2. Remove the BatchNorm in a network (Ln143)
+   ref. [https://github.com/SamsungLabs/zero-cost-nas/blob/a43bfbc90c1a02a81fb4397a5e096759e93fbe50/foresight/pruners/measures/synflow.py#L22]
+3. Initialize the model with Kaiming init
 '''
 
 

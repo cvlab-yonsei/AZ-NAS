@@ -12,6 +12,16 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 # =============================================================================
+'''
+Note from authors of
+
+The code is modified from the implementation of zero-cost-nas [https://github.com/SamsungLabs/zero-cost-nas/blob/a43bfbc90c1a02a81fb4397a5e096759e93fbe50/foresight/pruners/measures/grasp.py]
+
+We revise the code as follows:
+1. Make it compatible with NAS-Bench-201
+2. Wrap the function for computing grasp score with compute_nas_score
+3. Initialize the model with Kaiming init
+'''
 
 import os, sys, time
 sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))

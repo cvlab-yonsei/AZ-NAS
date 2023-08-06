@@ -1,8 +1,14 @@
 '''
-Copyright (C) 2010-2021 Alibaba Group Holding Limited.
+Note from authors of
+
+The code is modified from the implementation of ZiCo [https://github.com/SLDGroup/ZiCo/blob/b0fec65923a90e84501593f675b1e2f422d79e3d/ZeroShotProxy/compute_zico.py]
+
+We revise the code as follows:
+1. Make it compatible with NAS-Bench-201
+2. Check whether gradients are valid or not
+3. Remove redundant variables
+4. Change the name of the function
 '''
-
-
 
 import os, sys
 import torch

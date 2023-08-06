@@ -1,5 +1,14 @@
 '''
 Copyright (C) 2010-2021 Alibaba Group Holding Limited.
+
+-----------
+Note from authors of
+
+The code is modified from the implementation of ZenNAS [https://github.com/idstcv/ZenNAS/blob/d1d617e0352733d39890fb64ea758f9c85b28c1a/ZeroShotProxy/compute_gradnorm_score.py]
+
+We revise the code as follows:
+1. Make it compatible with NAS-Bench-201
+2. Initialize the model with Kaiming init
 '''
 
 

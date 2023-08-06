@@ -106,6 +106,28 @@ def compute_nas_score(model, device, trainloader, resolution, batch_size):
     
     res_features = model.extract_res_features(input_)
 
+    ################ fwrd pca score ################
+    """
+    pca score across residual block features / normalize each score by upper bound
+    """
+    expressivity_scores = []
+    for i in range(len(res_features)):
+        feat = res_features[i].detach().clone()
+        b,n,c = feat.size()
+        feat = feat.view(b*n,c)
+        m = feat.mean(dim=0, keepdim=True)
+        feat = feat - m
+        sigma = torch.mm(feat.transpose(1,0),feat) / (feat.size(0))
+        s = torch.linalg.eigvalsh(sigma) # faster version for computing eignevalues, can be adopted since sigma is symmetric
+        prob_s = s / s.sum()
+        score = (-prob_s)*torch.log(prob_s+1e-8)
+        score = score.sum().item()
+        expressivity_scores.append(score)
+    expressivity_scores = np.array(expressivity_scores)
+    # progressivity = np.min(expressivity_scores[1:] - expressivity_scores[:-1])
+    expressivity = np.sum(expressivity_scores)
+    #################################################
+
     ################ spec norm score ##############
     """
     spec norm score across residual block features
@@ -152,6 +174,8 @@ def compute_nas_score(model, device, trainloader, resolution, batch_size):
     # n_params = sum(numels) + model.sample_embed_dim[0] * (2 + model.patch_embed_super.num_patches)
     # ####
 
+    info['expressivity'] = float(expressivity) if not np.isnan(expressivity) else -np.inf
+    # info['progressivity'] = float(progressivity) if not np.isnan(progressivity) else -np.inf
     info['trainability'] = float(bkwd_norm_score) if not np.isnan(bkwd_norm_score) else -np.inf
     # info['capacity'] = float(n_params)
     info['complexity'] = float(model.get_complexity(model.patch_embed_super.num_patches))

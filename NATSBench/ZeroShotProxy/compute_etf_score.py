@@ -115,7 +115,7 @@ def compute_nas_score(model, gpu, trainloader, resolution, batch_size, fp16=Fals
             g_out = g_out.permute(0,2,3,1).contiguous().view(bo*ho*wo,co)
             g_in = g_in.permute(0,2,3,1).contiguous().view(bi*hi*wi,ci)
             mat = torch.mm(g_in.transpose(1,0),g_out) / (bo*ho*wo)
-            ### make faster on cpu
+            ### make it faster
             if mat.size(0) < mat.size(1):
                 mat = mat.transpose(0,1)
             ###
