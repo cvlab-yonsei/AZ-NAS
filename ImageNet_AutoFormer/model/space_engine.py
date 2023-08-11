@@ -154,8 +154,8 @@ def train_one_epoch(writer, model: torch.nn.Module, criterion: torch.nn.Module,
             flag_tensor += 1
         dist.all_reduce(flag_tensor,op=dist.ReduceOp.SUM)
         if flag_tensor != 0:
-            print("Warning: Loss is {}, skip this iteration@{}".format(loss_value, device))
-            logging.info("Warning: Loss is {}, skip this iteration@{}".format(loss_value, device))
+            print("Warning: Loss is {}, skip this iteration".format(loss_value))
+            logging.info("Warning: Loss is {}, skip this iteration".format(loss_value))
             continue
 
         ### logging

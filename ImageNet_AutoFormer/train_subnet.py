@@ -342,7 +342,8 @@ def main(args):
             num_classes=args.nb_classes,
         )
         teacher_model.to(device)
-        teacher_loss = LabelSmoothingCrossEntropy(smoothing=args.smoothing)
+        # teacher_loss = LabelSmoothingCrossEntropy(smoothing=args.smoothing)
+        teacher_loss = torch.nn.CrossEntropyLoss(label_smoothing=args.smoothing)
     else:
         teacher_model = None
         teacher_loss = None
@@ -369,7 +370,8 @@ def main(args):
         # smoothing is handled with mixup label transform
         criterion = SoftTargetCrossEntropy()
     elif args.smoothing:
-        criterion = LabelSmoothingCrossEntropy(smoothing=args.smoothing)
+        # criterion = LabelSmoothingCrossEntropy(smoothing=args.smoothing)
+        criterion = torch.nn.CrossEntropyLoss(label_smoothing=args.smoothing)
     else:
         criterion = torch.nn.CrossEntropyLoss()
 
