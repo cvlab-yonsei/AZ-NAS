@@ -156,6 +156,9 @@ def train_one_epoch(writer, model: torch.nn.Module, criterion: torch.nn.Module,
         if flag_tensor != 0:
             print("Warning: Loss is {}, skip this iteration".format(loss_value))
             logging.info("Warning: Loss is {}, skip this iteration".format(loss_value))
+            torch.nan_to_num(loss)
+            loss.backward()
+            optimizer.zero_grad()
             continue
 
         ### logging
