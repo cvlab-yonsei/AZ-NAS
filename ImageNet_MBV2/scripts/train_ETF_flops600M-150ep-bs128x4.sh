@@ -26,12 +26,12 @@ echo "Run this script with metric=$metric, population_size=$population_size, evo
 
 cd ../
 
-save_dir=./save_dir/${metric}_flops1G-searchbs64-pop${population_size}-iter${evolution_max_iter}-${seed}
+save_dir=./save_dir/${metric}_flops600M-searchbs64-pop${population_size}-iter${evolution_max_iter}-${seed}
 mkdir -p ${save_dir}
 evolution_max_iter=$(printf "%.0f" $evolution_max_iter)
 
 resolution=224
-epochs=480
+epochs=150
 
 python analyze_model.py \
   --input_image_size 224 \
@@ -40,24 +40,16 @@ python analyze_model.py \
   --plainnet_struct_txt ${save_dir}/best_structure.txt
 
 CUDA_VISIBLE_DEVICES=0,1,2,3, \
-horovodrun -np 4 python ts_train_image_classification.py --dataset imagenet --num_classes 1000 \
+horovodrun -np 4 python train_image_classification.py --dataset imagenet --num_classes 1000 \
   --dist_mode single --workers_per_gpu ${num_workers} \
   --input_image_size ${resolution} --epochs ${epochs} --warmup 5 \
   --optimizer sgd --bn_momentum 0.01 --wd 4e-5 --nesterov --weight_init ${init} \
-  --label_smoothing --random_erase --mixup --auto_augment \
-  --lr_per_256 0.1 --target_lr_per_256 0.0 --lr_mode cosine \
+  --label_smoothing \
+  --lr_per_256 0.4 --target_lr_per_256 0.0 --lr_mode cosine \
   --arch Masternet.py:MasterNet \
   --plainnet_struct_txt ${save_dir}/best_structure.txt \
-  --teacher_arch geffnet_tf_efficientnet_b3_ns \
-  --teacher_pretrained \
-  --teacher_input_image_size 320 \
-  --teacher_feature_weight 1.0 \
-  --teacher_logit_weight 1.0 \
-  --ts_proj_no_relu \
-  --ts_proj_no_bn \
   --use_se \
   --target_downsample_ratio 16 \
-  --batch_size_per_gpu 128 --save_dir ${save_dir}/ts_training_epochs${epochs}_init-${init} \
+  --batch_size_per_gpu 128 --save_dir ${save_dir}/plain_training_epochs${epochs}_init-${init} \
   --world-size 4 \
   --dist_mode horovod\
-
