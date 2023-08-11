@@ -142,12 +142,18 @@ def train_one_epoch(writer, model: torch.nn.Module, criterion: torch.nn.Module,
                 loss = criterion(outputs, targets)
 
         loss_value = loss.item()
+        
+        ###
+        flag_tensor = torch.zeros(1).to(device)
         if not math.isfinite(loss_value):
             # print("Loss is {}, stopping training".format(loss_value))
             # logging.info("Loss is {}, stopping training".format(loss_value))
             # sys.exit(1)
-            print("Warning: Loss is {}, skip this iteration".format(loss_value))
-            logging.info("Warning: Loss is {}, skip this iteration".format(loss_value))
+            flag_tensor += 1
+        dist.all_reduce(flag_tensor,op=ReduceOp.SUM)
+        if flag_tensor != 0:
+            print("Warning: Loss is {}, skip this iteration@{}".format(loss_value, device))
+            logging.info("Warning: Loss is {}, skip this iteration@{}".format(loss_value, device))
             continue
 
         ### logging
