@@ -142,6 +142,14 @@ def train_one_epoch(writer, model: torch.nn.Module, criterion: torch.nn.Module,
                 loss = criterion(outputs, targets)
 
         loss_value = loss.item()
+        if not math.isfinite(loss_value):
+            # print("Loss is {}, stopping training".format(loss_value))
+            # logging.info("Loss is {}, stopping training".format(loss_value))
+            # sys.exit(1)
+            print("Warning: Loss is {}, skip this iteration".format(loss_value))
+            logging.info("Warning: Loss is {}, skip this iteration".format(loss_value))
+            continue
+
         ### logging
         input_size = int(samples.size(0))
         acc1, acc5 = accuracy(outputs, targets, topk=(1, 5))
@@ -155,11 +163,6 @@ def train_one_epoch(writer, model: torch.nn.Module, criterion: torch.nn.Module,
             writer.add_scalar('train/top1(average)', top1.avg, len(data_loader)*epoch + i)
             writer.add_scalar('train/top5(average)', top5.avg, len(data_loader)*epoch + i)
         ###
-
-        if not math.isfinite(loss_value):
-            print("Loss is {}, stopping training".format(loss_value))
-            logging.info("Loss is {}, stopping training".format(loss_value))
-            sys.exit(1)
 
         optimizer.zero_grad()
 
