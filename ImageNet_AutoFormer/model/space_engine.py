@@ -145,18 +145,22 @@ def train_one_epoch(writer, model: torch.nn.Module, criterion: torch.nn.Module,
 
         loss_value = loss.item()
         
-        ### avoid NaN issue
+        ### avoid NaN
         flag_tensor = torch.zeros(1).to(device)
         if not math.isfinite(loss_value):
             # print("Loss is {}, stopping training".format(loss_value))
             # logging.info("Loss is {}, stopping training".format(loss_value))
             # sys.exit(1)
             flag_tensor += 1
-            print("Warning: Loss is {}, skip this gpu batch".format(loss_value))
-            logging.info("Warning: Loss is {}, skip this gpu batch".format(loss_value))
+            print("Warning: Loss is {}, skip this iteration and setting amp=Fasel".format(loss_value))
+            logging.info("Warning: Loss is {}, skip this iteration and setting amp=Fasel".format(loss_value))
         dist.all_reduce(flag_tensor,op=dist.ReduceOp.SUM)
         if flag_tensor != 0:
             torch.nan_to_num(loss)
+            loss.backward()
+            optimizer.zero_grad()
+            amp=False
+            continue
         ###
 
         ### logging

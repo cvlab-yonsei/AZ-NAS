@@ -163,3 +163,7 @@ python3 -m torch.distributed.launch --master_port 6666 --nproc_per_node=2 --use_
 CUDA_VISIBLE_DEVICES=0,2,4,6, CUDA_LAUNCH_BLOCKING=1 \
 python3 -m torch.distributed.launch --master_port 8888 --nproc_per_node=4 --use_env train_subnet.py --data-path '/dataset/ILSVRC2012' --gp --change_qkv --relative_position \
  --epochs 500 --warmup-epochs 20 --batch-size 256 --mode retrain --model_type 'AUTOFORMER' --dist-eval --cfg './experiments/ETF-ETC-seed123-iter10000/Tiny.yaml' --output_dir './OUTPUT/ETF-ETC-seed123-iter10000/Tiny-bs256x4-use_subnet-500ep'
+
+CUDA_LAUNCH_BLOCKING=1 \
+python3 -m torch.distributed.launch --master_port 7777 --nproc_per_node=8 --use_env train_subnet.py --data-path '/dataset/ILSVRC2012' --gp --change_qkv --relative_position \
+ --epochs 500 --warmup-epochs 20 --batch-size 128 --mode retrain --model_type 'AUTOFORMER' --dist-eval --cfg './experiments/ETF-ETC-seed123-iter10000/Base.yaml' --output_dir './OUTPUT/ETF-ETC-seed123-iter10000/Base-bs128x8-use_subnet-500ep-no_amp' --no-amp # setting amp=True occasionally results in a loss value of NaN for the Base model
