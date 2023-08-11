@@ -158,7 +158,7 @@ python3 -m torch.distributed.launch --master_port 7777 --nproc_per_node=4 --use_
 
  CUDA_VISIBLE_DEVICES=6,7, CUDA_LAUNCH_BLOCKING=1 \
 python3 -m torch.distributed.launch --master_port 6666 --nproc_per_node=2 --use_env train_subnet.py --data-path '/dataset/ILSVRC2012' --gp --change_qkv --relative_position \
- --epochs 500 --warmup-epochs 20 --batch-size 512 --mode retrain --model_type 'AUTOFORMER' --dist-eval --cfg './experiments/ETF-ETC-seed123-iter10000/Small.yaml' --output_dir './OUTPUT/ETF-ETC-seed123-iter10000/Small-bs512x2-use_subnet-500ep'
+ --epochs 500 --warmup-epochs 20 --batch-size 512 --mode retrain --model_type 'AUTOFORMER' --dist-eval --cfg './experiments/ETF-ETC-seed123-iter10000/Small.yaml' --output_dir './OUTPUT/ETF-ETC-seed123-iter10000/Small-bs512x2-use_subnet-500ep' --resume './OUTPUT/ETF-ETC-seed123-iter10000/Small-bs512x2-use_subnet-500ep/checkpoint.pth'
 
 CUDA_VISIBLE_DEVICES=0,2,4,6, CUDA_LAUNCH_BLOCKING=1 \
 python3 -m torch.distributed.launch --master_port 8888 --nproc_per_node=4 --use_env train_subnet.py --data-path '/dataset/ILSVRC2012' --gp --change_qkv --relative_position \
