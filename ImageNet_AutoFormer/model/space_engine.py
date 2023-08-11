@@ -13,6 +13,8 @@ from lib.flops import count_flops
 from thop import profile
 import logging
 
+import torch.distributed as dist
+
 class AverageMeter(object):
     """Computes and stores the average and current value"""
 
