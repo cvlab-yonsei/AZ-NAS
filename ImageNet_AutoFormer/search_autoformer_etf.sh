@@ -63,8 +63,18 @@
 # CUDA_VISIBLE_DEVICES=0, python3 search_autoformer_etf.py --data-path '/dataset/ILSVRC2012' --gp --population-num 10000 --seed 123 \
 #  --param-limits 54 --min-param-limits 52 --change_qkv --relative_position --dist-eval --cfg './experiments/search_space/space-B.yaml' --output_dir './OUTPUT/Search-ETF-ETC-seed123-iter10000/Base'
 
-CUDA_VISIBLE_DEVICES=1, python3 search_autoformer_etf.py --data-path '/dataset/ILSVRC2012' --gp --population-num 10000 --seed 123 \
-  --param-limits 6 --min-param-limits 4 --change_qkv --relative_position --dist-eval --cfg './experiments/search_space/space-T.yaml' --output_dir './OUTPUT/Search-ETF-ETC-seed123-iter10000/Tiny'
+# CUDA_VISIBLE_DEVICES=1, python3 search_autoformer_etf.py --data-path '/dataset/ILSVRC2012' --gp --population-num 10000 --seed 123 \
+#   --param-limits 6 --min-param-limits 4 --change_qkv --relative_position --dist-eval --cfg './experiments/search_space/space-T.yaml' --output_dir './OUTPUT/Search-ETF-ETC-seed123-iter10000/Tiny'
+
+# CUDA_VISIBLE_DEVICES=1, python3 search_autoformer_etf.py --data-path '/dataset/ILSVRC2012' --gp --population-num 10000 --seed 123 \
+#  --param-limits 23 --min-param-limits 21 --change_qkv --relative_position --dist-eval --cfg './experiments/search_space/space-S.yaml' --output_dir './OUTPUT/Search-ETF-ETC-seed123-iter10000/Small'
+
+#### 10000 Exp + Tra + Comp // TFTAS budget
+# CUDA_VISIBLE_DEVICES=0, python3 search_autoformer_etf.py --data-path '/dataset/ILSVRC2012' --gp --population-num 10000 --seed 123 \
+#  --param-limits 56.5 --min-param-limits 52 --change_qkv --relative_position --dist-eval --cfg './experiments/search_space/space-B.yaml' --output_dir './OUTPUT/Search-ETF-ETC-seed123-iter10000-TFTAS_budget/Base'
 
 CUDA_VISIBLE_DEVICES=1, python3 search_autoformer_etf.py --data-path '/dataset/ILSVRC2012' --gp --population-num 10000 --seed 123 \
- --param-limits 23 --min-param-limits 21 --change_qkv --relative_position --dist-eval --cfg './experiments/search_space/space-S.yaml' --output_dir './OUTPUT/Search-ETF-ETC-seed123-iter10000/Small'
+  --param-limits 6.2 --min-param-limits 4 --change_qkv --relative_position --dist-eval --cfg './experiments/search_space/space-T.yaml' --output_dir './OUTPUT/Search-ETF-ETC-seed123-iter10000-TFTAS_budget/Tiny'
+
+CUDA_VISIBLE_DEVICES=1, python3 search_autoformer_etf.py --data-path '/dataset/ILSVRC2012' --gp --population-num 10000 --seed 123 \
+ --param-limits 24 --min-param-limits 21 --change_qkv --relative_position --dist-eval --cfg './experiments/search_space/space-S.yaml' --output_dir './OUTPUT/Search-ETF-ETC-seed123-iter10000-TFTAS_budget/Small'
