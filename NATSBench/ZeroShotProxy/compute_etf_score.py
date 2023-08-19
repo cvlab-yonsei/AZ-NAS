@@ -24,17 +24,89 @@ def kaiming_normal_fanout_init(m):
             nn.init.ones_(m.weight)
             nn.init.zeros_(m.bias)
 
+def kaiming_uniform_fanin_init(m):
+    if isinstance(m, nn.Conv2d) or isinstance(m, nn.Linear):
+        nn.init.kaiming_uniform_(m.weight, mode='fan_in', nonlinearity='relu')
+        if hasattr(m, 'bias') and m.bias is not None:
+            nn.init.zeros_(m.bias)
+    elif isinstance(m, (nn.BatchNorm2d, nn.GroupNorm)):
+        if m.affine:
+            nn.init.ones_(m.weight)
+            nn.init.zeros_(m.bias)
+
+def kaiming_uniform_fanout_init(m):
+    if isinstance(m, nn.Conv2d) or isinstance(m, nn.Linear):
+        nn.init.kaiming_uniform_(m.weight, mode='fan_out', nonlinearity='relu')
+        if hasattr(m, 'bias') and m.bias is not None:
+            nn.init.zeros_(m.bias)
+    elif isinstance(m, (nn.BatchNorm2d, nn.GroupNorm)):
+        if m.affine:
+            nn.init.ones_(m.weight)
+            nn.init.zeros_(m.bias)
+
+def xavier_normal_init(m):
+    if isinstance(m, nn.Conv2d) or isinstance(m, nn.Linear):
+        nn.init.xavier_normal_(m.weight)
+        if hasattr(m, 'bias') and m.bias is not None:
+            nn.init.zeros_(m.bias)
+    elif isinstance(m, (nn.BatchNorm2d, nn.GroupNorm)):
+        if m.affine:
+            nn.init.ones_(m.weight)
+            nn.init.zeros_(m.bias)
+
+def xavier_uniform_init(m):
+    if isinstance(m, nn.Conv2d) or isinstance(m, nn.Linear):
+        nn.init.xavier_uniform_(m.weight)
+        if hasattr(m, 'bias') and m.bias is not None:
+            nn.init.zeros_(m.bias)
+    elif isinstance(m, (nn.BatchNorm2d, nn.GroupNorm)):
+        if m.affine:
+            nn.init.ones_(m.weight)
+            nn.init.zeros_(m.bias)
+
+def plain_normal_init(m):
+    if isinstance(m, nn.Conv2d) or isinstance(m, nn.Linear):
+        nn.init.normal_(m.weight, mean=0.0, std=0.1)
+        if hasattr(m, 'bias') and m.bias is not None:
+            nn.init.zeros_(m.bias)
+    elif isinstance(m, (nn.BatchNorm2d, nn.GroupNorm)):
+        if m.affine:
+            nn.init.ones_(m.weight)
+            nn.init.zeros_(m.bias)
+
+def plain_uniform_init(m):
+    if isinstance(m, nn.Conv2d) or isinstance(m, nn.Linear):
+        nn.init.uniform_(m.weight, a=-0.1, b=0.1)
+        if hasattr(m, 'bias') and m.bias is not None:
+            nn.init.zeros_(m.bias)
+    elif isinstance(m, (nn.BatchNorm2d, nn.GroupNorm)):
+        if m.affine:
+            nn.init.ones_(m.weight)
+            nn.init.zeros_(m.bias)
+
 def init_model(model, method='kaiming_norm_fanin'):
     if method == 'kaiming_norm_fanin':
         model.apply(kaiming_normal_fanin_init)
     elif method == 'kaiming_norm_fanout':
         model.apply(kaiming_normal_fanout_init)
+    elif method == 'kaiming_uni_fanin':
+        model.apply(kaiming_uniform_fanin_init)
+    elif method == 'kaiming_uni_fanout':
+        model.apply(kaiming_uniform_fanout_init)
+    elif method == 'xavier_norm':
+        model.apply(xavier_normal_init)
+    elif method == 'xavier_uni':
+        model.apply(xavier_uniform_init)
+    elif method == 'plain_norm':
+        model.apply(plain_normal_init)
+    elif method == 'plain_uni':
+        model.apply(plain_uniform_init)
     else:
         raise NotImplementedError
     return model
 
 
-def compute_nas_score(model, gpu, trainloader, resolution, batch_size, fp16=False):
+def compute_nas_score(model, gpu, trainloader, resolution, batch_size, init_method = 'kaiming_norm_fanin', fp16=False):
     model.train()
     model.cuda()
     info = {}
@@ -49,7 +121,7 @@ def compute_nas_score(model, gpu, trainloader, resolution, batch_size, fp16=Fals
     else:
         dtype = torch.float32
 
-    init_model(model, 'kaiming_norm_fanin')
+    init_model(model, init_method)
 
     if trainloader == None:
         input_ = torch.randn(size=[batch_size, 3, resolution, resolution], device=device, dtype=dtype)

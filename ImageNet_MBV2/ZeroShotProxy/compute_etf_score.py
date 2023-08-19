@@ -28,20 +28,8 @@ def kaiming_normal_fanout_init(m):
 def init_model(model, method='kaiming_norm_fanin'):
     if method == 'kaiming_norm_fanin':
         model.apply(kaiming_normal_fanin_init)
-    elif method == 'kaiming_norm_fanout':
-        model.apply(kaiming_normal_fanout_init)
-    # elif method == 'kaiming_uni_fanin':
-    #     model.apply(kaiming_uniform_fanin_init)
-    # elif method == 'kaiming_uni_fanout':
-    #     model.apply(kaiming_uniform_fanout_init)
-    # elif method == 'xavier_norm':
-    #     model.apply(xavier_normal)
-    # elif method == 'xavier_uni':
-    #     model.apply(xavier_uniform)
-    # elif method == 'plain_norm':
-    #     model.apply(plain_normal)
-    # else:
-    #     raise NotImplementedError
+    else:
+        raise NotImplementedError
     return model
 
 
