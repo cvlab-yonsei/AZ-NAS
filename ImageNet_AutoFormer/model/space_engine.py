@@ -82,7 +82,7 @@ def train_one_epoch(writer, model: torch.nn.Module, criterion: torch.nn.Module,
                     device: torch.device, epoch: int, model_type, loss_scaler, max_norm: float = 0,
                     model_ema: Optional[ModelEma] = None, mixup_fn: Optional[Mixup] = None,
                     amp: bool = True, teacher_model: torch.nn.Module = None,
-                    teach_loss: torch.nn.Module = None, choices=None, mode='super', retrain_config=None):
+                    teach_loss: torch.nn.Module = None, choices=None, mode='super', retrain_config=None, args=None):
     losses = AverageMeter('Loss ', ':6.4g')
     top1 = AverageMeter('Acc@1 ', ':6.2f')
     top5 = AverageMeter('Acc@5 ', ':6.2f')
@@ -152,15 +152,27 @@ def train_one_epoch(writer, model: torch.nn.Module, criterion: torch.nn.Module,
             # logging.info("Loss is {}, stopping training".format(loss_value))
             # sys.exit(1)
             flag_tensor += 1
-            print("Warning: Loss is {}, skip this iteration and set amp=False".format(loss_value))
-            logging.info("Warning: Loss is {}, skip this iteration and set amp=False".format(loss_value))
+            print("Warning: Loss is {}, setting amp=False".format(loss_value))
+            logging.info("Warning: Loss is {}, setting amp=False".format(loss_value))
         dist.all_reduce(flag_tensor,op=dist.ReduceOp.SUM)
         if flag_tensor != 0:
             torch.nan_to_num(loss)
             loss.backward()
             optimizer.zero_grad()
             amp=False
-            continue
+            if args is not None:
+                args.amp = False
+
+            ### retry
+            outputs = model(samples)
+            if teacher_model:
+                with torch.no_grad():
+                    teach_output = teacher_model(samples)
+                _, teacher_label = teach_output.topk(1, 1, True, True)
+                loss = 1 / 2 * criterion(outputs, targets) + 1 / 2 * teach_loss(outputs, teacher_label.squeeze())
+            else:
+                loss = criterion(outputs, targets)
+            loss_value = loss.item()
         ###
 
         ### logging
