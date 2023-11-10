@@ -1,5 +1,0 @@
-train_image_classification.log
-*.pth
-*.done
-events.*
-init_plainnet.txt
