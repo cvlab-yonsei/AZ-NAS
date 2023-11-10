@@ -131,9 +131,6 @@ def compute_nas_score(model, gpu, trainloader, resolution, batch_size, init_meth
     layer_features = model.extract_cell_features(input_)
 
     ################ expressivity & progressivity scores ################
-    """
-    pca score across residual block features / normalize each score by upper bound
-    """
     expressivity_scores = []
     for i in range(len(layer_features)):
         feat = layer_features[i].detach().clone()
@@ -153,9 +150,6 @@ def compute_nas_score(model, gpu, trainloader, resolution, batch_size, init_meth
     #####################################################################
 
     ################ trainability score ##############
-    """
-    spec norm score across residual block features
-    """
     scores = []
     for i in reversed(range(1, len(layer_features))):
         f_out = layer_features[i]
