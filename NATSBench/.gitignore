@@ -3,3 +3,5 @@ results/
 *.pbz2
 api_data/
 *.pickle
+backup/
+*.pdf

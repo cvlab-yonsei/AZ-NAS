@@ -21,7 +21,7 @@ from timm.utils.model import unwrap_model
 import copy
 from timm.utils import accuracy
 
-from lib.training_free.indicators.etf import compute_nas_score
+from lib.training_free.indicators.az_nas import compute_nas_score
 import scipy.stats as stats
 import time, logging
 import distutils.dir_util
@@ -157,7 +157,7 @@ class Searcher(object):
         set_arc(self.val_loader, self.model_without_ddp, self.device, amp=self.args.amp, mode='retrain',
                               retrain_config=sampled_config)
 
-        ### ETF metric
+        ### AZ-NAS metric
         scores = compute_nas_score(model=self.model_without_ddp, device=self.device, trainloader=None, 
                                    resolution=self.args.input_size, batch_size=self.args.batch_size)
 
@@ -244,7 +244,7 @@ def get_args_parser():
     parser.add_argument('--batch-size', default=64, type=int)
 
     # search parameters
-    parser.add_argument('--indicator-name', default='etf', type=str)
+    parser.add_argument('--indicator-name', default='az_nas', type=str)
     parser.add_argument('--max-epochs', type=int, default=1)
     parser.add_argument('--population-num', type=int, default=8000)
     parser.add_argument('--param-limits', type=float, default=23)

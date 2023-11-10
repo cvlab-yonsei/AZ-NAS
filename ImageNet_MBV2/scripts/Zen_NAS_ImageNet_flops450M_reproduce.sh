@@ -14,7 +14,8 @@ echo "Run this script with search_gpu=$gpu, seed=$seed"
 
 cd ../
 
-save_dir=./save_dir/Zen_NAS_ImageNet_flops450M-reproduce-rev_iter-${seed}
+# save_dir=./save_dir/Zen_NAS_ImageNet_flops450M-reproduce-rev_iter-${seed}
+save_dir=./save_dir/Zen_NAS-best_ImageNet_flops450M
 mkdir -p ${save_dir}
 
 

@@ -10,21 +10,21 @@ set -e
 # read seed
 # echo "Run this script with metric=$metric, search gpu=$gpu, seed=$seed"
 
-if [ "$#" -lt 5 ] || [ "$#" -gt 5 ]; then
+if [ "$#" -lt 2 ] || [ "$#" -gt 2 ]; then
     echo "$# is Illegal number of parameters."
-    echo "Usage: *.sh metric pop_size evo_iter search_gpu seed"
+    echo "Usage: *.sh search_gpu seed"
 	exit 1
 fi
 
-metric=$1
-population_size=$2
-evolution_max_iter=$3
-gpu=$4
-seed=$5
-echo "Run this script with metric=$metric, population_size=$population_size, evolution_max_iter=$evolution_max_iter, search_gpu=$gpu, seed=$seed"
+metric=ETF
+population_size=1024
+evolution_max_iter=1e5
+
+gpu=$1
+seed=$2
+echo "Run this script with search_gpu=$gpu, seed=$seed"
 
 cd ../
-
 save_dir=./save_dir/${metric}_flops600M-searchbs64-pop${population_size}-iter${evolution_max_iter}-${seed}
 mkdir -p ${save_dir}
 evolution_max_iter=$(printf "%.0f" $evolution_max_iter)
