@@ -44,7 +44,7 @@ def none_or_int(value):
 def parse_cmd_options(argv):
     parser = argparse.ArgumentParser()
     parser.add_argument('--gpu', type=int, default=None)
-    parser.add_argument('--zero_shot_score', type=str, default='etf')
+    parser.add_argument('--zero_shot_score', type=str, default='az_nas')
     parser.add_argument('--search_space', type=str, default=None,
                         help='.py file to specify the search space.')
     parser.add_argument('--evolution_max_iter', type=int, default=int(100000),
@@ -144,7 +144,7 @@ def compute_nas_score(AnyPlainNet, random_structure_str, gpu, args, trainloader=
                             no_create=False, no_reslink=args.search_no_res)
     the_model = the_model.cuda(gpu)
     
-    if args.zero_shot_score.lower() != 'etf':
+    if args.zero_shot_score.lower() != 'az_nas':
         raise NotImplementedError("Use 'evolutionary_search_others.py' for other metrics")
 
     score_fn_name = "compute_{}_score".format(args.zero_shot_score.lower())
@@ -218,7 +218,7 @@ def main(args, argv):
 
     popu_structure_list = []
     search_time_list = []
-    if 'etf' in args.zero_shot_score.lower():
+    if args.zero_shot_score.lower() == 'az_nas':
         popu_zero_shot_score_dict = None
     else:
         popu_zero_shot_score_list = []
