@@ -5,7 +5,7 @@ The implementation of NASWOT score is modified from:
 https://github.com/BayesWatch/nas-without-training
 
 -----------
-Note from authors of
+Note from the authors of AZ-NAS
 
 The code is further modified from the implementation of ZenNAS [https://github.com/idstcv/ZenNAS/blob/d1d617e0352733d39890fb64ea758f9c85b28c1a/ZeroShotProxy/compute_NASWOT_score.py]
 We revise the code as follows:

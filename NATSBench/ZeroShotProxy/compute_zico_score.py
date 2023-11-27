@@ -1,5 +1,5 @@
 '''
-Note from authors of
+Note from the authors of AZ-NAS
 
 The code is modified from the implementation of ZiCo [https://github.com/SLDGroup/ZiCo/blob/b0fec65923a90e84501593f675b1e2f422d79e3d/ZeroShotProxy/compute_zico.py]
 

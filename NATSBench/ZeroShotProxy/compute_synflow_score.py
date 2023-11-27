@@ -4,7 +4,7 @@ This file is modified from
 https://github.com/SamsungLabs/zero-cost-nas
 
 -----------
-Note from authors of
+Note from the authors of AZ-NAS
 
 The code is further modified from the implementation of ZenNAS [https://github.com/idstcv/ZenNAS/blob/d1d617e0352733d39890fb64ea758f9c85b28c1a/ZeroShotProxy/compute_syncflow_score.py]
 

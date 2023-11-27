@@ -13,7 +13,7 @@
 # limitations under the License.
 # =============================================================================
 '''
-Note from authors of
+Note from the authors of AZ-NAS
 
 The code is modified from the implementation of zero-cost-nas [https://github.com/SamsungLabs/zero-cost-nas/blob/a43bfbc90c1a02a81fb4397a5e096759e93fbe50/foresight/pruners/measures/snip.py]
 

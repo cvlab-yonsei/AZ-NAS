@@ -126,7 +126,7 @@ def compute_nas_score(model, gpu, trainloader, resolution, batch_size, init_meth
     if trainloader == None:
         input_ = torch.randn(size=[batch_size, 3, resolution, resolution], device=device, dtype=dtype)
     else:
-        input_ = next(iter(trainloader))[0]
+        input_ = next(iter(trainloader))[0].to(device)
     
     layer_features = model.extract_cell_features(input_)
 

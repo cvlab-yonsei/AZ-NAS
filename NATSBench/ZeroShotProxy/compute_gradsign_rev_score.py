@@ -2,6 +2,10 @@
 Note from the authors of AZ-NAS
 
 We have referred to the official implementation in [https://github.com/cmu-catalyst/GradSign/blob/26412be8000a19c1a1147b2bb9399a7d1003eaf1/zero-cost-nas-code/gradsign.py].
+
+[Major modification]
+We add the condition in Ln22~23 to detect modules that are not used, instead of zeroing gradients in Ln38, which results in incorrect scores due to the "mean" operation in Ln43.
+Without this condition, it could produce different results for the cases using a supernet and stand-alone networks.
 '''
 
 import os, sys
@@ -14,6 +18,8 @@ def get_flattened_metric(net, metric):
     grad_list = []
     for layer in net.modules():
         if isinstance(layer, nn.Conv2d) or isinstance(layer, nn.Linear):
+            if layer.weight.grad is None:
+                continue
             grad_list.append(metric(layer).flatten())
     flattened_grad = np.concatenate(grad_list)
 
