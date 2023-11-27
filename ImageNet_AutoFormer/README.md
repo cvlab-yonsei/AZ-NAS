@@ -1,21 +1,21 @@
-<!-- # Install
-```bash
-pip install timm thop einops
-``` -->
+# Implementation of AZ-NAS on the AutoFormer search space
+- Prepare the ImageNet dataset in the form of `/dataset/ILSVRC2012`  
+or manually change the directory specified by `--data-path` in the shell script files
+- Refer the commands in the scripts files `search_autoformer_az.sh` and `train_searched_result_az.sh`
 
 # Credit
 - The search space is proposed in [AutoFormer](https://github.com/microsoft/Cream/tree/b799630a29995163f282b15e2f38701160272fd1/AutoFormer)
-- Code taken from [TFTAS](https://github.com/decemberzhou/TF_TAS/tree/42616bcf1b6bb643bf968a8342f8aaddc4f53f32)
+- The code is modified from [TFTAS](https://github.com/decemberzhou/TF_TAS/tree/42616bcf1b6bb643bf968a8342f8aaddc4f53f32)
 
 # Change notes
-- `./model/autoformer_space.py`
-> * Add a function that extracts features from primary blocks
-> * Turn off Automatic Mixed Precision (AMP) when the NaN loss error is raised
+- `./model/autoformer_subnet.py`: Modified from [`autoformer_space.py`](https://github.com/decemberzhou/TF_TAS/blob/42616bcf1b6bb643bf968a8342f8aaddc4f53f32/model/autoformer_space.py)
+> * Generate a subnetwork for training
+> * Add a function that extracts blcok features
 
-- `./lib/training_free/indicators/az_nas.py`
-> * Add our algorithm
+- `./model/space_engine.py`
+> * Disenable the Automatic Mixed Precision (AMP) option when the NaN loss error is raised
 
-- `search_autoformer_az.py`: Modified from [search_autoformer.py](https://github.com/decemberzhou/TF_TAS/blob/42616bcf1b6bb643bf968a8342f8aaddc4f53f32/search_autoformer.py)
+- `search_autoformer_az.py`: Modified from [`search_autoformer.py`](https://github.com/decemberzhou/TF_TAS/blob/42616bcf1b6bb643bf968a8342f8aaddc4f53f32/search_autoformer.py)
 > * Search with zero-cost proxies of AZ-NAS
 > * Add non-linear ranking aggregation
 

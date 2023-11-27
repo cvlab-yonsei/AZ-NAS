@@ -1,42 +1,28 @@
-Official code for 'ZiCo: Zero-shot NAS via Inverse Coefficient of Variation on Gradients' (ICLR 2023) [Paper link](https://openreview.net/forum?id=rwo-ls5GqGn)
+# Implementation of AZ-NAS on the MobileNetV2 search space
+- Prepare the ImageNet dataset in the form of `/dataset/ILSVRC2012`  
+or manually change the directory specified in `./Dataloader/__init__.py` (Ln33-34)
+- Run the scripts in the `scripts` folder e.g.,
+```bash
+cd scripts
 
-# Usage
-Install the python environment; check `./environment.txt`
-ZiCo-based searching for and train ImageNet models, with FLOPs budget from 450M to 1G:
-``` bash
-scripts/ZiCo_NAS_ImageNet_flops450M.sh
-scripts/ZiCo_NAS_ImageNet_flops600M.sh
-scripts/ZiCo_NAS_ImageNet_flops1G.sh
+# find a network architecture with a FLOPs constraint of 450M
+./search_AZ-NAS_flops450M-bs64.sh 
+
+# train a selected network for 480 epochs with the teacher-student distillation and advanced data augmentation techniques
+./train_AZ-NAS_flops450M-480ep-bs64x8.sh 
+# or train a selected network for 150 epochs with a simplified training setting
+./train_AZ-NAS_flops450M-150ep-bs64x8.sh 
 ```
 
-Params-based searching for and train ImageNet models, with FLOPs budget 450M:
-``` bash
-scripts/Params_NAS_ImageNet_flops450M
-```
+# Credit
+- The code is modified from [ZenNAS](https://github.com/idstcv/ZenNAS/tree/d1d617e0352733d39890fb64ea758f9c85b28c1a) and [ZiCo](https://github.com/SLDGroup/ZiCo/tree/b0fec65923a90e84501593f675b1e2f422d79e3d)
 
-Download the checkpoints from the Anonymous google drive links:
-https://drive.google.com/drive/folders/1DXhYUMvOmD7AjxGsGiUE5kYNa7t8tgPH?usp=sharing
-Move all downloaded folders into the `./save_dir`
-Evaluate the checkpoints ZiCo-based pretrained models, with FLOPs budget from 450M to 1G:
-``` bash
-python val.py --fp16 --gpu 0 --arch ZiCo_imagenet1k_flops450M_res224 --ckpt_path=./save_dir/ZiCo_NAS_ImageNet_flops450M/student_best-params_rank0.pth --data=$PATH_TO_IMAGENET
-python val.py --fp16 --gpu 0 --arch ZiCo_imagenet1k_flops600M_res224 --ckpt_path=./save_dir/ZiCo_NAS_ImageNet_flops600M/student_best-params_rank0.pth --data=$PATH_TO_IMAGENET
-python val.py --fp16 --gpu 0 --arch ZiCo_imagenet1k_flops1G_res224 --ckpt_path=./save_dir/ZiCo_NAS_ImageNet_flops1G/student_best-params_rank0.pth --data=$PATH_TO_IMAGENET
-```
+# Change notes
+- `Masternet.py`
+> *  Add a function that extracts block features
 
-Evaluate the checkpoints Params-based pretrained models, with FLOPs budget 450M:
-``` bash
-python val.py --fp16 --gpu 0 --arch Params_imagenet1k_flops450M_res224 --ckpt_path=./save_dir/Param_imagenet1k_flops450M_res224/student_best-params_rank0.pth --data=$PATH_TO_IMAGENET
-```
+- `evolutionary_search_az.py`: Modified from [`evolutionary_search.py`](https://github.com/SLDGroup/ZiCo/blob/b0fec65923a90e84501593f675b1e2f422d79e3d/evolution_search.py)
+> *  Implement an evolutionary search algorithm for AZ-NAS
 
-The code is modified on `https://github.com/idstcv/ZenNAS`
-
-if you find our code useful, please consider citing our paper:
-```
-@article{li2023zico,
-  title={ZiCo: Zero-shot NAS via Inverse Coefficient of Variation on Gradients},
-  author={Li, Guihong and Yang, Yuedong and Bhardwaj, Kartikeya and Marculescu, Radu},
-  journal={arXiv preprint arXiv:2301.11300},
-  year={2023}
-}
-```
+- `train_image_classification.py` and `ts_train_image_classification.py`
+> *  Add Kaiming normal initialization

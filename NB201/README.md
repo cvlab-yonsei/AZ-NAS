@@ -6,11 +6,11 @@
 - `nats_bench` taken from [NATS-Bench](https://github.com/D-X-Y/NATS-Bench/tree/1d4a304ad1906aa5866563438fcbf0d624b7eda2)
 - `xautodl` and `configs` taken from [AutoDL-Projects](https://github.com/D-X-Y/AutoDL-Projects/tree/f46486e21b71ae6459a700be720d7648b5429569)
 
-# Changes in `custom` folder
-- `tss_model.py`: Modified from `./xaudodl/models/cell_infers/tiny_network.py`
+# Change notes
+- `./custom/tss_model.py`: Modified from `./xaudodl/models/cell_infers/tiny_network.py`
 > *  Used for constructing individual networks (`tss_general.ipynb`)
 > *  Add a function that extracts cell features
 
-- `tss_model_supernet.py`: Modified from `./xaudodl/models/cell_searchs/search_model_random.py`
+- `./custom/tss_model_supernet.py`: Modified from `./xaudodl/models/cell_searchs/search_model_random.py`
 > *  Used for constructing a supernet (`tss_supernet(gradsign).ipynb`)
 > *  Add a function that extracts cell features

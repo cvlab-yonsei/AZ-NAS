@@ -10,18 +10,18 @@ set -e
 # read seed
 # echo "Run this script with metric=$metric, search gpu=$gpu, seed=$seed"
 
-if [ "$#" -lt 6 ] || [ "$#" -gt 6 ]; then
-    echo "$# is Illegal number of parameters."
-    echo "Usage: *.sh metric pop_size evo_iter seed num_workers init_method"
-	exit 1
-fi
+# if [ "$#" -lt 6 ] || [ "$#" -gt 6 ]; then
+#     echo "$# is Illegal number of parameters."
+#     echo "Usage: *.sh metric pop_size evo_iter seed num_workers init_method"
+# 	exit 1
+# fi
 
-metric=$1
-population_size=$2
-evolution_max_iter=$3
-seed=$4
-num_workers=$5
-init=$6
+metric=AZ_NAS
+population_size=1024
+evolution_max_iter=1e5
+seed=123
+num_workers=12
+init=custom_kaiming
 echo "Run this script with metric=$metric, population_size=$population_size, evolution_max_iter=$evolution_max_iter, seed=$seed, num_workers=$num_workers, init=$init"
 
 cd ../

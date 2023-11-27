@@ -10,18 +10,18 @@ set -e
 # read seed
 # echo "Run this script with metric=$metric, search gpu=$gpu, seed=$seed"
 
-if [ "$#" -lt 2 ] || [ "$#" -gt 2 ]; then
-    echo "$# is Illegal number of parameters."
-    echo "Usage: *.sh search_gpu seed"
-	exit 1
-fi
+# if [ "$#" -lt 2 ] || [ "$#" -gt 2 ]; then
+#     echo "$# is Illegal number of parameters."
+#     echo "Usage: *.sh search_gpu seed"
+# 	exit 1
+# fi
 
 metric=AZ_NAS
 population_size=1024
 evolution_max_iter=1e5
 
-gpu=$1
-seed=$2
+gpu=0
+seed=123
 echo "Run this script with search_gpu=$gpu, seed=$seed"
 
 cd ../
