@@ -1,6 +1,6 @@
 # Neural Architecture Search with ZiCo
 
-This repository contains the implementation of the research paper titled "ZiCo: Zero-shot NAS via Inverse Coefficient of Variation on Gradients," presented at ICLR 2023. The work is conducted using the NAS-Bench-201 dataset.
+This repository contains the implementation of the research paper titled "ZiCo: Zero-shot NAS via Inverse Coefficient of Variation on Gradients," presented at ICLR 2023.  
 
 ## Table of Contents
 - [Introduction](#introduction)
