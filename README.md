@@ -1,36 +1,36 @@
-# Neural Architecture Search with ZiCo
+# Pytorch implementation of AZ-NAS
+This repository contains the official implementation of the paper "AZ-NAS: Assembling Zero-Cost Proxies for Network Architecture Search" presented at CVPR 2024.
 
-This repository contains the implementation of the research paper titled "ZiCo: Zero-shot NAS via Inverse Coefficient of Variation on Gradients," presented at ICLR 2023.  
+For detailed information, please visit the [project website](https://cvlab.yonsei.ac.kr/projects/AZNAS/) or read the [paper on arXiv](https://arxiv.org/abs/2403.19232).
 
-## Table of Contents
-- [Introduction](#introduction)
-- [Citation](#citation)
-- [Dependencies](#dependencies)
-- [Usage](#usage)
-- [Results](#results)
-- [License](#license)
+## Requirements
+To reproduce our results, we provide `Dockerfile` to build a Docker image. 
 
-## Introduction
+Refer to the `Dockerfile` for details about the environment setup.
 
-Neural Architecture Search (NAS) has become a crucial aspect of designing effective neural networks. This repository focuses on the research presented in the paper "ZiCo: Zero-shot NAS via Inverse Coefficient of Variation on Gradients" by Guihong Li, Yuedong Yang, Kartikeya Bhardwaj, and Radu Marculescu. The work explores novel methods for NAS, and the experiments are conducted on the NAS-Bench-201 dataset.
+## Code
+Instructions and example code for each search space can be found in the README file within the corresponding folder.
 
-For more details, please refer to the original paper: [ZiCo: Zero-shot NAS via Inverse Coefficient of Variation on Gradients](https://arxiv.org/abs/2301.11300).
+## Acknowledgement
+Our implementation is based on several open-source projects. 
+
+We express our gratitude to the authors and contributors of these projects. 
+
+If you use any of their assets, please cite the corresponding papers appropriately:
+- [NATS-Bench](https://github.com/D-X-Y/NATS-Bench)
+- [AutoDL-Projects](https://github.com/D-X-Y/AutoDL-Projects)
+- [ZenNAS](https://github.com/idstcv/ZenNAS) 
+- [ZiCo](https://github.com/SLDGroup/ZiCo)
+- [AutoFormer](https://github.com/microsoft/Cream/tree/main/AutoFormer)
+- [TFTAS](https://github.com/decemberzhou/TF_TAS)
 
 ## Citation
-
-If you find this work useful in your research, please consider citing the following papers:
-
-```bibtex
-@article{li2023zico,
-  title={ZiCo: Zero-shot NAS via Inverse Coefficient of Variation on Gradients},
-  author={Li, Guihong and Yang, Yuedong and Bhardwaj, Kartikeya and Marculescu, Radu},
-  journal={arXiv preprint arXiv:2301.11300},
-  year={2023}
+If you find our work useful in your research, please cite our paper:
+```
+@inproceedings{lee2024assembling,
+  title={{AZ-NAS}: Assembling Zero-Cost Proxies for Network Architecture Search},
+  author={Lee, Junghyup and Ham, Bumsub},
+  booktitle={Proceedings of the IEEE Conference on Computer Vision and Pattern Recognition},
+  year={2024}
 }
-
-@article{dong2020bench,
-  title={Nas-bench-201: Extending the scope of reproducible neural architecture search},
-  author={Dong, Xuanyi and Yang, Yi},
-  journal={arXiv preprint arXiv:2001.00326},
-  year={2020}
-}
+```
