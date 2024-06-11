@@ -1,7 +1,6 @@
-# Implementation of AZ-NAS on the MobileNetV2 search space
-- Prepare the ImageNet dataset in the form of `/dataset/ILSVRC2012`  
-or manually change the directory specified in `./Dataloader/__init__.py` (Ln33-34)
-- Run the scripts in the `scripts` folder e.g.,
+## Implementation of AZ-NAS on the MobileNetV2 search space
+- Prepare the ImageNet dataset in the directory `/dataset/ILSVRC2012`, or manually change the directory specified in `./Dataloader/__init__.py` (Lines 33-34).
+- Run the scripts in the `scripts` folder. For example:
 ```bash
 cd scripts
 
@@ -14,12 +13,12 @@ cd scripts
 ./train_AZ-NAS_flops450M-150ep-bs64x8.sh 
 ```
 
-# Credit
+## Credit
 - The code is modified from [ZenNAS](https://github.com/idstcv/ZenNAS/tree/d1d617e0352733d39890fb64ea758f9c85b28c1a) and [ZiCo](https://github.com/SLDGroup/ZiCo/tree/b0fec65923a90e84501593f675b1e2f422d79e3d)
 
-# Change notes
+## Change Notes
 - `Masternet.py`
-> *  Add a function that extracts block features
+> *  Add a function to extract block features
 
 - `evolutionary_search_az.py`: Modified from [`evolutionary_search.py`](https://github.com/SLDGroup/ZiCo/blob/b0fec65923a90e84501593f675b1e2f422d79e3d/evolution_search.py)
 > *  Implement an evolutionary search algorithm for AZ-NAS
