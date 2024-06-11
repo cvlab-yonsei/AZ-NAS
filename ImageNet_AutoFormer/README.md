@@ -19,5 +19,6 @@ or manually change the directory specified by `--data-path` in the shell script 
 > * Search with zero-cost proxies of AZ-NAS
 > * Add non-linear ranking aggregation
 
-- `train.py`
+- `train_subnet.py`: Modified from [`train.py`](https://github.com/decemberzhou/TF_TAS/blob/42616bcf1b6bb643bf968a8342f8aaddc4f53f32/train.py)
 > * Add tensorboard logging
+> * Train with a subnetwork instead of a supernet
